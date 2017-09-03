@@ -1,0 +1,211 @@
+# -*- coding: utf-8 -*-
+import unittest
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+
+
+class Test7Auth(unittest.TestCase):
+
+    print("Тестирование кнопок соц.сетей на Google Chrome в русском ЛК")
+    def setUp(self):
+        self.options = webdriver.ChromeOptions()
+        self.options.add_argument("--start-maximized")
+
+        self.driver = webdriver.Chrome(chrome_options=self.options)
+        self.driver.implicitly_wait(30)
+
+        self.driver.get("https://cab-test4.skyway.capital")
+        self.assertIn("Sky Way", self.driver.title)
+        print("Открыли форму авторизации сайта cab-test4.skyway.capital")
+
+    def test_auth_in_test7(self):
+        self.login__form_email = self.driver.find_element_by_name("LoginForm[email]")
+        self.login__form_email.send_keys("n.chagdurova@skyway.capital")
+        self.login__form_email.send_keys(Keys.RETURN)
+        print("Ввели логин")
+        self.login__form_password = self.driver.find_element_by_name("LoginForm[password]")
+        # self.login__form_password.send_keys("Xfulehjd")
+        # self.login__form_password.send_keys(Keys.RETURN)
+        # self.mes = self.driver.find_element_by_xpath("/html/body/div/div/div/form/span")
+        # self.assertIn("The username or password you entered is incorrect.", self.mes)
+        # self.login__form_password.clear()
+        self.login__form_password.send_keys("aa1bb2cc")
+        self.login__form_password.send_keys(Keys.RETURN)
+        print("Ввели пароль")
+        self.assertIn("Sky Way", self.driver.title)
+        print("Переход в ЛК")
+        # self.cabinet = self.driver.find_element_by_link_text("Go to Partner Cabinet")
+        # self.assertTrue("Go to Partner Cabinet", self.cabinet)
+        # self.cabinet.click()
+        # self.cabinet.implicitly_wait(5)
+
+        print()
+
+        print("ПРОВЕРКА КНОПОК СОЦИАЛЬНЫХ СЕТЕЙ:")
+        print('1. Проверка кнопки "Фейсбук":')
+        self.facebook = self.driver.find_element_by_xpath("//img[@alt='Фейсбук']")
+        # print(self.facebook.location)
+        # print(self.facebook.size)
+        self.facebook.click()
+        self.assertIn("Общедоступная группа «SkyWay Capital» | Facebook", self.driver.title)
+        print(' - Проверили кнопку "Фейсбук"')
+        self.driver.execute_script("window.history.go(-1)")
+        self.assertIn("Sky Way", self.driver.title)
+        print(' - После проверки кнопки "Фейсбук" вернулись обратно в ЛК')
+        #time.sleep(300)
+
+        print('2. Проверка кнопки  "ВКонтакте":')
+        self.vkontakte = self.driver.find_element_by_xpath("//img[@alt='ВКонтакте']")
+        self.vkontakte.click()
+        self.assertIn("Sky Way Capital - партнёр компании Rail Sky Way | ВКонтакте", self.driver.title)
+        print(' - Проверили кнопку "ВКонтакте"')
+        self.driver.execute_script("window.history.go(-1)")
+        self.assertIn("Sky Way", self.driver.title)
+        print(' - После проверки кнопки "ВКонтакте" вернулись обратно в ЛК')
+
+        print('3. Проверка кнопки "Твиттер":')
+        self.twitter = self.driver.find_element_by_xpath("//img[@alt='Твиттер']")
+        #time.sleep(2)
+        self.twitter.click()
+        #time.sleep(2)
+        self.assertIn("SkyWay Capital (@skyway_capital) | Твиттер", self.driver.title)
+        print(' - Проверили кнопку "Твиттер"')
+        #time.sleep(3)
+        self.driver.execute_script("window.history.go(-1)")
+        #time.sleep(3)
+        self.assertIn("Sky Way", self.driver.title)
+        print(' - После проверки кнопки "Твиттер" вернулись обратно в ЛК')
+
+        print('4. Проверка кнопки "Одноклассники":')
+        self.ok = self.driver.find_element_by_xpath("//img[@alt='Одноклассники']")
+        # print(self.facebook.location)
+        # print(self.facebook.size)
+        #time.sleep(2)
+        self.ok.click()
+        #time.sleep(2)
+        self.assertIn("SkyWay Capital официальная группа | OK.RU", self.driver.title)
+        print(' - Проверили кнопку "Одноклассники"')
+        #time.sleep(3)
+        self.driver.execute_script("window.history.go(-1)")
+        #time.sleep(3)
+        self.assertIn("Sky Way", self.driver.title)
+        print(' - После проверки кнопки "Одноклассники" вернулись обратно в ЛК')
+
+        print('5. Проверка кнопки "Инастаграм":')
+        self.instagram = self.driver.find_element_by_xpath("//img[@alt='Инстаграм']")
+        #time.sleep(2)
+        self.instagram.click()
+        #time.sleep(2)
+        self.assertIn("СТРУННЫЙ ТРАНСПОРТ ЮНИЦКОГО (@skywaycapital) • Фото и видео в Instagram", self.driver.title)
+        print(' - Проверили кнопку "Инстаграм"')
+        #time.sleep(3)
+        self.driver.execute_script("window.history.go(-1)")
+        #time.sleep(3)
+        self.assertIn("Sky Way", self.driver.title)
+        print(' - После проверки кнопки "Инстаграм" вернулись обратно в ЛК')
+
+        print('6. Проверка кнопки "Лив Джорнал":')
+        self.live_journal = self.driver.find_element_by_xpath("//img[@alt='Лив Джорнал']")
+        #time.sleep(2)
+        self.live_journal.click()
+        #time.sleep(3)
+        self.assertIn("SkyWay Capital", self.driver.title)
+        print(' - Проверили кнопку "Лив Джорнал"')
+        self.driver.execute_script("window.history.go(-1)")
+        #time.sleep(3)
+        self.assertIn("Sky Way", self.driver.title)
+        print(' - После проверки кнопки "Лив Джорнал" вернулись обратно в ЛК')
+
+        print('7. Проверка кнопки "Гугл +":')
+        self.google_plus = self.driver.find_element_by_xpath("//img[@alt='Гугл +']")
+        #time.sleep(2)
+        self.google_plus.click()
+        #time.sleep(3)
+        self.assertIn("SkyWay Capital - Google+", self.driver.title)
+        print(' - Проверили кнопку "Гугл +"')
+        self.driver.execute_script("window.history.go(-1)")
+        #time.sleep(3)
+        self.assertIn("Sky Way", self.driver.title)
+        print(' - После проверки кнопки "Гугл +" вернулись обратно в ЛК')
+
+        print('8. Проверка кнопки "Вайбер чат":')
+        self.viber = self.driver.find_element_by_xpath("//img[@alt='Вайбер чат']")
+        #time.sleep(2)
+        self.viber.click()
+        #time.sleep(3)
+        self.assertIn("SkyWay Capital", self.driver.title)
+        print(' - Проверили кнопку "Вайбер чата"')
+        self.driver.execute_script("window.history.go(-1)")
+        #time.sleep(3)
+        self.assertIn("Sky Way", self.driver.title)
+        print(' - После проверки кнопки "Вайбер чат" вернулись обратно в ЛК')
+
+
+        print('10. Проверка кнопки "Ютюб":')
+        self.youtube = self.driver.find_element_by_xpath("//img[@alt='Ютюб']")
+        self.youtube.click()
+        self.assertIn("➨ SkyWay Capital инвестиционная компания струнного транспорта будущего - YouTube",
+                      self.driver.title)
+        print(' - Проверили кнопку "Ютюб"')
+        self.driver.execute_script("window.history.go(-1)")
+        self.assertIn("Sky Way", self.driver.title)
+        print(' - После проверки кнопки "Ютюб" вернулись обратно в ЛК')
+        print()
+        print("Проверка кнопок социальных сетей закончена. Все кнопки работают исправно")
+        print()
+
+
+        print('ПРОВЕРКА КНОПКИ "go to Partner Cabinet":')
+        self.cabinet = WebDriverWait(self.driver, 10).until(expected_conditions.visibility_of_element_located((By.XPATH, "//a[@href='/tools/marketing-plan']")))
+        self.cabinet.send_keys(Keys.ENTER)
+        self.assertIn("План вознаграждения", self.driver.title)
+        print('Кнопка "go to Partner Cabinet" работает')
+        self.driver.execute_script("window.history.go(-1)")
+        print('Возврат на главную страницу')
+        self.assertIn("Sky Way", self.driver.title)
+        print('Тест окончен успешно!')
+
+
+        print('ПРОВЕРКА ПАКЕТА "INNOTRANS":')
+        self.innotrans = WebDriverWait(self.driver, 10).until(expected_conditions.element_to_be_clickable((By.XPATH, "//a[@class='innotrans-buy']")))
+        self.innotrans.send_keys(Keys.ENTER)
+        #self.assertEqual("200000 акций", self.driver.find_element_by_id("input3"))
+        print("Выбрали пакет INNOTRANS")
+        self.innotrans_pay_in = WebDriverWait(self.driver, 10).until(expected_conditions.element_to_be_clickable((By.ID, "pay-w-acc")))
+        self.innotrans_pay_in.send_keys(Keys.ENTER)
+        print('Выбрали оплату с внутренних кошельков')
+        self.innotrans_main = self.driver.find_element_by_xpath("//input[@id='input5']")
+        time.sleep(5)
+        self.innotrans_main.clear()
+        self.innotrans_main.send_keys("1000")
+        self.innotrans_main.send_keys(Keys.RETURN)
+        print('Ввели необходимую сумму в размере 1000$')
+        self.innotrans_checkout = self.driver.find_element_by_xpath("//input[@class='btn pay-btn do-pay-button col-xs-12']")
+        self.innotrans_checkout.click()
+        print('Нажали кнопку "Перейти"')
+        self.innotrans_yes = self.driver.find_element_by_xpath("//button[@id='progressStart']")
+        self.innotrans_yes.click()
+        print('Во всплывающем окне подтвердили инвестицию нажатием кнопки "да"')
+        self.innotrans_agree = self.driver.find_element_by_xpath("//input[@id='agree']")
+        self.innotrans_agree.click()
+        print('Приняли условия договора')
+        self.innotrans_invest = self.driver.find_element_by_xpath("//button[@id='buy-btn']")
+        self.innotrans_invest.click()
+        print('Нажали кнопку "Инвестировать"')
+        self.assertIn('Мои сертификаты', self.driver.title)
+        print('После покупки иннотранса перешли в раздел "Мои сертификаты"')
+
+
+        print('Тест окончен успешно!')
+
+
+    def tearDown(self):
+        self.driver.quit()
+
+
+if __name__ == "__main__":
+    unittest.main()
