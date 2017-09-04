@@ -77,18 +77,7 @@ class Login(unittest.TestCase):
             print("Зашли в ЛК Norzhima Чагдурова")
             print("Тестирование авторизации на сайт https://cab-test7.skyway.capital прошло успешно.")
         except TimeoutException:
-            print("-----------Загрузка страница занимает слмшком много времени!------------")
-
-    def tearDown(self):
-        self.driver.quit()
-
-if __name__ == "__main__":
-    unittest.main()
-
-
-    def test_login(self):
-        self.delay = 10
-        self.autorization("n.chagdurova@skyway.capital", "Xfulehjdf!1")
+            print("-----------Загрузка страницы занимает слмшком много времени!------------")
 
     def tearDown(self):
         self.driver.quit()
