@@ -96,11 +96,12 @@ class Login(unittest.TestCase):
             print("Зашли в Личный кабинет:", self.driver.title)
             #self.assertTrue(self.driver.page_source.__contains__("Norzhima Чагдурова"))
             self.username = self.driver.find_element_by_xpath("//h3[@class='personal-card__name personal-card__name_verified']")
+            self.current_url = self.driver.current_url
             if self.username.text == "Norzhima Чагдурова":
                 print("пользователя: ", self.username.text)
             else:
                 pass
-            print("- Тестирование авторизации на сайте https://cab-test7.skyway.capital прошло успешно.")
+            print("- Тестирование авторизации на сайте", self.current_url, "прошло успешно.")
         except TimeoutException:
             print("Попытка авторизации провалилась")
 
