@@ -64,19 +64,15 @@ class innotrans_testing(unittest.TestCase):
 
         print()
         print("1) Покупка через основной счет:")
-        try:
-            WebDriverWait(self.driver, self.delay).until(EC.presence_of_element_located((By.XPATH, "//a[@class='innotrans-buy']")))
-        except TimeoutException:
-            print('-----------Поиск кнопки "Выбрать" у пакета innotrans занял слишком много времени!-----------')
-        self.innotrans = self.driver.find_element_by_xpath("//a[@class='innotrans-buy']")
+        WebDriverWait(self.driver, self.delay).until(EC.presence_of_element_located((By.XPATH, "//a[@href='/investment/programs?packet=388']")))
+        self.innotrans = self.driver.find_element_by_xpath("//a[@href='/investment/programs?packet=388']")
         self.innotrans.click()
-
-        try:
-            WebDriverWait(self.driver, self.delay).until(EC.visibility_of_element_located((By.XPATH, "//input[@id='pay-w-acc']")))
-        except TimeoutException:
-            print('-----------Поиск элемента "Оплатить с внутренних кошельков" поля "Основной" занял слишком много времени!-----------')
+        WebDriverWait(self.driver, self.delay).until(EC.visibility_of_element_located((By.XPATH, "//label[@por='pay-w-acc']")))
+        self.get_url_388 = self.driver.current_url
+        self.assertIn("https://cab-test7.skyway.capital/investment/programs?packet=388", self.get_url_388)
         self.pay_acc = self.driver.find_element_by_xpath("//input[@id='pay-w-acc']")
         print(" - Выбрали пакет innotrans")
+        
         self.actions = ActionChains(self.driver)
         self.actions.move_to_element(self.pay_acc)
         self.actions.click(self.pay_acc)
