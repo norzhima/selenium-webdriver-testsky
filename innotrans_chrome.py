@@ -72,7 +72,7 @@ class innotrans_testing(unittest.TestCase):
         self.assertIn("https://cab-test7.skyway.capital/investment/programs?packet=388", self.get_url_388)
         self.pay_acc = self.driver.find_element_by_xpath("//input[@id='pay-w-acc']")
         print(" - Выбрали пакет innotrans")
-        
+
         self.actions = ActionChains(self.driver)
         self.actions.move_to_element(self.pay_acc)
         self.actions.click(self.pay_acc)
