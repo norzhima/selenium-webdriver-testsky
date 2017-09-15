@@ -71,7 +71,10 @@ class innotrans_testing(unittest.TestCase):
         print("1) Покупка через основной счет:")
         WebDriverWait(self.driver, self.delay).until(EC.presence_of_element_located((By.XPATH, "//a[@href='/investment/programs?packet=384']")))
         self.tree_one = self.driver.find_element_by_xpath("//a[@href='/investment/programs?packet=384']")
-        self.tree_one.click()
+        self.actions_tree = ActionChains(self.driver)
+        self.actions_tree.move_to_element(self.tree_one)
+        self.actions_tree.click(self.tree_one)
+        self.actions_tree.perform()
         WebDriverWait(self.driver, self.delay).until(EC.visibility_of_element_located((By.XPATH, "//label[@for='pay-w-acc']")))
         self.get_url_384 = self.driver.current_url
         self.assertIn("https://cab-test7.skyway.capital/investment/programs?packet=384", self.get_url_384)
