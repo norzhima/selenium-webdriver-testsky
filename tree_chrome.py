@@ -86,6 +86,7 @@ class tree_testing(unittest.TestCase):
         print('Баланс основного счета до покупки пакета составляет:', self.main_balance_before.text)
         #self.driver.execute_script("return arguments[0].scrollIntoView();", self.invest_programs)
         self.tree_one.click()
+
         WebDriverWait(self.driver, self.delay).until(EC.visibility_of_element_located((By.XPATH, "//label[@for='pay-w-acc']")))
         self.get_url_384 = self.driver.current_url
         self.assertTrue("https://cab-test7.skyway.capital/investment/programs?packet=384", self.get_url_384)
