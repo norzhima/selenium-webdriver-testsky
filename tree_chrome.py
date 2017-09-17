@@ -9,7 +9,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 class innotrans_testing(unittest.TestCase):
-    print("     ПРОВЕРКА ПРИОБРЕТЕНИЯ ПАКЕТА INNOTRANS в браузере Chrome(Руский ЛК).")
+    print('     ПРОВЕРКА ПРИОБРЕТЕНИЯ ПАКЕТА "ИМЕННОЕ ДЕРЕВО 5000" в браузере Chrome(Руский ЛК).')
     print()
     print('Тестирование авторизации в ЛК')
     def setUp(self):
@@ -25,8 +25,13 @@ class innotrans_testing(unittest.TestCase):
         self.search_leng = self.driver.find_element_by_xpath("//span[@class='login__header-lang-title dropdown-toggle']")
         if self.search_leng.text == "EN":
             print("Язык: Английский")
+            self.main_accounts = "Main: "
+            self.you_select_shares = " You are going to select the following number of shares : "
+
         else:
             print("Сайт SkyWay Capital открыт на ", self.search_leng.text)
+            self.main_accounts = "Основной: "
+            self.you_select_shares = "Вы собираетесь приобрести следующее количество акций: "
 
     def autorization(self, login, passw):
         #WebDriverWait(self.driver, self.delay).until(EC.presence_of_element_located((By.XPATH, "//input[@name='LoginForm[email]']")))
@@ -58,61 +63,54 @@ class innotrans_testing(unittest.TestCase):
         except TimeoutException:
             print("Попытка авторизации провалилась")
 
-    def test_innotrans(self):
+    def test_tree(self):
         self.login()
         #Ниже будет проводиться проверка наличия баннеров на сайте
 
         print()
         print("1) Покупка через основной счет:")
-        WebDriverWait(self.driver, self.delay).until(EC.presence_of_element_located((By.XPATH, "//a[@href='/investment/programs?packet=388']")))
-        self.innotrans = self.driver.find_element_by_xpath("//a[@href='/investment/programs?packet=388']")
-        self.innotrans.click()
-        WebDriverWait(self.driver, self.delay).until(EC.visibility_of_element_located((By.XPATH, "//label[@por='pay-w-acc']")))
-        self.get_url_388 = self.driver.current_url
-        self.assertIn("https://cab-test7.skyway.capital/investment/programs?packet=388", self.get_url_388)
-        self.pay_acc = self.driver.find_element_by_xpath("//input[@id='pay-w-acc']")
-        print(" - Выбрали пакет innotrans")
 
+        WebDriverWait(self.driver, self.delay).until(EC.visibility_of_element_located((By.XPATH, "//a[@href='/investment/programs?packet=384']")))
+        self.tree_one = self.driver.find_element_by_xpath("//a[@href='/investment/programs?packet=384']")
+        self.tree_one.click()
+        WebDriverWait(self.driver, self.delay).until(EC.visibility_of_element_located((By.XPATH, "//label[@for='pay-w-acc']")))
+        self.get_url_384 = self.driver.current_url
+        self.assertIn("https://cab-test7.skyway.capital/investment/programs?packet=384", self.get_url_384)
+        self.pay_acc = self.driver.find_element_by_xpath("//label[@for='pay-w-acc']")
+        print(" - Перешли на страницу", self.get_url_384, 'для выбора способа оплаты пакета "Именное дерево 5000"')
+        
         self.actions = ActionChains(self.driver)
         self.actions.move_to_element(self.pay_acc)
         self.actions.click(self.pay_acc)
         self.actions.perform()
+        WebDriverWait(self.driver, self.delay).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), self.main_accounts)]")))
+        self.assertTrue(self.driver.page_source.__contains__(self.main_accounts))
         print(" - Выбрали оплату с внутренних кошельков")
-
-        try:
-            WebDriverWait(self.driver, self.delay).until(EC.visibility_of_any_elements_located((By.ID, "input5")))
-        except TimeoutException:
-            print('-----------Поиск поля "Основной" занял слишком много времени!-----------')
-        self.input5 = self.driver.find_element_by_id("input5")
-        self.input5.send_keys("1000")
-        print(" - Ввели сумму 1000$ в поле для основного счета")
-
-        self.checkout_innotrans = self.driver.find_element_by_xpath("//input[@class='btn pay-btn do-pay-button col-xs-12']")
+        WebDriverWait(self.driver, self.delay).until(EC.visibility_of_any_elements_located((By.ID, "input1")))
+        self.input1 = self.driver.find_element_by_id("input1")
+        self.sum_packet = 5000
+        self.input1.send_keys(self.sum_packet)
+        WebDriverWait(self.driver, self.delay).until(EC.presence_of_element_located((By.XPATH, "//input[@class='swc-btn do-pay-button']")))
+        print(" - Ввели сумму", self.sum_packet,"в поле для основного счета")
+        self.checkout_innotrans = self.driver.find_element_by_xpath("//input[@class='swc-btn do-pay-button']")
         self.checkout_innotrans.click()
-
-        try:
-            WebDriverWait(self.driver, self.delay).until(EC.visibility_of_element_located((By.XPATH, "//button[@id='progressStart']")))
-        except TimeoutException:
-            print('-----------Поиск кнопки "да" для подтверждения инвестиции занял слишком много времени!-----------')
+        WebDriverWait(self.driver, self.delay).until(EC.visibility_of_element_located((By.XPATH, "//button[@id='progressStart']")))
         self.progress_start = self.driver.find_element_by_xpath("//button[@id='progressStart']")
         self.progress_start.click()
+        WebDriverWait(self.driver, self.delay).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), self.you_select_shares)]")))
         print(" - Подтвердили инвестицию во всплывающем окне")
-
-        try:
-            WebDriverWait(self.driver, self.delay).until(EC.presence_of_element_located((By.ID, "agree")))
-        except TimeoutException:
-            print('-----------Поиск элемента для подтверждения инвестиции занял слишком много времени!-----------')
+        self.get_url_pay_check = self.driver.current_url
+        self.assertTrue("https://cab-test7.skyway.capital/investment/pay-check", self.get_url_pay_check)
+        print('и перешли на страницу', self.get_url_pay_check)
+        WebDriverWait(self.driver, self.delay).until(EC.presence_of_element_located((By.ID, "agree")))
         self.agree = self.driver.find_element_by_id("agree")
         self.agree.click()
+        WebDriverWait(self.driver, self.delay).until(EC.presence_of_element_located((By.ID, "buy-btn")))
         print(' - Нажали галочку для принятия условий договора конвертируемого займа;')
-
-        try:
-            WebDriverWait(self.driver, self.delay).until(EC.presence_of_element_located((By.ID, "buy-btn")))
-        except TimeoutException:
-            print('-----------Поиск кнопки "Инвестировать" для подтверждения инвестиции занял слишком много времени!-----------')
         self.buy_btn = self.driver.find_element_by_id("buy-btn")
         self.buy_btn.click()
-        print(' - После этого нажали на кнопку "Инвестировать";')
+        WebDriverWait(self.driver, self.delay).until(EC.presence_of_element_located((By.ID, "swc-canvas")))
+        print(' - После этого нажали на появившуюся кнопку "Инвестировать";')
 
         self.verif_data = self.driver.find_element_by_xpath("//a[@href='/personal']")
 
