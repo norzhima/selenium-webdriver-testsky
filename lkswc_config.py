@@ -3,6 +3,9 @@ delay = 5
 default_browser = 'Chrome'
 
 
+sum_cashin = 50
+
+
 language_search_xpath = "//DIV[@class='login__header-ul']//SPAN[@href='#']"
 switching_to_ru_xpath = "//DIV[@class='login__header-ul']//A[@href='#'][text()='RU']"
 
@@ -31,3 +34,8 @@ requirement_xpath = "//canvas[@id='swc-canvas']"
 section_my_certificates = "Мои сертификаты"
 checkout_main_section_xpath = "//a[@class='heading-logo-link']"
 all_news_xpath = "//a[@class='news__title-link']"
+
+banking_xpath = "//ul[@class='menu-bar__ul']/li[3]"
+deposit_account = "//ul[@class='menu-bar__ul']/li[3]/div/ul/li[2]"
+check_url_cashin = main_url + "/account/cashin"
+field_cashin_xpath = "//input[@id='req1']"

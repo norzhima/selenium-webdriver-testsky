@@ -45,7 +45,7 @@ class LkswcTest(unittest.TestCase):
     def test_authorization(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
 
-    def test_check_packet_tree(self):
+    def check_packet_tree(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.packet_tree_xpath)))
         #self.invest_programs = self.driver.find_element_by_xpath("//h3[@class='cabinet__title']")
@@ -92,6 +92,25 @@ class LkswcTest(unittest.TestCase):
         self.main_balance_after_replace_int = int(self.main_balance_after_replace[:-4])
         self.assertTrue(self.main_balance_before_replace_int-self.sum_packet, self.main_balance_after_replace_int)
         return True
+
+    def test_cashin_pm(self):
+        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.banking_xpath))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.deposit_account))).click()
+        self.get_url_cashin = self.driver.current_url
+        self.assertTrue(lkswc_config.check_url_cashin, self.get_url_cashin)
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.field_cashin_xpath)))
+        self.req1 = self.driver.find_element_by_xpath(lkswc_config.field_cashin_xpath)
+        self.req1.send_keys(lkswc_config.sum_cashin)
+        time.sleep(5)
+
+        '''try:
+            WebDriverWait(self.driver, self.delay).until(EC.visibility_of_any_elements_located((By.ID, "buttonPay")))
+        except TimeoutException:
+            print('-----------Поиск кнопки "Пополнить" занял слишком много времени!-----------')
+        print(' - Ввели в поле сумму для пополнения;')
+        self.deposit_sum = self.driver.find_element_by_id("buttonPay")
+        self.deposit_sum.click()'''
 
     def autorization(self, login, passw):
         self.login_field = self.driver.find_element_by_xpath(lkswc_config.login_field_xpath).send_keys(login)
