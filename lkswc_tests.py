@@ -37,7 +37,7 @@ class LkswcTest(unittest.TestCase):
             self.debug_minimize = self.driver.find_element_by_xpath(lkswc_config.debug_minimize_xpath)
             self.debug_minimize.click()
         except TimeoutException:
-            print("нет дебаг-панели")
+            pass
 
     def tearDown(self):
         self.driver.quit()
@@ -47,7 +47,6 @@ class LkswcTest(unittest.TestCase):
 
     def test_check_packet_tree(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
-
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.packet_tree_xpath)))
         #self.invest_programs = self.driver.find_element_by_xpath("//h3[@class='cabinet__title']")
         self.packet_tree = self.driver.find_element_by_xpath(lkswc_config.packet_tree_xpath)
@@ -55,9 +54,7 @@ class LkswcTest(unittest.TestCase):
         self.main_balance_before = self.driver.find_element_by_xpath(lkswc_config.main_balance_xpath)
         self.main_balance_before_replace = self.main_balance_before.text.replace(' ', '')
         self.main_balance_before_replace_int = int(self.main_balance_before_replace[:-4])
-        print('Баланс основного счета до покупки пакета составляет:', self.main_balance_before.text)
         self.packet_tree.click()
-
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.pay_account_xpath)))
         self.get_url_450 = self.driver.current_url
         self.assertTrue("https://cab-test7.skyway.capital/investment/programs?packet=450", self.get_url_450)
@@ -73,29 +70,18 @@ class LkswcTest(unittest.TestCase):
         self.assertTrue(self.total_price_int, self.sum_packet)
         self.input_one.send_keys(self.sum_packet)
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.checkout_tree_xpath))).click()
-        #self.checkout_tree = self.driver.find_element_by_xpath(lkswc_config.checkout_tree_xpath)
-        #self.checkout_tree.click()
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.progress_start))).click()
-        #self.progress_start = self.driver.find_element_by_xpath(lkswc_config.progress_start)
-        #self.progress_start.click()
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), lkswc_config.you_select_shares)]")))
         self.get_url_pay_check = self.driver.current_url
         self.assertTrue("https://cab-test7.skyway.capital/investment/pay-check", self.get_url_pay_check)
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.checkbox_icon_xpath))).click()
-        #self.agree = self.driver.find_element_by_xpath(lkswc_config.checkbox_icon_xpath)
-        #self.agree.click()
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.button_buy_xpath))).click()
-        #self.buy_btn = self.driver.find_element_by_id(lkswc_config.button_buy_xpath)
-        #self.buy_btn.click()
         try:
             WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.verif_data_xpath)))
             WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.requirement_xpath)))
-            #self.verif_data = self.driver.find_element_by_xpath(lkswc_config.verif_data_xpath)
             WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.sign_xpath))).click()
-            #self.sign = self.driver.find_element_by_xpath(lkswc_config.sign_xpath)
-            #self.sign.click()
         except TimeoutException:
-            print("Пользователь не верифицирован")
+            pass
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, "//h2[contains(text(), lkswc_config.section_my_certificates)]")))
         self.assertTrue(self.driver.page_source.__contains__(lkswc_config.section_my_certificates))
         self.get_url_portfolio = self.driver.current_url
@@ -105,7 +91,6 @@ class LkswcTest(unittest.TestCase):
         self.main_balance_after_replace = self.main_balance_after.text.replace(' ', '')
         self.main_balance_after_replace_int = int(self.main_balance_after_replace[:-4])
         self.assertTrue(self.main_balance_before_replace_int-self.sum_packet, self.main_balance_after_replace_int)
-        print('Списалась верная сумма')
         return True
 
     def autorization(self, login, passw):
