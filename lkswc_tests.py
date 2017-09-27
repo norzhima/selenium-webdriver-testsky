@@ -21,7 +21,7 @@ class LkswcTest(unittest.TestCase):
         else:
             self.driver = webdriver.Firefox()
         self.driver.get(lkswc_config.main_url)
-        self.assertIn("SkyWay", self.driver.title)
+        self.assertEqual("SkyWay", self.driver.title)
         WebDriverWait(self.driver, lkswc_config.delay).until(
             EC.presence_of_all_elements_located((By.XPATH, lkswc_config.language_search_xpath)))
         self.language_search = self.driver.find_element_by_xpath(lkswc_config.language_search_xpath)
@@ -31,13 +31,14 @@ class LkswcTest(unittest.TestCase):
                 EC.visibility_of_element_located((By.XPATH, lkswc_config.switching_to_ru_xpath)))
             self.switching_to_ru = self.driver.find_element_by_xpath(lkswc_config.switching_to_ru_xpath).click()
         self.assertTrue(self.driver.page_source.__contains__("Вход в систему"))
+        '''включить после того, как вернут дебаг-панель на тест7
         try:
             WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.ID, lkswc_config.debug_toolbar_xpath)))
             WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.debug_minimize_xpath)))
             self.debug_minimize = self.driver.find_element_by_xpath(lkswc_config.debug_minimize_xpath)
             self.debug_minimize.click()
         except TimeoutException:
-            pass
+            pass'''
 
     def tearDown(self):
         self.driver.quit()
@@ -45,7 +46,7 @@ class LkswcTest(unittest.TestCase):
     def test_authorization(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
 
-    def check_packet_tree(self):
+    def test_check_packet_tree(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.packet_tree_xpath)))
         #self.invest_programs = self.driver.find_element_by_xpath("//h3[@class='cabinet__title']")
@@ -67,13 +68,13 @@ class LkswcTest(unittest.TestCase):
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.input_one_xpath)))
         self.input_one = self.driver.find_element_by_xpath(lkswc_config.input_one_xpath)
         self.sum_packet = 5000
-        self.assertTrue(self.total_price_int, self.sum_packet)
+        self.assertEqual(self.total_price_int, self.sum_packet)
         self.input_one.send_keys(self.sum_packet)
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.checkout_tree_xpath))).click()
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.progress_start))).click()
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), lkswc_config.you_select_shares)]")))
         self.get_url_pay_check = self.driver.current_url
-        self.assertTrue("https://cab-test7.skyway.capital/investment/pay-check", self.get_url_pay_check)
+        self.assertEqual("https://cab-test7.skyway.capital/investment/pay-check", self.get_url_pay_check)
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.checkbox_icon_xpath))).click()
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.button_buy_xpath))).click()
         try:
@@ -85,39 +86,76 @@ class LkswcTest(unittest.TestCase):
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, "//h2[contains(text(), lkswc_config.section_my_certificates)]")))
         self.assertTrue(self.driver.page_source.__contains__(lkswc_config.section_my_certificates))
         self.get_url_portfolio = self.driver.current_url
-        self.assertTrue("https://cab-test7.skyway.capital/investment/portfolio", self.get_url_portfolio)
+        self.assertEqual("https://cab-test7.skyway.capital/investment/portfolio", self.get_url_portfolio)
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.main_balance_xpath)))
         self.main_balance_after = self.driver.find_element_by_xpath(lkswc_config.main_balance_xpath)
         self.main_balance_after_replace = self.main_balance_after.text.replace(' ', '')
         self.main_balance_after_replace_int = int(self.main_balance_after_replace[:-4])
-        self.assertTrue(self.main_balance_before_replace_int-self.sum_packet, self.main_balance_after_replace_int)
+        self.assertEqual(self.main_balance_before_replace_int-self.sum_packet, self.main_balance_after_replace_int)
         return True
 
     def test_cashin_pm(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.banking_xpath))).click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.deposit_account))).click()
-        self.get_url_cashin = self.driver.current_url
-        self.assertTrue(lkswc_config.check_url_cashin, self.get_url_cashin)
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.field_cashin_xpath)))
-        self.req1 = self.driver.find_element_by_xpath(lkswc_config.field_cashin_xpath)
-        self.req1.send_keys(lkswc_config.sum_cashin)
+        self.deposit_account(lkswc_config.sum_cashin_small)
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.ps_perfect_money_xpath))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.wait_checkout_pm))).click()
+        self.get_url_perfect_money = self.driver.current_url
+        self.assertIn(lkswc_config.site_perfect_money, self.get_url_perfect_money)
+        return True
+
+    def test_cashin_mera(self):
+        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.deposit_account(lkswc_config.sum_cashin_small)
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.ps_mera_xpath))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.popup_checkbox_accept_xpath))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.mera_success_xpath))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.wait_checkout_mera)))
+        self.get_url_mera = self.driver.current_url
+        self.assertIn(lkswc_config.site_mera, self.get_url_mera)
+
+    def test_cashin_exmo(self):
+        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.deposit_account(lkswc_config.sum_cashin_small)
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.ps_exmo_xpath))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.wait_checkout_advcash)))
+        self.get_url_exmo = self.driver.current_url
+        self.assertEqual(lkswc_config.site_advcash, self.get_url_exmo)
+
+    def test_cashin_ecoin(self):
+        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.deposit_account(lkswc_config.sum_cashin_small)
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.ps_ecoin_xpath))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.wait_checkout_advcash)))
+        self.get_url_ecoin = self.driver.current_url
+        self.assertEqual(lkswc_config.site_advcash, self.get_url_ecoin)
+
+    def test_cashin_mastercard_impex(self):
+        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.deposit_account(lkswc_config.sum_cashin_small)
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.ps_mc_impex_xpath))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.title_instruction_xpath)))
+        self.assertTrue(self.driver.page_source.__contains__("Инструкция по оплате"))
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.popup_accept_mc_impex_xpath))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.mc_impex_success_xpath))).click()
+
         time.sleep(5)
 
-        '''try:
-            WebDriverWait(self.driver, self.delay).until(EC.visibility_of_any_elements_located((By.ID, "buttonPay")))
-        except TimeoutException:
-            print('-----------Поиск кнопки "Пополнить" занял слишком много времени!-----------')
-        print(' - Ввели в поле сумму для пополнения;')
-        self.deposit_sum = self.driver.find_element_by_id("buttonPay")
-        self.deposit_sum.click()'''
+
+    def deposit_account(self, sum_cashin):
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.banking_xpath))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.deposit_account_xpath))).click()
+        self.get_url_cashin = self.driver.current_url
+        self.assertEqual(lkswc_config.check_url_cashin, self.get_url_cashin)
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.field_cashin_xpath)))
+        self.req1 = self.driver.find_element_by_xpath(lkswc_config.field_cashin_xpath)
+        self.req1.send_keys(sum_cashin)
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.deposit_button_xpath))).click()
 
     def autorization(self, login, passw):
         self.login_field = self.driver.find_element_by_xpath(lkswc_config.login_field_xpath).send_keys(login)
         self.passw_field = self.driver.find_element_by_xpath(lkswc_config.passw_field_xpath).send_keys(passw)
         self.login_button = self.driver.find_element_by_xpath(lkswc_config.login_button_xpath).click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located(
-            (By.XPATH, lkswc_config.username_xpath)))
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.username_xpath)))
         self.assertEqual("SkyWay Capital", self.driver.title)
         self.assertTrue(self.driver.page_source.__contains__(lkswc_private_data.username))
         return True
