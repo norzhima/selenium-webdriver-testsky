@@ -1,5 +1,5 @@
 main_url = 'https://cab-test7.skyway.capital'
-delay = 5
+delay = 7
 default_browser = 'Chrome'
 
 
@@ -8,6 +8,7 @@ sum_cashin_small = 50
 #Смена языка в ЛК
 language_search_xpath = "//DIV[@class='login__header-ul']//SPAN[@href='#']"
 switching_to_ru_xpath = "//DIV[@class='login__header-ul']//A[@href='#'][text()='RU']"
+enter_the_systeme = "//div[@class='login__form-body']/form/h3"
 
 #Сворачиваниие дебагпанели
 debug_toolbar_xpath = "yii-debug-toolbar"
@@ -20,7 +21,7 @@ login_button_xpath = "//input[@id='buttonLoginSubmit']"
 username_xpath = "//h3[@class='personal-card__name personal-card__name_verified']"
 
 #Покупка пакета именное дерево
-packet_tree_xpath = "//a[@href='/investment/programs?packet=450']"
+packet_tree_xpath = "//div[@data-id='450']/div[3]/div/a"
 main_balance_xpath = "//span[@class='personal-card__table-value-text']"
 pay_account_xpath = "//label[@for='pay-w-acc']"
 main_account_xpath = "//span[@class='paying__control-label-text']"
@@ -66,13 +67,22 @@ wait_checkout_advcash = "//a[@href='https://advcash.com/']"
 ps_exmo_xpath = "//div[@id='payment-adv-exmo']"
 
 #Пополнение через ECOIN
-ps_ecoin_xpath = "//div[@id='payment-adv-ecoin']"
+ps_ecoin_xpath = "//div[@id='payment-adv-ecoin']/label/div[1]"
 
 #Пополнение через MasterCard (impex)
 ps_mc_impex_xpath = "//div[@data-code='impex']"
 title_instruction_xpath = "//div[@class='swc-modal-subtitle']"
 popup_accept_mc_impex_xpath = "//div[@id='impex-alert']/div/div/div[3]/label"
 mc_impex_success_xpath = "//button[@id='impex-success']"
+wait_checkout_trading_impex = "//button[@id='dropdownMenu1']"
+site_trading_impex = "https://devcab.trading-impex.com/auth/login"
+
+ps_fasapay_xpath = "//div[@id='payment-fasa']"
+site_fasapay = "https://sandbox.fasapay.com/sci/"
+wait_checkout_fasapay = "//div[@class='lbar1']"
+
+
+
 
 
 
