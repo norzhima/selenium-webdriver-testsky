@@ -71,17 +71,24 @@ ps_ecoin_xpath = "//div[@id='payment-adv-ecoin']/label/div[1]"
 
 #Пополнение через MasterCard (impex)
 ps_mc_impex_xpath = "//div[@data-code='impex']"
-title_instruction_xpath = "//div[@class='swc-modal-subtitle']"
+instruction_mc_impex_xpath = "//div[@id='impex-alert']/div/div/div[2]/div"
 popup_accept_mc_impex_xpath = "//div[@id='impex-alert']/div/div/div[3]/label"
 mc_impex_success_xpath = "//button[@id='impex-success']"
+
+#сайт devcab.trading-impex.com/
 wait_checkout_trading_impex = "//button[@id='dropdownMenu1']"
 site_trading_impex = "https://devcab.trading-impex.com/auth/login"
 
+#Пополнение через Fasapay
 ps_fasapay_xpath = "//div[@id='payment-fasa']"
 site_fasapay = "https://sandbox.fasapay.com/sci/"
 wait_checkout_fasapay = "//div[@class='lbar1']"
 
-
+#Пополнение через Impaya (Все страны)
+ps_impaya_world_xpath = "//div[@data-code='impeximpaya']"
+instruction_impaya_world_xpath = "//div[@id='impex-tutor']/div/div/div[2]/div"
+popup_accept_impaya_world_xpath = "//div[@id='impex-tutor']/div/div/div[3]/label"
+impaya_world_success_xpath = "//button[@id='impex-tutor-success']"
 
 
 

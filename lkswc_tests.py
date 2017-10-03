@@ -146,13 +146,8 @@ class LkswcTest(unittest.TestCase):
     def test_cashin_mastercard_impex(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_mc_impex_xpath)
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.title_instruction_xpath)))
-        self.assertTrue(self.driver.page_source.__contains__("Инструкция по оплате"))
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.popup_accept_mc_impex_xpath))).click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.mc_impex_success_xpath))).click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.wait_checkout_trading_impex)))
-        self.get_url_trading_impex = self.driver.current_url
-        self.assertEqual(lkswc_config.site_trading_impex, self.get_url_trading_impex)
+        self.checkout_impex_trading(lkswc_config.instruction_mc_impex_xpath, lkswc_config.popup_accept_mc_impex_xpath, lkswc_config.mc_impex_success_xpath)
+
 
     def test_cashin_fasapay(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
@@ -161,6 +156,22 @@ class LkswcTest(unittest.TestCase):
         self.get_url_fasa_pay = self.driver.current_url
         self.assertIn(lkswc_config.site_fasapay, self.get_url_fasa_pay)
         time.sleep(5)
+        return True
+
+    def test_cashin_impaya_world(self):
+        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_impaya_world_xpath)
+        self.checkout_impex_trading(lkswc_config.instruction_impaya_world_xpath, lkswc_config.popup_accept_impaya_world_xpath, lkswc_config.impaya_world_success_xpath)
+
+    def autorization(self, login, passw):
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.login_field_xpath)))
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.passw_field_xpath)))
+        self.login_field = self.driver.find_element_by_xpath(lkswc_config.login_field_xpath).send_keys(login)
+        self.passw_field = self.driver.find_element_by_xpath(lkswc_config.passw_field_xpath).send_keys(passw)
+        self.login_button = self.driver.find_element_by_xpath(lkswc_config.login_button_xpath).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.username_xpath)))
+        self.assertEqual("SkyWay Capital", self.driver.title)
+        self.assertTrue(self.driver.page_source.__contains__(lkswc_private_data.username))
         return True
 
     def deposit_account(self, sum_cashin, ps_xpath):
@@ -178,20 +189,16 @@ class LkswcTest(unittest.TestCase):
         self.driver.execute_script("arguments[0].scrollIntoView(true)", self.cashin_button_xpath)
         self.ps.click()
 
-    def autorization(self, login, passw):
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.login_field_xpath)))
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.passw_field_xpath)))
-        self.login_field = self.driver.find_element_by_xpath(lkswc_config.login_field_xpath).send_keys(login)
-        self.passw_field = self.driver.find_element_by_xpath(lkswc_config.passw_field_xpath).send_keys(passw)
-        self.login_button = self.driver.find_element_by_xpath(lkswc_config.login_button_xpath).click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.username_xpath)))
-        self.assertEqual("SkyWay Capital", self.driver.title)
-        self.assertTrue(self.driver.page_source.__contains__(lkswc_private_data.username))
-        return True
+    def checkout_impex_trading(self, instruction, popup_accept, success):
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, instruction)))
+        self.assertTrue(self.driver.page_source.__contains__("Инструкция по оплате"))
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, popup_accept))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, success))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.wait_checkout_trading_impex)))
+        self.get_url_trading_impex = self.driver.current_url
+        self.assertEqual(lkswc_config.site_trading_impex, self.get_url_trading_impex)
 
-    def skroll_to_element(self, element_xpath, count=1):
-        self.element_to_view = self.driver.find_elements_by_xpath(element_xpath)
-        self.driver.execute_script("arguments[0].scrollIntoView(true)", self.package_header[count])
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
