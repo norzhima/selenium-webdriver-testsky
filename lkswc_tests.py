@@ -163,6 +163,23 @@ class LkswcTest(unittest.TestCase):
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_impaya_world_xpath)
         self.checkout_impex_trading(lkswc_config.instruction_impaya_world_xpath, lkswc_config.popup_accept_impaya_world_xpath, lkswc_config.impaya_world_success_xpath)
 
+    def test_impexvisa(self):
+        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_impexvisa_xpath)
+        self.checkout_impex_trading(lkswc_config.instruction_impexvisa_xpath, lkswc_config.popup_accept_impexvisa_xpath, lkswc_config.impexvisa_success_xpath)
+
+    def test_impexorange(self):
+        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_impexorange_xpath)
+        self.checkout_impex_trading(lkswc_config.instruction_impexorange_xpath, lkswc_config.popup_accept_impexorange_xpath, lkswc_config.impexorange_success_xpath)
+
+    def test_impexepay(self):
+        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_impexepay_xpath)
+        self.checkout_impex_trading(lkswc_config.instruction_impexepay_xpath, lkswc_config.popup_accept_impexepay_xpath, lkswc_config.impexepay_success_xpath)
+
+
+
     def autorization(self, login, passw):
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.login_field_xpath)))
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.passw_field_xpath)))
@@ -197,8 +214,6 @@ class LkswcTest(unittest.TestCase):
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.wait_checkout_trading_impex)))
         self.get_url_trading_impex = self.driver.current_url
         self.assertEqual(lkswc_config.site_trading_impex, self.get_url_trading_impex)
-
-
 
 if __name__ == "__main__":
     unittest.main()

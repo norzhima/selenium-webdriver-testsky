@@ -90,6 +90,21 @@ instruction_impaya_world_xpath = "//div[@id='impex-tutor']/div/div/div[2]/div"
 popup_accept_impaya_world_xpath = "//div[@id='impex-tutor']/div/div/div[3]/label"
 impaya_world_success_xpath = "//button[@id='impex-tutor-success']"
 
+#Пополнение через impexvisa
+ps_impexvisa_xpath = "//div[@data-code='impexvisa']"
+instruction_impexvisa_xpath = "//div[@id='impexvisa-alert']/div/div/div[2]/div"
+popup_accept_impexvisa_xpath = "//div[@id='impexvisa-alert']/div/div/div[3]/label"
+impexvisa_success_xpath = "//button[@id='impexvisa-success']"
 
+#Пополнение через impexorange
+ps_impexorange_xpath = "//div[@data-code='impexorange']"
+instruction_impexorange_xpath = "//div[@id='impex-tutor']/div/div/div[2]/div"
+popup_accept_impexorange_xpath = "//div[@id='impex-tutor']/div/div/div[3]/label"
+impexorange_success_xpath = "//button[@id='impex-tutor-success']"
 
+#Пополнение через impexepay
+ps_impexepay_xpath = "//div[@data-code='impexepay']"
+instruction_impexepay_xpath = "//div[@id='impex-tutor']/div/div/div[2]/div"
+popup_accept_impexepay_xpath = "//div[@id='impex-tutor']/div/div/div[3]/label"
+impexepay_success_xpath = "//button[@id='impex-tutor-success']"
 
