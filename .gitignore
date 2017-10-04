@@ -1,4 +1,4 @@
 .idea/
 .__pycache__
-.lkswc_private_data.py
+lkswc_private_data.py
 *.log
