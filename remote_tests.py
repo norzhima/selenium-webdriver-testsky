@@ -37,7 +37,7 @@ class innotrans_testing(unittest.TestCase):
         return self.success
         self.driver.implicitly_wait(1200)
         self.driver.set_window_size(1400, 1000)
-        print
+        print()
         bcolors.OKGREEN + "logs in " + self.hub + "/session/" + self.wd.session_id + "/log" + bcolors.ENDC
         return self.driver
         self.driver.get("https://cab-test7.skyway.capital")
@@ -90,3 +90,30 @@ class innotrans_testing(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+'''
+def __start_server(self):
+        #self.listhub = ('http://10.0.3.227:4444/wd/hub', 'http://31.xxx.96.183:4444/wd/hub')
+        #self.hub = str(random.sample(self.listhub, 1)[0])
+        self.hub = 'http://10.0.3.231:4444/wd/hub'
+        self.wd = webdriver.Remote(
+            command_executor=self.hub,
+            desired_capabilities={
+                "seleniumProtocol": "WebDriver",
+                "browserName": "chrome",
+                "maxInstances": "2",  # on hub "docker-compose scale chrome=3"
+                "maxSession": "6",
+                "version": "any",
+                "applicationName": "",
+                "platform": "LINUX",
+                "chrome.switches": '--proxy-server=kakawka:ZbhZVEF1@31.xxx.96.183:65534'
+            }
+        )
+        self.success = True
+        return self.success
+        self.wd.implicitly_wait(1200)
+        self.wd.set_window_size(1400, 1000)
+        print bcolors.OKGREEN + "logs in " + self.hub + "/session/" + self.wd.session_id + "/log" + bcolors.ENDC
+        return self.wd
+'''
