@@ -15,7 +15,6 @@ from selenium.webdriver.common.action_chains import ActionChains
 class LkswcTest(unittest.TestCase):
 
     def setUp(self):
-
         if lkswc_config.default_browser is "Chrome":
             self.options = webdriver.ChromeOptions()
             self.options.add_argument("--start-maximized")
@@ -94,10 +93,6 @@ class LkswcTest(unittest.TestCase):
             WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.sign_xpath)))
             time.sleep(3) #временное решение
             self.go_to_element(lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
-            '''
-            self.footer = self.driver.find_element_by_xpath(lkswc_config.footer_xpath)
-            self.driver.execute_script("arguments[0].scrollIntoView(false)", self.footer)
-            '''
             self.sign = self.driver.find_element_by_xpath(lkswc_config.sign_xpath)
             self.sign.click()
         except TimeoutException:
@@ -143,11 +138,10 @@ class LkswcTest(unittest.TestCase):
         self.get_url_ecoin = self.driver.current_url
         self.assertEqual(lkswc_config.site_advcash, self.get_url_ecoin)
 
-    def test_cashin_mastercard_impex(self):
+    def test_cashin_impex_mastercard(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_mc_impex_xpath)
         self.checkout_impex_trading(lkswc_config.instruction_mc_impex_xpath, lkswc_config.popup_accept_mc_impex_xpath, lkswc_config.mc_impex_success_xpath)
-
 
     def test_cashin_fasapay(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
@@ -155,24 +149,23 @@ class LkswcTest(unittest.TestCase):
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.wait_checkout_fasapay))).click()
         self.get_url_fasa_pay = self.driver.current_url
         self.assertIn(lkswc_config.site_fasapay, self.get_url_fasa_pay)
-        time.sleep(5)
 
-    def test_cashin_impaya_world(self):
+    def test_cashin_impex_impaya_world(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_impaya_world_xpath)
         self.checkout_impex_trading(lkswc_config.instruction_impaya_world_xpath, lkswc_config.popup_accept_impaya_world_xpath, lkswc_config.impaya_world_success_xpath)
 
-    def test_cashin_impexvisa(self):
+    def test_cashin_impex_visa(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_impexvisa_xpath)
         self.checkout_impex_trading(lkswc_config.instruction_impexvisa_xpath, lkswc_config.popup_accept_impexvisa_xpath, lkswc_config.impexvisa_success_xpath)
 
-    def test_cashin_impexorange(self):
+    def test_cashin_impex_orange(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_impexorange_xpath)
         self.checkout_impex_trading(lkswc_config.instruction_impexorange_xpath, lkswc_config.popup_accept_impexorange_xpath, lkswc_config.impexorange_success_xpath)
 
-    def test_cashin_impexepay(self):
+    def test_cashin_impex_epay(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_impexepay_xpath)
         self.checkout_impex_trading(lkswc_config.instruction_impexepay_xpath, lkswc_config.popup_accept_impexepay_xpath, lkswc_config.impexepay_success_xpath)
@@ -180,9 +173,32 @@ class LkswcTest(unittest.TestCase):
     def test_cashin_web_swift_small(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_web_swift_xpath, lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.popup_web_swift_xpath)))
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.popup_web_swift_small_xpath)))
         self.assertTrue(self.driver.page_source.__contains__("Банковский перевод"))
         self.assertTrue(self.driver.page_source.__contains__("www.advcash.com"))
+
+    def test_cashin_web_swift_large(self):
+        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.deposit_account(lkswc_config.sum_cashin_large, lkswc_config.ps_web_swift_xpath, lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.popup_web_swift_large_xpath)))
+        self.assertTrue(self.driver.page_source.__contains__(" Счет действителен в течении 7 дней."))
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.popup_accept_swift_large_xpath))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.swift_large_success_xpath))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.transition_to_payment_swift_xpath)))
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.download_from_verification_swift_xpath)))
+        self.download_from_verification_swift = self.driver.find_element_by_xpath(lkswc_config.download_from_verification_swift_xpath)
+        self.go_to_element(lkswc_config.transition_to_payment_swift_xpath)
+        self.download_from_verification_swift.click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.accept_swift_xpath)))
+        self.accept_swift = self.driver.find_element_by_xpath(lkswc_config.accept_swift_xpath)
+        self.go_to_element(lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
+        self.accept_swift.click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.submit_swift_xpath))).click()
+        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.wait_checkout_swift_page)))
+        self.get_url_swift = self.driver.current_url
+        self.assertEqual(lkswc_config.swift_page, self.get_url_swift)
+
+
 
 
 
@@ -212,11 +228,12 @@ class LkswcTest(unittest.TestCase):
 
     def go_to_element(self, element, elem_position=lkswc_config.elem_position_top):
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, element)))
-        self.go_to_element = self.driver.find_element_by_xpath(element)
+        self.go_element = self.driver.find_element_by_xpath(element)
         if elem_position == lkswc_config.elem_position_top:
-            self.driver.execute_script("arguments[0].scrollIntoView(true)", self.go_to_element)
+            self.driver.execute_script("arguments[0].scrollIntoView(true)", self.go_element)
         else:
-            self.driver.execute_script("arguments[0].scrollIntoView(false)", self.go_to_element)
+            self.driver.execute_script("arguments[0].scrollIntoView(false)", self.go_element)
+            
 
     def checkout_impex_trading(self, instruction, popup_accept, success):
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, instruction)))
@@ -228,4 +245,4 @@ class LkswcTest(unittest.TestCase):
         self.assertEqual(lkswc_config.site_trading_impex, self.get_url_trading_impex)
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)

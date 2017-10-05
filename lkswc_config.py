@@ -4,9 +4,7 @@ default_browser = 'Chrome'
 
 
 sum_cashin_small = 50
-
-
-
+sum_cashin_large = 2500
 footer_xpath = "//div[@id='footer']"
 elem_position_top = "top"
 elem_position_bottom = "bottom"
@@ -115,11 +113,17 @@ instruction_impexepay_xpath = "//div[@id='impex-tutor']/div/div/div[2]/div"
 popup_accept_impexepay_xpath = "//div[@id='impex-tutor']/div/div/div[3]/label"
 impexepay_success_xpath = "//button[@id='impex-tutor-success']"
 
-
 #Пополнение через web-swift
 ps_web_swift_xpath = "//div[@data-code='web-swift']"
-popup_web_swift_xpath = "//div[@id='modalSwiftStep1']/div/div/div/div[2]"
-popup_accept_impexepay_xpath = "//div[@id='impex-tutor']/div/div/div[3]/label"
-impexepay_success_xpath = "//button[@id='impex-tutor-success']"
-
-
+#<2500
+popup_web_swift_small_xpath = "//div[@id='modalSwiftStep1']/div/div/div/div[2]"
+#>=2500
+popup_web_swift_large_xpath = "//div[@id='swift-alert']/div/div/div[1]"
+popup_accept_swift_large_xpath = "//div[@id='swift-alert']/div/div/div[3]/label"
+swift_large_success_xpath = "//button[@id='swift-success']"
+transition_to_payment_swift_xpath = "//h4[@id='currency-choice']"
+download_from_verification_swift_xpath = "//a[@id='fill-from-vd']"
+accept_swift_xpath = "//form[@id='form-main']/div/div[4]/div[2]/label"
+submit_swift_xpath = "//button[@type='submit']"
+wait_checkout_swift_page = "//span[@class='label label-danger']"
+swift_page = "https://cab-test7.skyway.capital/swift/"
