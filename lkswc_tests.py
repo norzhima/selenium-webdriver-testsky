@@ -185,10 +185,13 @@ class LkswcTest(unittest.TestCase):
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.popup_accept_swift_large_xpath))).click()
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.swift_large_success_xpath))).click()
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.transition_to_payment_swift_xpath)))
+
+        '''
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.download_from_verification_swift_xpath)))
         self.download_from_verification_swift = self.driver.find_element_by_xpath(lkswc_config.download_from_verification_swift_xpath)
+        '''
         self.go_to_element(lkswc_config.transition_to_payment_swift_xpath)
-        self.download_from_verification_swift.click()
+        self.some_method(lkswc_config.download_from_verification_swift_xpath).click()
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.accept_swift_xpath)))
         self.accept_swift = self.driver.find_element_by_xpath(lkswc_config.accept_swift_xpath)
         self.go_to_element(lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
@@ -198,7 +201,10 @@ class LkswcTest(unittest.TestCase):
         self.get_url_swift = self.driver.current_url
         self.assertEqual(lkswc_config.swift_page, self.get_url_swift)
 
-
+    def some_method(self, path):
+        WebDriverWait(self.driver, lkswc_config.delay).until(
+            EC.visibility_of_element_located((By.XPATH, path)))
+        return self.driver.find_element_by_xpath(lkswc_config.download_from_verification_swift_xpath)
 
 
 
@@ -244,4 +250,4 @@ class LkswcTest(unittest.TestCase):
         self.assertEqual(lkswc_config.site_trading_impex, self.get_url_trading_impex)
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    unittest.main()
