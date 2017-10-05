@@ -5,6 +5,13 @@ default_browser = 'Chrome'
 
 sum_cashin_small = 50
 
+
+
+footer_xpath = "//div[@id='footer']"
+elem_position_top = "top"
+elem_position_bottom = "bottom"
+
+
 #Смена языка в ЛК
 language_search_xpath = "//DIV[@class='login__header-ul']//SPAN[@href='#']"
 switching_to_ru_xpath = "//DIV[@class='login__header-ul']//A[@href='#'][text()='RU']"
@@ -107,4 +114,12 @@ ps_impexepay_xpath = "//div[@data-code='impexepay']"
 instruction_impexepay_xpath = "//div[@id='impex-tutor']/div/div/div[2]/div"
 popup_accept_impexepay_xpath = "//div[@id='impex-tutor']/div/div/div[3]/label"
 impexepay_success_xpath = "//button[@id='impex-tutor-success']"
+
+
+#Пополнение через web-swift
+ps_web_swift_xpath = "//div[@data-code='web-swift']"
+popup_web_swift_xpath = "//div[@id='modalSwiftStep1']/div/div/div/div[2]"
+popup_accept_impexepay_xpath = "//div[@id='impex-tutor']/div/div/div[3]/label"
+impexepay_success_xpath = "//button[@id='impex-tutor-success']"
+
 
