@@ -233,7 +233,6 @@ class LkswcTest(unittest.TestCase):
             self.driver.execute_script("arguments[0].scrollIntoView(true)", self.go_element)
         else:
             self.driver.execute_script("arguments[0].scrollIntoView(false)", self.go_element)
-            
 
     def checkout_impex_trading(self, instruction, popup_accept, success):
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, instruction)))
