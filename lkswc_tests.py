@@ -222,7 +222,7 @@ class LkswcTest(unittest.TestCase):
         self.ps.click()
 
     def go_to_element(self, element, elem_position=lkswc_config.elem_position_top):
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, element)))
+        self.expect_visibility(element)
         self.go_element = self.driver.find_element_by_xpath(element)
         if elem_position == lkswc_config.elem_position_top:
             self.driver.execute_script("arguments[0].scrollIntoView(true)", self.go_element)
