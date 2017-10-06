@@ -180,27 +180,27 @@ class LkswcTest(unittest.TestCase):
     def test_cashin_web_swift_large(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_large, lkswc_config.ps_web_swift_xpath, lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.popup_web_swift_large_xpath)))
+        self.expect_visibility(lkswc_config.popup_web_swift_large_xpath)
         self.assertTrue(self.driver.page_source.__contains__(" Счет действителен в течении 7 дней."))
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.popup_accept_swift_large_xpath))).click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.swift_large_success_xpath))).click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.transition_to_payment_swift_xpath)))
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.download_from_verification_swift_xpath)))
-        self.download_from_verification_swift = self.driver.find_element_by_xpath(lkswc_config.download_from_verification_swift_xpath)
+        self.expect_visibility(lkswc_config.popup_accept_swift_large_xpath).click()
+        self.expect_visibility(lkswc_config.swift_large_success_xpath).click()
+        self.expect_visibility(lkswc_config.transition_to_payment_swift_xpath)
         self.go_to_element(lkswc_config.transition_to_payment_swift_xpath)
-        self.download_from_verification_swift.click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.accept_swift_xpath)))
+        self.expect_visibility(lkswc_config.download_from_verification_swift_xpath).click()
+        self.expect_visibility(lkswc_config.accept_swift_xpath)
         self.accept_swift = self.driver.find_element_by_xpath(lkswc_config.accept_swift_xpath)
         self.go_to_element(lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
         self.accept_swift.click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.submit_swift_xpath))).click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.wait_checkout_swift_page)))
+        self.expect_visibility(lkswc_config.submit_swift_xpath).click()
+        self.expect_visibility(lkswc_config.wait_checkout_swift_page)
         self.get_url_swift = self.driver.current_url
         self.assertEqual(lkswc_config.swift_page, self.get_url_swift)
+        
 
-
-
-
+    def expect_visibility(self, path):
+        WebDriverWait(self.driver, lkswc_config.delay).until(
+            EC.visibility_of_element_located((By.XPATH, path)))
+        return self.driver.find_element_by_xpath(path)
 
     def autorization(self, login, passw):
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.login_field_xpath)))
@@ -234,7 +234,6 @@ class LkswcTest(unittest.TestCase):
         else:
             self.driver.execute_script("arguments[0].scrollIntoView(false)", self.go_element)
 
-
     def checkout_impex_trading(self, instruction, popup_accept, success):
         WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, instruction)))
         self.assertTrue(self.driver.page_source.__contains__("Инструкция по оплате"))
@@ -245,4 +244,4 @@ class LkswcTest(unittest.TestCase):
         self.assertEqual(lkswc_config.site_trading_impex, self.get_url_trading_impex)
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    unittest.main()
