@@ -230,11 +230,11 @@ class LkswcTest(unittest.TestCase):
             self.driver.execute_script("arguments[0].scrollIntoView(false)", self.go_element)
 
     def checkout_impex_trading(self, instruction, popup_accept, success):
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, instruction)))
+        self.expect_visibility(instruction)
         self.assertTrue(self.driver.page_source.__contains__("Инструкция по оплате"))
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, popup_accept))).click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, success))).click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.wait_checkout_trading_impex)))
+        self.expect_visibility(popup_accept).click()
+        self.expect_visibility(success).click()
+        self.expect_visibility(lkswc_config.wait_checkout_trading_impex)
         self.get_url_trading_impex = self.driver.current_url
         self.assertEqual(lkswc_config.site_trading_impex, self.get_url_trading_impex)
 
