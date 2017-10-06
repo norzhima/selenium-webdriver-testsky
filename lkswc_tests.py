@@ -46,8 +46,8 @@ class LkswcTest(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
-    def test_authorization(self):
-        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+    #def test_authorization(self):
+        #self.autorization(lkswc_private_data.login, lkswc_private_data.password)
 
     def test_check_packet_tree(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
@@ -172,14 +172,14 @@ class LkswcTest(unittest.TestCase):
 
     def test_cashin_web_swift_small(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
-        self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_web_swift_xpath, lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
+        self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_web_swift_xpath, element=lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
         self.expect_visibility(lkswc_config.popup_web_swift_small_xpath)
         self.assertTrue(self.driver.page_source.__contains__("Банковский перевод"))
         self.assertTrue(self.driver.page_source.__contains__("www.advcash.com"))
 
     def test_cashin_web_swift_large(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
-        self.deposit_account(lkswc_config.sum_cashin_large, lkswc_config.ps_web_swift_xpath, lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
+        self.deposit_account(lkswc_config.sum_cashin_large, lkswc_config.ps_web_swift_xpath, element=lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
         self.expect_visibility(lkswc_config.popup_web_swift_large_xpath)
         self.assertTrue(self.driver.page_source.__contains__(" Счет действителен в течении 7 дней."))
         self.expect_visibility(lkswc_config.popup_accept_swift_large_xpath).click()
@@ -211,16 +211,13 @@ class LkswcTest(unittest.TestCase):
         self.assertTrue(self.driver.page_source.__contains__(lkswc_private_data.username))
 
     def deposit_account(self, sum_cashin, ps_xpath, element=lkswc_config.deposit_button_xpath, elem_position=lkswc_config.elem_position_top):
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.banking_xpath))).click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.deposit_account_xpath))).click()
+        self.expect_visibility(lkswc_config.banking_xpath).click()
+        self.expect_visibility(lkswc_config.deposit_account_xpath).click()
         self.get_url_cashin = self.driver.current_url
         self.assertEqual(lkswc_config.check_url_cashin, self.get_url_cashin)
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.field_cashin_xpath)))
-        self.req1 = self.driver.find_element_by_xpath(lkswc_config.field_cashin_xpath)
-        self.req1.send_keys(sum_cashin)
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.deposit_button_xpath))).click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, ps_xpath)))
-        self.ps = self.driver.find_element_by_xpath(ps_xpath)
+        self.expect_visibility(lkswc_config.field_cashin_xpath).send_keys(sum_cashin)
+        self.expect_visibility(lkswc_config.deposit_button_xpath).click()
+        self.ps = self.expect_visibility(ps_xpath)
         self.go_to_element(element, elem_position)
         self.ps.click()
 
