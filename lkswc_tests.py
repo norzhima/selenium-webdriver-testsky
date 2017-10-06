@@ -173,7 +173,7 @@ class LkswcTest(unittest.TestCase):
     def test_cashin_web_swift_small(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_web_swift_xpath, lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.popup_web_swift_small_xpath)))
+        self.expect_visibility(lkswc_config.popup_web_swift_small_xpath)
         self.assertTrue(self.driver.page_source.__contains__("Банковский перевод"))
         self.assertTrue(self.driver.page_source.__contains__("www.advcash.com"))
 
@@ -195,7 +195,7 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lkswc_config.wait_checkout_swift_page)
         self.get_url_swift = self.driver.current_url
         self.assertEqual(lkswc_config.swift_page, self.get_url_swift)
-        
+
 
     def expect_visibility(self, path):
         WebDriverWait(self.driver, lkswc_config.delay).until(
@@ -203,12 +203,10 @@ class LkswcTest(unittest.TestCase):
         return self.driver.find_element_by_xpath(path)
 
     def autorization(self, login, passw):
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.login_field_xpath)))
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.passw_field_xpath)))
-        self.login_field = self.driver.find_element_by_xpath(lkswc_config.login_field_xpath).send_keys(login)
-        self.passw_field = self.driver.find_element_by_xpath(lkswc_config.passw_field_xpath).send_keys(passw)
-        self.login_button = self.driver.find_element_by_xpath(lkswc_config.login_button_xpath).click()
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.presence_of_element_located((By.XPATH, lkswc_config.username_xpath)))
+        self.expect_visibility(lkswc_config.login_field_xpath).send_keys(login)
+        self.expect_visibility(lkswc_config.passw_field_xpath).send_keys(passw)
+        self.expect_visibility(lkswc_config.login_button_xpath).click()
+        self.expect_visibility(lkswc_config.username_xpath)
         self.assertEqual("SkyWay Capital", self.driver.title)
         self.assertTrue(self.driver.page_source.__contains__(lkswc_private_data.username))
 
