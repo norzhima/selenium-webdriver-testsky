@@ -146,7 +146,7 @@ class LkswcTest(unittest.TestCase):
     def test_cashin_fasapay(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_fasapay_xpath)
-        WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.wait_checkout_fasapay))).click()
+        self.expect_visibility(lkswc_config.wait_checkout_fasapay)
         self.get_url_fasa_pay = self.driver.current_url
         self.assertIn(lkswc_config.site_fasapay, self.get_url_fasa_pay)
 
