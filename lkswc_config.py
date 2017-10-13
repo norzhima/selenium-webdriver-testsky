@@ -1,5 +1,5 @@
 main_url = 'https://cab-test7.skyway.capital'
-delay = 7
+delay = 10
 default_browser = 'Chrome'
 
 
@@ -23,11 +23,12 @@ debug_minimize_xpath = "//span[@class='yii-debug-toolbar-toggler']"
 login_field_xpath = "//input[@name='LoginForm[email]']"
 passw_field_xpath = "//input[@name='LoginForm[password]']"
 login_button_xpath = "//input[@id='buttonLoginSubmit']"
-username_xpath = "//h3[@class='personal-card__name personal-card__name_verified']"
+username_verif_data_xpath = "//h3[@class='personal-card__name personal-card__name_verified']"
 
 #Покупка пакета именное дерево
 packet_tree_xpath = "//div[@data-id='450']/div[3]/div/a"
 main_balance_xpath = "//span[@class='personal-card__table-value-text']"
+package_header_xpath = "//div[@class='package__item-header']"
 pay_account_xpath = "//label[@for='pay-w-acc']"
 main_account_xpath = "//span[@class='paying__control-label-text']"
 total_price_xpath = "//span[@id='total_price']"
@@ -37,7 +38,6 @@ progress_start = "//button[@id='progressStart']"
 you_select_shares = "Вы собираетесь приобрести следующее количество акций: "
 checkbox_icon_xpath = "//span[@class='swc-elements_checkbox-icon']"
 button_buy_xpath = "//button[@id='buy-btn']"
-verif_data_xpath = "//h3[@class='personal-card__name personal-card__name_verified']"
 sign_xpath = "//button[@name='sign']"
 requirement_xpath = "//canvas[@id='swc-canvas']"
 section_my_certificates = "Мои сертификаты"
@@ -114,16 +114,29 @@ popup_accept_impexepay_xpath = "//div[@id='impex-tutor']/div/div/div[3]/label"
 impexepay_success_xpath = "//button[@id='impex-tutor-success']"
 
 #Пополнение через web-swift
-ps_web_swift_xpath = "//div[@data-code='web-swift']"
+ps_web_swift_xpath = "//div[@data-payid='4']"
+#"//div[@data-code='web-swift']"
 #<2500
 popup_web_swift_small_xpath = "//div[@id='modalSwiftStep1']/div/div/div/div[2]"
 #>=2500
-popup_web_swift_large_xpath = "//div[@id='swift-alert']/div/div/div[1]"
-popup_accept_swift_large_xpath = "//div[@id='swift-alert']/div/div/div[3]/label"
-swift_large_success_xpath = "//button[@id='swift-success']"
 transition_to_payment_swift_xpath = "//h4[@id='currency-choice']"
 download_from_verification_swift_xpath = "//a[@id='fill-from-vd']"
 accept_swift_xpath = "//form[@id='form-main']/div/div[4]/div[2]/label"
 submit_swift_xpath = "//button[@type='submit']"
 wait_checkout_swift_page = "//span[@class='label label-danger']"
-swift_page = "https://cab-test7.skyway.capital/swift/"
+
+#Пополнение через Мегаполис
+ps_megapolis_xpath = "//div[@data-payid='44']"
+choose_the_curr_for_payment = "//div[@id='content']/div[3]/div[2]/h4"
+
+#Пополнение через tt_swift
+tt_swift_xpath = "//div[@id='payment-tt']"
+choose_val_ru = "//div[@data-val='2']"
+
+#Всплывающее окно свифт
+popup_swift_alert_xpath = "//div[@id='swift-alert']/div/div/div[1]"
+popup_accept_swift_alert_xpath = "//div[@id='swift-alert']/div/div/div[3]/label"
+swift_alert_success_xpath = "//button[@id='swift-success']"
+
+
+all_ps = "//div[@class='paying__panel-item pay-system checkout-button']"
