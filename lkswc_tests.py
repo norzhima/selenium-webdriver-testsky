@@ -68,7 +68,6 @@ class LkswcTest(unittest.TestCase):
         self.button_checkout_tree = self.expect_visibility(lkswc_config.checkout_tree_xpath)
         self.go_to_element(lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
         self.button_checkout_tree.click()
-        self.button_checkout_tree.click()
         self.expect_visibility(lkswc_config.progress_start).click()
         self.expect_visibility("//span[contains(text(), lkswc_config.you_select_shares)]")
         self.get_url_pay_check = self.driver.current_url
