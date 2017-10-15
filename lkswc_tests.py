@@ -65,7 +65,10 @@ class LkswcTest(unittest.TestCase):
         self.sum_packet = 5000
         self.assertEqual(self.total_price_int, self.sum_packet)
         self.input_one.send_keys(self.sum_packet)
-        self.expect_visibility(lkswc_config.checkout_tree_xpath).click()
+        self.button_checkout_tree = self.expect_visibility(lkswc_config.checkout_tree_xpath)
+        self.go_to_element(lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
+        self.button_checkout_tree.click()
+        self.button_checkout_tree.click()
         self.expect_visibility(lkswc_config.progress_start).click()
         self.expect_visibility("//span[contains(text(), lkswc_config.you_select_shares)]")
         self.get_url_pay_check = self.driver.current_url
@@ -240,7 +243,6 @@ class LkswcTest(unittest.TestCase):
         self.go_to_element(lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
         self.accept_swift.click()
         self.expect_visibility(lkswc_config.submit_swift_xpath).click()
-        time.sleep(10)
         self.expect_visibility(lkswc_config.wait_checkout_swift_page)
         self.get_url_swift = self.driver.current_url
         self.assertEqual(lkswc_config.main_url + "/swift/", self.get_url_swift)
