@@ -21,6 +21,7 @@ class LkswcTest(unittest.TestCase):
             self.driver = webdriver.Chrome(chrome_options=self.options)
         else:
             self.driver = webdriver.Firefox()
+            self.driver.maximize_window()
         self.driver.get(lkswc_config.main_url)
         self.assertEqual("SkyWay", self.driver.title)
         self.language_search = self.expect_visibility(lkswc_config.language_search_xpath)
@@ -227,6 +228,7 @@ class LkswcTest(unittest.TestCase):
         self.assertTrue(self.driver.page_source.__contains__(" Счет действителен в течении 7 дней."))
         self.expect_visibility(lkswc_config.popup_accept_swift_alert_xpath).click()
         self.expect_visibility(lkswc_config.swift_alert_success_xpath).click()
+
     def payment_swift(self, select_currency="no", val=lkswc_config.choose_val_ru):
         self.expect_visibility(lkswc_config.choose_the_curr_for_payment)
         self.go_to_element(lkswc_config.choose_the_curr_for_payment)
@@ -238,14 +240,13 @@ class LkswcTest(unittest.TestCase):
         self.go_to_element(lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
         self.accept_swift.click()
         self.expect_visibility(lkswc_config.submit_swift_xpath).click()
+        time.sleep(10)
         self.expect_visibility(lkswc_config.wait_checkout_swift_page)
         self.get_url_swift = self.driver.current_url
         self.assertEqual(lkswc_config.main_url + "/swift/", self.get_url_swift)
 
-
-
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)
 
 
 
