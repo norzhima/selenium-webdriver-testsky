@@ -28,11 +28,12 @@ class LkswcTest(unittest.TestCase):
         if self.language_search.text == "EN":
             self.language_search.click()
             self.switching_to_ru = self.expect_visibility(lkswc_config.switching_to_ru_xpath).click()
-        self.expect_visibility(lkswc_config.enter_the_systeme)
+        #self.expect_visibility(lkswc_config.enter_the_systeme)
+        self.expect_visibility("//h3[contains(text(), lkswc_config.enter_the_systeme)]")
         '''включить после того, как вернут дебаг-панель на тест7
         try:
             #self.expect_visibility(lkswc_config.debug_toolbar_xpath)
-            WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.ID, lkswc_config.debug_toolbar_xpath)))
+            WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.ID, lkswc_config.debug_toolbar_id)))
             self.expect_visibility(lkswc_config.debug_minimize_xpath).click()
             #WebDriverWait(self.driver, lkswc_config.delay).until(EC.visibility_of_element_located((By.XPATH, lkswc_config.debug_minimize_xpath)))
             #self.debug_minimize = self.driver.find_element_by_xpath(lkswc_config.debug_minimize_xpath)
@@ -41,10 +42,12 @@ class LkswcTest(unittest.TestCase):
             pass'''
 
     def tearDown(self):
+        #Временное ограничение во времени
+        #time.sleep(60)
         self.driver.quit()
 
     def test_check_packet_tree(self):
-        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.autorization(lkswc_private_data.login_1, lkswc_private_data.password_1, lkswc_private_data.username_1)
         self.packet_tree = self.expect_visibility(lkswc_config.packet_tree_xpath)
         self.expect_visibility(lkswc_config.main_balance_xpath)
         self.main_balance_before = self.driver.find_elements_by_xpath(lkswc_config.main_balance_xpath)
@@ -56,6 +59,8 @@ class LkswcTest(unittest.TestCase):
         self.pay_account = self.expect_visibility(lkswc_config.pay_account_xpath)
         self.get_url_450 = self.driver.current_url
         self.assertEqual(lkswc_config.main_url + "/investment/programs?packet=450", self.get_url_450)
+        self.expect_visibility(lkswc_config.total_price_xpath)
+        time.sleep(2)
         self.go_to_element(lkswc_config.total_price_xpath)
         self.pay_account.click()
         self.expect_visibility(lkswc_config.main_account_xpath)
@@ -65,14 +70,12 @@ class LkswcTest(unittest.TestCase):
         self.sum_packet = 5000
         self.assertEqual(self.total_price_int, self.sum_packet)
         self.input_one.send_keys(self.sum_packet)
-        self.button_checkout_tree = self.expect_visibility(lkswc_config.checkout_tree_xpath)
-        self.go_to_element(lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
-        self.button_checkout_tree.click()
-        self.expect_visibility(lkswc_config.progress_start).click()
+        self.expect_visibility(lkswc_config.checkout_tree_xpath).click()
+        self.expect_visibility(lkswc_config.progress_start_xpath).click()
         self.expect_visibility("//span[contains(text(), lkswc_config.you_select_shares)]")
         self.get_url_pay_check = self.driver.current_url
         self.assertEqual(lkswc_config.main_url+"/investment/pay-check", self.get_url_pay_check)
-        self.go_to_element(lkswc_config.username_verif_data_xpath)
+        self.go_to_element(lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
         self.expect_visibility(lkswc_config.checkbox_icon_xpath).click()
         self.expect_visibility(lkswc_config.button_buy_xpath).click()
         try:
@@ -94,16 +97,16 @@ class LkswcTest(unittest.TestCase):
         self.assertEqual(self.main_balance_before_replace_int-self.sum_packet, self.main_balance_after_replace_int)
         return True
 
-
     #Здесь в дальнейшем планируется получать список активных платежных систем и на основе этих данных проводить тесты ПС
 
     def test_cashin_pm(self):
-        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.autorization(lkswc_private_data.login_2, lkswc_private_data.password_2, lkswc_private_data.username_2)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_perfect_money_xpath)
         self.expect_visibility(lkswc_config.wait_checkout_pm).click()
         self.get_url_perfect_money = self.driver.current_url
         self.assertIn(lkswc_config.site_perfect_money, self.get_url_perfect_money)
-
+    '''
+    на бою выключена ПС
     def test_cashin_mera(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_mera_xpath)
@@ -112,89 +115,99 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lkswc_config.wait_checkout_mera)
         self.get_url_mera = self.driver.current_url
         self.assertIn(lkswc_config.site_mera, self.get_url_mera)
+    '''
 
     def test_cashin_exmo(self):
-        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.autorization(lkswc_private_data.login_4, lkswc_private_data.password_4, lkswc_private_data.username_4)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_exmo_xpath)
         self.expect_visibility(lkswc_config.wait_checkout_advcash)
         self.get_url_exmo = self.driver.current_url
         self.assertEqual(lkswc_config.site_advcash, self.get_url_exmo)
 
     def test_cashin_ecoin(self):
-        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.autorization(lkswc_private_data.login_3, lkswc_private_data.password_3, lkswc_private_data.username_3)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_ecoin_xpath)
         self.expect_visibility(lkswc_config.wait_checkout_advcash)
         self.get_url_ecoin = self.driver.current_url
         self.assertEqual(lkswc_config.site_advcash, self.get_url_ecoin)
 
     def test_cashin_impex_mastercard(self):
-        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.autorization(lkswc_private_data.login_2, lkswc_private_data.password_2, lkswc_private_data.username_2)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_mc_impex_xpath)
         self.checkout_impex_trading(lkswc_config.instruction_mc_impex_xpath, lkswc_config.popup_accept_mc_impex_xpath, lkswc_config.mc_impex_success_xpath)
 
     def test_cashin_fasapay(self):
-        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.autorization(lkswc_private_data.login_1, lkswc_private_data.password_1, lkswc_private_data.username_1)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_fasapay_xpath)
         self.expect_visibility(lkswc_config.wait_checkout_fasapay)
         self.get_url_fasa_pay = self.driver.current_url
         self.assertIn(lkswc_config.site_fasapay, self.get_url_fasa_pay)
 
+    '''
+    Выключено на бою
     def test_cashin_impex_impaya_world(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_impaya_world_xpath)
         self.checkout_impex_trading(lkswc_config.instruction_impaya_world_xpath, lkswc_config.popup_accept_impaya_world_xpath, lkswc_config.impaya_world_success_xpath)
+    '''
 
     def test_cashin_impex_visa(self):
-        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.autorization(lkswc_private_data.login_4, lkswc_private_data.password_4, lkswc_private_data.username_4)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_impexvisa_xpath)
         self.checkout_impex_trading(lkswc_config.instruction_impexvisa_xpath, lkswc_config.popup_accept_impexvisa_xpath, lkswc_config.impexvisa_success_xpath)
 
     def test_cashin_impex_orange(self):
-        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.autorization(lkswc_private_data.login_3, lkswc_private_data.password_3, lkswc_private_data.username_3)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_impexorange_xpath)
         self.checkout_impex_trading(lkswc_config.instruction_impexorange_xpath, lkswc_config.popup_accept_impexorange_xpath, lkswc_config.impexorange_success_xpath)
 
+    '''
     def test_cashin_impex_epay(self):
+    на бою выключены ПС
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_impexepay_xpath, element=lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
         self.checkout_impex_trading(lkswc_config.instruction_impexepay_xpath, lkswc_config.popup_accept_impexepay_xpath, lkswc_config.impexepay_success_xpath)
-
     def test_cashin_web_swift_small(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.ps_web_swift_xpath, element=lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
         self.expect_visibility(lkswc_config.popup_web_swift_small_xpath)
         self.assertTrue(self.driver.page_source.__contains__("Банковский перевод"))
         self.assertTrue(self.driver.page_source.__contains__("www.advcash.com"))
-
     def test_cashin_web_swift_large(self):
         self.autorization(lkswc_private_data.login, lkswc_private_data.password)
         self.deposit_account(lkswc_config.sum_cashin_large, lkswc_config.ps_web_swift_xpath, element=lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
         self.popup_swift_alert()
         self.payment_swift()
+    '''
 
     def test_cashin_megapolis(self):
-        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.autorization(lkswc_private_data.login_1, lkswc_private_data.password_1, lkswc_private_data.username_1)
         self.deposit_account(lkswc_config.sum_cashin_large, lkswc_config.ps_megapolis_xpath, element=lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
         self.popup_swift_alert()
         self.payment_swift()
 
     def test_cashin_tt_swift(self):
-        self.autorization(lkswc_private_data.login, lkswc_private_data.password)
+        self.autorization(lkswc_private_data.login_3, lkswc_private_data.password_3, lkswc_private_data.username_3)
         self.deposit_account(lkswc_config.sum_cashin_large, lkswc_config.tt_swift_xpath, element=lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
         self.payment_swift(select_currency="yes")
+
+    def test_cashin_bitcoin(self):
+        self.autorization(lkswc_private_data.login_2, lkswc_private_data.password_2, lkswc_private_data.username_2)
+        self.deposit_account(lkswc_config.sum_cashin_small, lkswc_config.bitcoin_xpath, element=lkswc_config.footer_xpath, elem_position=lkswc_config.elem_position_bottom)
+        self.expect_visibility(lkswc_config.popup_bitcoin)
 
     def expect_visibility(self, path):
         WebDriverWait(self.driver, lkswc_config.delay).until(
             EC.visibility_of_element_located((By.XPATH, path)))
         return self.driver.find_element_by_xpath(path)
 
-    def autorization(self, login, passw):
+    def autorization(self, login, passw, uname):
         self.expect_visibility(lkswc_config.login_field_xpath).send_keys(login)
         self.expect_visibility(lkswc_config.passw_field_xpath).send_keys(passw)
         self.expect_visibility(lkswc_config.login_button_xpath).click()
-        self.expect_visibility(lkswc_config.username_verif_data_xpath)
+        self.expect_visibility("//h2[contains(text(), lkswc_private_data.username)]")
         self.assertEqual("SkyWay Capital", self.driver.title)
-        self.assertTrue(self.driver.page_source.__contains__(lkswc_private_data.username))
+        self.assertTrue(self.driver.page_source.__contains__(uname))
 
     def deposit_account(self, sum_cashin, ps_xpath, element=lkswc_config.deposit_button_xpath, elem_position=lkswc_config.elem_position_top):
         self.expect_visibility(lkswc_config.banking_xpath).click()
@@ -209,7 +222,7 @@ class LkswcTest(unittest.TestCase):
         self.ps.click()
 
     def go_to_element(self, element, elem_position=lkswc_config.elem_position_top):
-        self.expect_visibility(element)
+        #self.expect_visibility(element)
         self.go_element = self.expect_visibility(element)
         if elem_position == lkswc_config.elem_position_top:
             self.driver.execute_script("arguments[0].scrollIntoView(true)", self.go_element)
@@ -247,7 +260,7 @@ class LkswcTest(unittest.TestCase):
         self.assertEqual(lkswc_config.main_url + "/swift/", self.get_url_swift)
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    unittest.main()
 
 
 
