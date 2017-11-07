@@ -258,6 +258,11 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lkswc_config.wait_checkout_swift_page)
         self.get_url_swift = self.driver.current_url
         self.assertEqual(lkswc_config.main_url + "/swift/", self.get_url_swift)
+        print("hello")
+
+
+
+
 
 if __name__ == "__main__":
     unittest.main()
