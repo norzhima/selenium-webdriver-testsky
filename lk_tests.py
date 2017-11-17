@@ -176,6 +176,21 @@ class LkswcTest(unittest.TestCase):
         self.packet_installment_payment(lk_conf.month_pay_instalment_xpath)
         self.packet_sign_a_claim(lk_conf.price_instalment_500_all)
 
+    def test_auth_login(self):
+        self.check_login("", "", lk_conf.enter_password, enter_email='yes',)
+        self.check_login(lk_priv_data.login_auth, "", lk_conf.enter_password)
+        self.check_login(lk_priv_data.login_auth, "nnn", lk_conf.username_or_password_incorrect)
+        self.check_login("nnn", "nnn", lk_conf.email_valid)
+
+
+
+    def check_login(self, check_login, check_passw, answer, enter_email='no'):
+        self.login(check_login, check_passw)
+        if enter_email == 'yes':
+            self.expect_visibility(lk_conf.enter_email_address)
+        self.expect_visibility(answer)
+        self.assertEqual(lk_conf.auth, self.driver.current_url)
+        self.login_clear()
 
     def expect_visibility(self, path):
         #print(path)
@@ -192,12 +207,19 @@ class LkswcTest(unittest.TestCase):
 
     def autorization(self):
         self.user = lk_priv_data.get_user()
-        self.expect_visibility(lk_conf.login_field_xpath).send_keys(self.user['login'])
-        self.expect_visibility(lk_conf.passw_field_xpath).send_keys(self.user['password'])
-        self.expect_visibility(lk_conf.login_button_xpath).click()
+        self.login(self.user['login'], self.user['password'])
         self.expect_visibility("//h3[contains(text(), '%s')]" % self.user['full_name'])
         self.assertEqual(lk_conf.full_company_name, self.driver.title)
         self.assertTrue(self.driver.page_source.__contains__(self.user['full_name']))
+
+    def login(self, lig_in, passw):
+        self.expect_visibility(lk_conf.login_field_xpath).send_keys(lig_in)
+        self.expect_visibility(lk_conf.passw_field_xpath).send_keys(passw)
+        self.expect_visibility(lk_conf.login_button_xpath).click()
+
+    def login_clear(self):
+        self.expect_visibility(lk_conf.login_field_xpath).clear()
+        self.expect_visibility(lk_conf.passw_field_xpath).clear()
 
     def deposit_account(self, sum_cashin=lk_conf.sum_cashin_small):
         self.expect_visibility(lk_conf.banking_xpath).click()

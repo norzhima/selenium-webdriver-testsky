@@ -15,6 +15,7 @@ list_username = [
                  ['lukoyanov13@mail.ru', 'aa1bb2cc', 'Виктор Лукоянов']
                  ]
 '''
+login_auth = "n.chagdurova@skyway.capital"
 
 list_ver_user = [
     {'login': 'sanyabc@mail.ru', 'password': 'aa1bb2cc', 'full_name': 'Александр Хухрянский'},

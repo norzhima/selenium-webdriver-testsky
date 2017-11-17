@@ -138,6 +138,12 @@ passw_field_xpath = "//input[@name='LoginForm[password]']"
 login_button_xpath = "//input[@id='buttonLoginSubmit']"
 username_verif_data_xpath = "//h3[@class='personal-card__name personal-card__name_verified']"
 username_non_verified_xpath = "//h3[@class='personal-card__name personal-card__name_nonVerified']"
+#проверка авторизации
+auth = lk_priv_data.main_url + "/auth/login"
+enter_email_address = "//span[contains(text(), 'Нужно ввести email')]"#"Нужно ввести email"
+enter_password = "//span[contains(text(), 'Нужно ввести пароль')]"#"Нужно ввести пароль"
+username_or_password_incorrect = "//span[contains(text(), 'Неверное имя пользователя или пароль. ')]"#"Неверное имя пользователя или пароль. "
+email_valid = "//span[contains(text(), 'Значение «Email» не является правильным email адресом.')]"#"Значение «Email» не является правильным email адресом."
 
 #Переход к пополнению
 banking_xpath = "//span[contains(text(), 'Банкинг')]"
