@@ -1,6 +1,7 @@
 import lk_priv_data
+import random
 
-delay = 15
+delay = 20
 default_browser = 'Chrome'
 
 short_company_name = "SkyWay"
@@ -63,7 +64,7 @@ impexorange_success_xpath = "//button[@id='impex-tutor-success']"
 
 #Пополнение через impex_visa
 ps_impexvisa_xpath = "//div[@data-code='impexvisa']"
-instruction_impexvisa_xpath = "//div[@id='impexvisa-alert']/div/div/div[2]/div"
+instruction_impexvisa_xpath = "//div[@id='impexvisa-alert']//div[contains(text(), 'Инструкция по оплате')]"#"//div[@id='impexvisa-alert']/div/div/div[2]/div"
 popup_accept_impexvisa_xpath = "//div[@id='impexvisa-alert']/div/div/div[3]/label"
 impexvisa_success_xpath = "//button[@id='impexvisa-success']"
 
@@ -106,7 +107,10 @@ url_swift_invoices =  lk_priv_data.main_url + "/swift/"
 
 #Пополнение через tt_swift
 tt_swift_xpath = "//div[@id='payment-tt']"
-choose_val_ru = "//div[@data-val='2']"
+choose_val_gbp_xpath = "//div[@data-val='1']"
+choose_val_ru_xpath = "//div[@data-val='2']"
+choose_val_eur_xpath = "//div[@data-val='4']"
+
 header_page = "//h3[contains(text(), 'Пополнить счет')]"
 
 #Пополнение через webmoney
@@ -132,12 +136,58 @@ count_shares_instalment_500_xpath = "//strong[contains(text(), '575 000')]"
 count_month = 9
 price_instalment_500_all = 5000
 
+#Регистрация
+sign_up_xpath = "//a[contains(text(), 'Зарегистрироваться')]"
+simple_reg_email = 'simple_reg'
+domain_name = "@mail.ru"
+field_email_xpath = "//input[@name='email']"
+for_phisical_xpath = "//label[@for='register-physical']"
+button_sign_up_xpath = "//input[@value='Зарегистрироваться']"
+partner_sky_xpath = "//input[@value='SkyWay Capital']"
+field_phone_xpath = "//input[@id='signupform-phone']"
+phone_code = 7
+region_code = 977
+field_regname_xpath = "//input[@name='SignupForm[firstname]']"
+regname = "name"
+field_reglastname_xpath = "//input[@name='SignupForm[lastname]']"
+reglastname = "lastname"
+field_reg_password = "//input[@name='SignupForm[password]']"
+field_reg_confirmpassword = "//input[@name='SignupForm[confirmpassword]']"
+button_reg_signup_xpath = "//input[@value='Зарегистрироваться']"
+auth_link_xpath = "//a[contains(text(), 'Авторизоваться')]"
+confirm_email_xpath = "//h3[contains(text(), 'Подтвердите свой email')]"
+
+login_for_gmail_xpath = "//input[@id='identifierId']"
+#confirm_login_xpath = "//div[@id='identifierNext')]"
+confirm_auth_button_xpath = "//span[contains(text(), 'Далее')]"
+password_for_gmail_xpath = "//input[@name='password']"
+#check_new_email_xpath = "//b[contains(text(), 'Верификация email на SkyWay Capital')]"
+check_new_email_xpath = "//tr[@class='zA zE']"
+link_reg = lk_priv_data.main_url + '/auth/verify-register?code='
+reg_link_xpath = "//a[contains(@href, '%s')]" % link_reg
+registration_completed_xpath = "//a[contains(text(), 'Регистрация завершена')]"
+
+choose_country_modal_xpath = "//select[@id='choose-citizenship-country']"
+    #"//body[@class='cabinet model-open']//div[@id='choose-citizenship-country-modal']//div[@class='swc-modal-content']"
+#                             "//DIV[@id='choose-citizenship-country-modal']//DIV[@class='swc-modal-body']"
+header_model_citizenshin_xpath = "//div[contains(text(), 'Выберите страну и укажите город')]"
+field_citizenship_country_xpath = "//DIV[@id='choose-citizenship-country-modal']//SELECT[@id='choose-citizenship-country']"#"//div[@id='cc_fg']/div"#"//select[@id='choose-citizenship-country']"
+ru_citizenship_country_xpath = "//select[@id='choose-citizenship-country']/option[contains(text(), 'Россия')]"
+field_country_xpath = "//select[@id='choose-country']"#"//select[@id='choose-country']/.."
+ru_country_xpath = "//select[@id='choose-country']/option[contains(text(), 'Россия')]"
+field_city_xpath = "//input[@id='choose-city']"
+reg_city = "Moscow"
+button_save_xpath = "//button[@id='save-citizenship']"
+
+
 #Авторизация в ЛК
 login_field_xpath = "//input[@name='LoginForm[email]']"
 passw_field_xpath = "//input[@name='LoginForm[password]']"
 login_button_xpath = "//input[@id='buttonLoginSubmit']"
-username_verif_data_xpath = "//h3[@class='personal-card__name personal-card__name_verified']"
-username_non_verified_xpath = "//h3[@class='personal-card__name personal-card__name_nonVerified']"
+username_verif_data_xpath = "//h3[contains(text(), 'Филипп Данкерт')]"
+
+username_verif_data_xpath = "//h3[@class='personal-card__name js-tooltipster personal-card__name_verified tooltipstered']"
+username_non_verified_xpath = "//h3[@class='personal-card__name js-tooltipster personal-card__name_nonVerified tooltipstered']"
 #проверка авторизации
 auth = lk_priv_data.main_url + "/auth/login"
 enter_email_address = "//span[contains(text(), 'Нужно ввести email')]"#"Нужно ввести email"
@@ -193,7 +243,7 @@ impex_modal_subtitle = "Инструкция по оплате"
 impex_modal_body_text = " Счет действителен в течении 7 дней."
 
 #Переход к элементу
-footer_xpath = "//div[@id='footer']"
+footer_xpath = "//div[@id='footer']//div[@class='footer__top']"
 select_payment_system = "//div[. = 'Выберите платежную систему']"
 elem_position_top = "top"
 elem_position_bottom = "bottom"

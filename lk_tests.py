@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 import unittest
 from selenium import webdriver
-import time
+from time import sleep
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException as TE
 import lk_conf
 import lk_priv_data
+import random
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from datetime import datetime, date, time
+import datetime
+import inspect
+
 
 class LkswcTest(unittest.TestCase):
     def setUp(self):
@@ -43,7 +48,7 @@ class LkswcTest(unittest.TestCase):
                             elem_position=lk_conf.elem_position_bottom) == True:
             self.expect_visibility(lk_conf.wait_checkout_cryptonator)
             self.assertIn(lk_conf.site_cryptonator, self.driver.current_url)
-    '''
+    #'''
     def test_cashin_ecoin(self):
         self.autorization()
         self.deposit_account()
@@ -64,7 +69,7 @@ class LkswcTest(unittest.TestCase):
         if self.check_of_ps(lk_conf.ps_fasapay_xpath, lk_conf.name_fasa) == True:
             self.expect_visibility(lk_conf.wait_checkout_fasapay)
             self.assertIn(lk_conf.site_fasapay, self.driver.current_url)
-    '''
+    #'''
     def test_cashin_impex_epay(self):
         self.autorization()
         self.deposit_account()
@@ -131,7 +136,7 @@ class LkswcTest(unittest.TestCase):
         if self.check_of_ps(lk_conf.ps_perfect_money_xpath, lk_conf.name_pm) == True:
             self.expect_visibility(lk_conf.wait_checkout_pm).click()
             self.assertIn(lk_conf.site_perfect_money, self.driver.current_url)
-    '''
+    #'''
     def test_cashin_swift_large(self):
         self.autorization()
         self.deposit_account(lk_conf.sum_cashin_large)
@@ -176,24 +181,73 @@ class LkswcTest(unittest.TestCase):
         self.packet_installment_payment(lk_conf.month_pay_instalment_xpath)
         self.packet_sign_a_claim(lk_conf.price_instalment_500_all)
 
+    #'''
     def test_auth_login(self):
         self.check_login("", "", lk_conf.enter_password, enter_email='yes',)
         self.check_login(lk_priv_data.login_auth, "", lk_conf.enter_password)
         self.check_login(lk_priv_data.login_auth, "nnn", lk_conf.username_or_password_incorrect)
         self.check_login("nnn", "nnn", lk_conf.email_valid)
+    #'''
 
+    def test_reg(self):
+        self.registration()
 
+    def test_registration(self):
+        self.registration()
+        self.checkout_gmail()
+        #self.choose_cityzenship_modal()
 
-    def check_login(self, check_login, check_passw, answer, enter_email='no'):
-        self.login(check_login, check_passw)
-        if enter_email == 'yes':
-            self.expect_visibility(lk_conf.enter_email_address)
-        self.expect_visibility(answer)
-        self.assertEqual(lk_conf.auth, self.driver.current_url)
-        self.login_clear()
+    def funcname(self):
+        return inspect.stack()[1][3]
+
+    def save_src_png(self, name_def):
+        self.now = datetime.datetime.now()
+        self.scr = str(self.now.year) + '_' + str(self.now.month) + '_' + str(self.now.day) + '_' + str(self.now.hour) + str(self.now.minute) + '_' + name_def + '.png'
+        self.driver.save_screenshot(self.scr)
+
+    def registration(self):
+        self.expect_visibility(lk_conf.sign_up_xpath).click()
+        self.email = self.get_email(lk_conf.simple_reg_email)
+        self.expect_visibility(lk_conf.field_email_xpath).send_keys(self.email)
+        self.expect_visibility(lk_conf.for_phisical_xpath).click()
+        self.expect_visibility(lk_conf.button_sign_up_xpath).click()
+        self.expect_visibility(lk_conf.partner_sky_xpath)
+        self.expect_visibility(lk_conf.field_phone_xpath).send_keys(self.get_phone())
+        self.expect_visibility(lk_conf.field_regname_xpath).send_keys(lk_conf.regname + '_' + self.email)
+        self.expect_visibility(lk_conf.field_reglastname_xpath).send_keys(lk_conf.reglastname + '_' + self.email)
+        self.expect_visibility(lk_conf.field_reg_password).send_keys(lk_priv_data.reg_password)
+        self.expect_visibility(lk_conf.field_reg_confirmpassword).send_keys(lk_priv_data.reg_password)
+        self.go_to_element(lk_conf.auth_link_xpath, elem_position=lk_conf.elem_position_bottom)
+        self.expect_visibility(lk_conf.button_reg_signup_xpath).click()
+        self.expect_visibility(lk_conf.confirm_email_xpath)
+        sleep(10)
+        return self.email
+
+    def checkout_gmail(self):
+        self.driver.get(lk_priv_data.mail_url)
+        self.expect_visibility(lk_conf.login_for_gmail_xpath).send_keys(lk_priv_data.login_for_gmail)
+        self.expect_visibility(lk_conf.confirm_auth_button_xpath).click()
+        self.expect_visibility(lk_conf.password_for_gmail_xpath).send_keys(lk_priv_data.password_for_gmail)
+        self.expect_visibility(lk_conf.confirm_auth_button_xpath).click()
+        self.expect_visibility(lk_conf.check_new_email_xpath).click()
+        self.expect_visibility(lk_conf.reg_link_xpath).click()
+        sleep(5)
+
+    def choose_cityzenship_modal(self):
+        self.expect_visibility(lk_conf.header_model_citizenshin_xpath)
+        self.save_src_png(self.funcname())
+        self.fieldcitizenship = self.expect_visibility(lk_conf.field_citizenship_country_xpath)
+        self.fieldcitizenship.click()
+        self.expect_visibility(lk_conf.ru_citizenship_country_xpath).click()
+        self.expect_visibility(lk_conf.field_country_xpath).click()
+        self.expect_visibility(lk_conf.ru_country_xpath).click()
+        self.expect_visibility(lk_conf.field_city_xpath).send_keys(lk_conf.reg_city)
+        self.expect_visibility(lk_conf.button_save_xpath).click()
+        self.full_regname = lk_conf.regname + self.email + ' ' + lk_conf.reglastname + self.email
+        self.expect_visibility("//h3[contains(text(), '%s')]" % self.full_regname)
 
     def expect_visibility(self, path):
-        #print(path)
+        print(path)
         WebDriverWait(self.driver, lk_conf.delay).until(
             EC.visibility_of_element_located((By.XPATH, path)))
         return self.driver.find_element_by_xpath(path)
@@ -205,13 +259,6 @@ class LkswcTest(unittest.TestCase):
         else:
             self.driver.execute_script("arguments[0].scrollIntoView(false)", self.go_element)
 
-    def autorization(self):
-        self.user = lk_priv_data.get_user()
-        self.login(self.user['login'], self.user['password'])
-        self.expect_visibility("//h3[contains(text(), '%s')]" % self.user['full_name'])
-        self.assertEqual(lk_conf.full_company_name, self.driver.title)
-        self.assertTrue(self.driver.page_source.__contains__(self.user['full_name']))
-
     def login(self, lig_in, passw):
         self.expect_visibility(lk_conf.login_field_xpath).send_keys(lig_in)
         self.expect_visibility(lk_conf.passw_field_xpath).send_keys(passw)
@@ -221,9 +268,25 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lk_conf.login_field_xpath).clear()
         self.expect_visibility(lk_conf.passw_field_xpath).clear()
 
+    def check_login(self, check_login, check_passw, answer, enter_email='no'):
+        self.login(check_login, check_passw)
+        if enter_email == 'yes':
+            self.expect_visibility(lk_conf.enter_email_address)
+        self.expect_visibility(answer)
+        self.assertEqual(lk_conf.auth, self.driver.current_url)
+        self.login_clear()
+
+    def autorization(self):
+        self.user = lk_priv_data.get_user()
+        self.login(self.user['login'], self.user['password'])
+        self.expect_visibility("//h3[contains(text(), '%s')]" % self.user['full_name'])
+        self.assertEqual(lk_conf.full_company_name, self.driver.title)
+        self.assertTrue(self.driver.page_source.__contains__(self.user['full_name']))
+
     def deposit_account(self, sum_cashin=lk_conf.sum_cashin_small):
         self.expect_visibility(lk_conf.banking_xpath).click()
         self.expect_visibility(lk_conf.deposit_account_xpath).click()
+        self.expect_visibility(lk_conf.dep_acc_title_xpath)
         self.assertEqual(lk_conf.check_url_cashin, self.driver.current_url)
         self.go_to_element(lk_conf.dep_acc_title_xpath)
         self.expect_visibility(lk_conf.field_cashin_xpath).send_keys(sum_cashin)
@@ -245,7 +308,7 @@ class LkswcTest(unittest.TestCase):
         if data in self.list_ps:
             self.ps = self.expect_visibility(ps_xpath)
             self.go_to_element(element, elem_position)
-            # time.sleep(10)
+            #sleep(20)
             self.ps.click()
             return True
         else:
@@ -266,20 +329,17 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lk_conf.popup_accept_swift_alert_xpath).click()
         self.expect_visibility(lk_conf.swift_alert_success_xpath).click()
 
-    def payment_swift(self, select_currency="no", val=lk_conf.choose_val_ru):
+    def payment_swift(self, select_currency="no", val=lk_conf.choose_val_gbp_xpath):
         self.expect_visibility(lk_conf.choose_the_curr_for_payment)
-        #self.go_to_element(lk_conf.choose_the_curr_for_payment)
         if select_currency == "yes":
             self.val_tt = self.expect_visibility(val)
             self.go_to_element(lk_conf.header_page)
-            #time.sleep(5)
             self.val_tt.click()
         self.go_to_element(lk_conf.choose_the_curr_for_payment)
         self.expect_visibility(lk_conf.download_from_verification_swift_xpath).click()
         self.expect_visibility(lk_conf.accept_swift_xpath)
         self.accept_swift = self.driver.find_element_by_xpath(lk_conf.accept_swift_xpath)
         self.go_to_element(lk_conf.footer_xpath, elem_position=lk_conf.elem_position_bottom)
-        #time.sleep(10)
         self.accept_swift.click()
         self.expect_visibility(lk_conf.submit_swift_xpath).click()
         self.expect_visibility(lk_conf.wait_checkout_swift_page)
@@ -297,7 +357,7 @@ class LkswcTest(unittest.TestCase):
         self.pay_account = self.expect_visibility(lk_conf.pay_account_xpath)
         self.assertEqual(url_checkout, self.driver.current_url)
         self.expect_visibility(lk_conf.total_price_xpath)
-        time.sleep(2)
+        sleep(2)
         self.go_to_element(lk_conf.total_price_xpath)
         self.pay_account.click()
         self.expect_visibility(lk_conf.main_account_xpath)
@@ -319,7 +379,7 @@ class LkswcTest(unittest.TestCase):
         self.assertEqual(lk_conf.url_pay_instalment, self.driver.current_url)
         self.checkout_my_instalment = self.expect_visibility(lk_conf.href_my_installment_xpath)
         self.go_to_element(lk_conf.footer_xpath, elem_position=lk_conf.elem_position_bottom)
-        #time.sleep(10)
+        #sleep(10)
         self.checkout_my_instalment.click()
         self.expect_visibility(lk_conf.checkout_myinstalment_xpath)
         self.assertEqual(lk_conf.section_myinstalment, self.driver.current_url)
@@ -336,7 +396,7 @@ class LkswcTest(unittest.TestCase):
             self.expect_visibility(lk_conf.username_verif_data_xpath)
             self.expect_visibility(lk_conf.requirement_xpath)
             self.sign = self.expect_visibility(lk_conf.sign_xpath)
-            time.sleep(3)  # временное решение
+            sleep(3)  # временное решение
             self.go_to_element(lk_conf.footer_xpath, elem_position=lk_conf.elem_position_bottom)
             self.sign.click()
         except TE:
@@ -366,6 +426,14 @@ class LkswcTest(unittest.TestCase):
             #self.debug_minimize.click()
         except TE:
             pass
+
+    def get_email(self, beginning_email):
+        self.full_email_new = beginning_email + str(random.randint(1111, 9999)) + lk_conf.domain_name
+        return  self.full_email_new
+    def get_phone(self):
+        self.phone = str(lk_conf.phone_code) + str(lk_conf.region_code) + str(random.randint(1000000, 9999999))
+        return self.phone
+
 
     def packet_choose_old(self, packet_name, count_pack, url_checkout, price_packet, count_shares):
         self.packet = self.expect_visibility(packet_name)

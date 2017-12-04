@@ -1,4 +1,5 @@
 main_url = 'https://cab-test7.skyway.capital'
+#main_url = 'https://nnew.skyway.capital'
 '''
 list_username = [
                  ['nikimik741@gmail.com', 'aa1bb2cc', 'Анна Арапова'],
@@ -34,9 +35,14 @@ user_gen = get_rolled_user()
 def get_user():
     return next(user_gen)
 
-
+reg_password = 'aa1bb2cc'
+mail_url = 'https://mail.google.com/mail/u/1/#inbox'
+login_for_gmail = "skywaytest2@gmail.com"
+password_for_gmail = "testuser2"
 
 all_user_id = [207302, 91, 163672, 258454, 258414, 111757, 208320, 243133, 258027, 220610, 257498, 256034, 242815, 257553, 157325, 257394, 257323]
+
+
 
 
 
