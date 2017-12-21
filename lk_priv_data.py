@@ -40,7 +40,13 @@ mail_url = 'https://mail.google.com/mail/u/1/#inbox'
 login_for_gmail = "skywaytest2@gmail.com"
 password_for_gmail = "testuser2"
 
+#list_for_bd
 all_user_id = [207302, 91, 163672, 258454, 258414, 111757, 208320, 243133, 258027, 220610, 257498, 256034, 242815, 257553, 157325, 257394, 257323]
+
+#Верификация
+login_for_verif = "chagdurova1992@mail.ru"
+passw_for_verif = "aa1bb2cc"
+full_name_for_verif = "Norzhima Chagdurova"
 
 
 
