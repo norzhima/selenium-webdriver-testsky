@@ -48,6 +48,10 @@ login_for_verif = "chagdurova1992@mail.ru"
 passw_for_verif = "aa1bb2cc"
 full_name_for_verif = "Norzhima Chagdurova"
 
+login_for_test = "n.chagdurova@skyway.capital"
+passw_for_test = "Xfulehjdf!1"
+full_name_for_test = "Norzhima Чагдурова"
+
 
 
 

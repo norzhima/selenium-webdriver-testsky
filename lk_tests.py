@@ -40,100 +40,12 @@ class LkswcTest(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
-    def test_cashin_bitcoin(self):
+    def test_cashin_pm(self):
         self.autorization()
         self.deposit_account()
-        if self.check_of_ps(lk_conf.bitcoin_xpath, lk_conf.name_bitcoin) == True:
-            self.expect_visibility(lk_conf.popup_bitcoin)
-
-    def test_cashin_cryptonator(self):
-        self.autorization()
-        self.deposit_account()
-        if self.check_of_ps(lk_conf.cryptonator_xpath, lk_conf.name_cryptonator) == True:
-            self.expect_visibility(lk_conf.wait_checkout_cryptonator)
-            self.assertIn(lk_conf.site_cryptonator, self.driver.current_url)
-
-    @unittest.skip("ecoin работает также как и exmo")
-    def test_cashin_ecoin(self):
-        self.autorization()
-        self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_ecoin_xpath, lk_conf.name_ecoin) == True:
-            self.expect_visibility(lk_conf.wait_checkout_advcash)
-            self.assertEqual(lk_conf.site_advcash, self.driver.current_url)
-
-    def test_cashin_exmo(self):
-        self.autorization()
-        self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_exmo_xpath, lk_conf.name_exmo) == True:
-            self.expect_visibility(lk_conf.wait_checkout_advcash)
-            self.assertEqual(lk_conf.site_advcash, self.driver.current_url)
-
-    def test_cashin_fasapay(self):
-        self.autorization()
-        self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_fasapay_xpath, lk_conf.name_fasa) == True:
-            self.expect_visibility(lk_conf.wait_checkout_fasapay)
-            self.assertIn(lk_conf.site_fasapay, self.driver.current_url)
-
-    @unittest.skip("Платежная система epay выключена.")
-    def test_cashin_impex_epay(self):
-        self.autorization()
-        self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_impexepay_xpath, lk_conf.name_epay) == True:
-            self.checkout_impex_trading(lk_conf.instruction_impexepay_xpath,
-                                        lk_conf.popup_accept_impexepay_xpath,
-                                        lk_conf.impexepay_success_xpath)
-
-    @unittest.skip("Платежная система impaya_world выключена.")
-    def test_cashin_impex_impaya_world(self):
-        self.autorization()
-        self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_impaya_world_xpath, lk_conf.name_impaya) == True:
-            self.checkout_impex_trading(lk_conf.instruction_impaya_world_xpath, lk_conf.popup_accept_impaya_world_xpath,
-                                        lk_conf.impaya_world_success_xpath)
-
-    def test_cashin_impex_mastercard(self):
-        self.autorization()
-        self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_mc_impex_xpath, lk_conf.name_mc) == True:
-            self.checkout_impex_trading(lk_conf.instruction_mc_impex_xpath,
-                                        lk_conf.popup_accept_mc_impex_xpath, lk_conf.mc_impex_success_xpath)
-
-    def test_cashin_impex_orange(self):
-        self.autorization()
-        self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_impexorange_xpath, lk_conf.name_orange) == True:
-            self.checkout_impex_trading(lk_conf.instruction_impexorange_xpath,
-                                        lk_conf.popup_accept_impexorange_xpath, lk_conf.impexorange_success_xpath)
-
-    def test_cashin_impex_visa(self):
-        self.autorization()
-        self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_impexvisa_xpath, lk_conf.name_visa) == True:
-            self.checkout_impex_trading(lk_conf.instruction_impexvisa_xpath,
-                                        lk_conf.popup_accept_impexvisa_xpath, lk_conf.impexvisa_success_xpath)
-
-    def test_cashin_impex_payboutique(self):
-        self.autorization()
-        self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_impexpayboutique_xpath, lk_conf.name_payboutique) == True:
-            self.expect_visibility(lk_conf.wait_checkout_trading_impex)
-            self.assertEqual(lk_conf.site_trading_impex, self.driver.current_url)
-            # self.checkout_impex_trading(lk_conf.instruction_impexpayboutique_xpath,
-            #                             lk_conf.popup_accept_impexpayboutique_xpath, lk_conf.impexpayboutique_success_xpath)
-
-    def test_cashin_megapolis(self):
-        self.autorization()
-        self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_megapolis_xpath, lk_conf.name_megapolis) == True:
-            try:
-                self.expect_visibility(lk_conf.popup_megapolis)
-                self.expect_visibility(lk_conf.button_megapolis).click()
-                self.expect_visibility(lk_conf.enter_to_megapolis)
-                self.assertEqual(lk_conf.site_megapolis, self.driver.current_url)
-            except TE:
-                self.popup_swift_alert()
-                self.payment_swift()
+        if self.check_of_ps(lk_conf.ps_perfect_money_xpath, lk_conf.name_pm) == True:
+            self.expect_visibility(lk_conf.wait_checkout_pm).click()
+            self.assertIn(lk_conf.site_perfect_money, self.driver.current_url)
 
     def test_cashin_mera(self):
         self.autorization()
@@ -144,12 +56,93 @@ class LkswcTest(unittest.TestCase):
             self.expect_visibility(lk_conf.wait_checkout_mera)
             self.assertIn(lk_conf.site_mera, self.driver.current_url)
 
-    def test_cashin_pm(self):
+    def test_cashin_exmo(self):
         self.autorization()
         self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_perfect_money_xpath, lk_conf.name_pm) == True:
-            self.expect_visibility(lk_conf.wait_checkout_pm).click()
-            self.assertIn(lk_conf.site_perfect_money, self.driver.current_url)
+        if self.check_of_ps(lk_conf.ps_exmo_xpath, lk_conf.name_exmo) == True:
+            self.expect_visibility(lk_conf.wait_checkout_advcash)
+            self.assertEqual(lk_conf.site_advcash, self.driver.current_url)
+
+    @unittest.skip("ecoin работает также как и exmo")
+    def test_cashin_ecoin(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.ps_ecoin_xpath, lk_conf.name_ecoin) == True:
+            self.expect_visibility(lk_conf.wait_checkout_advcash)
+            self.assertEqual(lk_conf.site_advcash, self.driver.current_url)
+
+    def test_cashin_impex_mastercard(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.ps_mc_impex_xpath, lk_conf.name_mc) == True:
+            self.checkout_impex_trading(lk_conf.instruction_mc_impex_xpath,
+                                        lk_conf.popup_accept_mc_impex_xpath, lk_conf.mc_impex_success_xpath)
+
+    def test_cashin_fasapay(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.ps_fasapay_xpath, lk_conf.name_fasa) == True:
+            self.expect_visibility(lk_conf.wait_checkout_fasapay)
+            self.assertIn(lk_conf.site_fasapay, self.driver.current_url)
+
+    @unittest.skip("Платежная система impaya_world выключена.")
+    def test_cashin_impex_impaya_world(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.ps_impaya_world_xpath, lk_conf.name_impaya) == True:
+            self.checkout_impex_trading(lk_conf.instruction_impaya_world_xpath, lk_conf.popup_accept_impaya_world_xpath,
+                                        lk_conf.impaya_world_success_xpath)
+
+    def test_cashin_impex_visa(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.ps_impexvisa_xpath, lk_conf.name_visa) == True:
+            self.checkout_impex_trading(lk_conf.instruction_impexvisa_xpath,
+                                        lk_conf.popup_accept_impexvisa_xpath, lk_conf.impexvisa_success_xpath)
+
+    def test_cashin_impex_orange(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.ps_impexorange_xpath, lk_conf.name_orange) == True:
+            self.checkout_impex_trading(lk_conf.instruction_impexorange_xpath,
+                                        lk_conf.popup_accept_impexorange_xpath, lk_conf.impexorange_success_xpath)
+
+    def test_cashin_impex_payboutique(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.ps_impexpayboutique_xpath, lk_conf.name_payboutique) == True:
+            self.expect_visibility(lk_conf.wait_checkout_trading_impex)
+            self.assertEqual(lk_conf.site_trading_impex, self.driver.current_url)
+            # self.checkout_impex_trading(lk_conf.instruction_impexpayboutique_xpath,
+            #                             lk_conf.popup_accept_impexpayboutique_xpath, lk_conf.impexpayboutique_success_xpath)
+
+    def test_cashin_webmoney(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.webmoney_xpath, lk_conf.name_webmoney) == True:
+            self.expect_visibility(lk_conf.popup_webmoney)
+
+    def test_cashin_bitcoin(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.bitcoin_xpath, lk_conf.name_bitcoin) == True:
+            self.expect_visibility(lk_conf.popup_bitcoin)
+
+    @unittest.skip("Платежная система epay выключена.")
+    def test_cashin_impex_epay(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.ps_impexepay_xpath, lk_conf.name_epay) == True:
+            self.checkout_impex_trading(lk_conf.instruction_impexepay_xpath,
+                                        lk_conf.popup_accept_impexepay_xpath,
+                                        lk_conf.impexepay_success_xpath)
+
+    def test_cashin_cryptonator(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.cryptonator_xpath, lk_conf.name_cryptonator) == True:
+            self.expect_visibility(lk_conf.wait_checkout_cryptonator)
+            self.assertIn(lk_conf.site_cryptonator, self.driver.current_url)
 
     @unittest.skip("Платежная система swift выключена.")
     def test_cashin_swift_large(self):
@@ -168,12 +161,18 @@ class LkswcTest(unittest.TestCase):
             self.assertTrue(self.driver.page_source.__contains__(lk_conf.swift_modal_title))
             self.assertTrue(self.driver.page_source.__contains__(lk_conf.link_in_modal_body))
 
-    @unittest.skip("Платежная система tt_swift выключена.")
-    def test_cashin_tt_swift(self):
+    def test_cashin_megapolis(self):
         self.autorization()
         self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_tt_swift_xpath, lk_conf.name_ttswift) == True:
-            self.payment_swift(select_currency="yes")
+        if self.check_of_ps(lk_conf.ps_megapolis_xpath, lk_conf.name_megapolis) == True:
+            try:
+                self.expect_visibility(lk_conf.popup_megapolis)
+                self.expect_visibility(lk_conf.button_megapolis).click()
+                self.expect_visibility(lk_conf.enter_to_megapolis)
+                self.assertEqual(lk_conf.site_megapolis, self.driver.current_url)
+            except TE:
+                self.popup_swift_alert()
+                self.payment_swift()
 
     def test_cashin_ameria_swift(self):
         self.autorization()
@@ -181,11 +180,12 @@ class LkswcTest(unittest.TestCase):
         if self.check_of_ps(lk_conf.ps_ameria_swift_xpath, lk_conf.name_ameria) == True:
             self.payment_swift()
 
-    def test_cashin_webmoney(self):
+    @unittest.skip("Платежная система tt_swift выключена.")
+    def test_cashin_tt_swift(self):
         self.autorization()
         self.deposit_account()
-        if self.check_of_ps(lk_conf.webmoney_xpath, lk_conf.name_webmoney) == True:
-            self.expect_visibility(lk_conf.popup_webmoney)
+        if self.check_of_ps(lk_conf.ps_tt_swift_xpath, lk_conf.name_ttswift) == True:
+            self.payment_swift(select_currency="yes")
 
     def test_check_packet_tree(self):
         self.autorization()
@@ -214,26 +214,39 @@ class LkswcTest(unittest.TestCase):
 
     def test_verification(self):
         self.login_simple(lk_priv_data.login_for_verif, lk_priv_data.passw_for_verif, lk_priv_data.full_name_for_verif)
+        self.checkout_section_personal()
+        self.verification_personal_data()
+        self.verification_passport_data()
+        self.verification_registration_address()
+        self.verification_uploading_of_the_doc()
+
+
+    def checkout_section_personal(self):
         self.expect_visibility(lk_conf.settings_section_xpath).click()
         self.expect_visibility(lk_conf.verification_section_xpath).click()
         self.fill = self.expect_visibility_and_move(lk_conf.fill_forms_xpath)
         sleep(0.5)
         self.fill.click()
+
+    def verification_personal_data(self):
         self.expect_visibility(lk_conf.verif_field_ln_ru_xpath).send_keys(lk_conf.verif_ln_ru)
         self.expect_visibility(lk_conf.verif_field_ln_en_xpath).send_keys(lk_conf.verif_ln_en)
         self.expect_visibility_and_move(lk_conf.verif_field_n_ru_xpath).send_keys(lk_conf.verif_n_ru)
         self.expect_visibility_and_move(lk_conf.verif_field_n_en_xpath).send_keys(lk_conf.verif_n_en)
         self.expect_visibility_and_move(lk_conf.checkbox_female_xpath).click()
-        self.expect_visibility(lk_conf.select_birthday_xpath).click()
+        self.expect_visibility_and_move(lk_conf.select_birthday_xpath).click()
         self.expect_visibility(lk_conf.select_birthday_count_xpath).click()
         self.expect_visibility(lk_conf.select_birthmonth_xpath).click()
         self.expect_visibility(lk_conf.select_birthmonth_count_xpath).click()
         self.expect_visibility(lk_conf.select_birthyear_xpath).click()
         self.expect_visibility(lk_conf.select_birthyear_count_xpath).click()
-        self.expect_visibility(lk_conf.select_birthplace_xpath).click()
+        self.expect_visibility_and_move(lk_conf.select_birthplace_xpath).click()
         self.expect_visibility(lk_conf.select_birthplace_country_xpath).click()
-        self.expect_visibility(lk_conf.button_next_passport_xpath).click()
-        self.expect_visibility(lk_conf.select_persondoc_xpath).click()
+        self.expect_visibility_and_move(lk_conf.button_next_passport_xpath).click()
+        self.select_perondoc = self.expect_visibility(lk_conf.select_persondoc_xpath)
+
+    def verification_passport_data(self):
+        self.select_perondoc.click()
         self.expect_visibility(lk_conf.select_persondoc_type_xpath).click()
         self.expect_visibility(lk_conf.field_persondoc_num_xpath).send_keys(lk_conf.persondoc_num)
         self.expect_visibility(lk_conf.select_persondoc_day_xpath).click()
@@ -243,8 +256,11 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lk_conf.select_persondoc_year_xpath).click()
         self.expect_visibility(lk_conf.select_persondoc_year_count_xpath).click()
         self.expect_visibility_and_move(lk_conf.field_persondoc_who_issue_xpath).send_keys(lk_conf.persondoc_who_issue)
-        self.expect_visibility(lk_conf.button_next_address_xpath).click()
-        self.expect_visibility(lk_conf.select_address_region_xpath).click()
+        self.expect_visibility_and_move(lk_conf.button_next_address_xpath).click()
+        self.selectaddress_region = self.expect_visibility(lk_conf.select_address_region_xpath)
+
+    def verification_registration_address(self):
+        self.selectaddress_region.click()
         self.expect_visibility(lk_conf.select_address_region_count_xpath).click()
         self.expect_visibility(lk_conf.select_address_citytype_xpath).click()
         self.expect_visibility(lk_conf.select_address_citytype_count_xpath).click()
@@ -253,7 +269,10 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lk_conf.select_address_streettype_count_xpath).click()
         self.expect_visibility(lk_conf.field_address_street_xpath).send_keys(lk_conf.address_street_name)
         self.expect_visibility_and_move(lk_conf.field_address_house_xpath).send_keys(lk_conf.house_number)
-        self.expect_visibility(lk_conf.button_finish_xpath).click()
+        self.expect_visibility_and_move(lk_conf.button_finish_xpath).click()
+        self.expect_visibility(lk_conf.section_download_xpath)
+
+    def verification_uploading_of_the_doc(self):
         for i in range(2):
             self.download_image()
             i += 1
@@ -264,38 +283,7 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lk_conf.finish_header_verif_xpath)
         self.assertEqual(self.driver.current_url, lk_conf.personal_list_link)
 
-    # def test_verification_fill(self):
-    #     self.login_simple(lk_priv_data.login_for_verif, lk_priv_data.passw_for_verif, lk_priv_data.full_name_for_verif)
-    #     for i in range(100):
-    #         self.expect_visibility(lk_conf.settings_section_xpath).click()
-    #         self.expect_visibility(lk_conf.verification_section_xpath).click()
-    #         #self.go_to_element(lk_conf.footer_xpath, elem_position=lk_conf.elem_position_bottom)
-    #         self.fill = self.expect_visibility_and_move(lk_conf.fill_forms_xpath)
-    #         sleep(0.5)
-    #         self.fill.click()
-    #         # ActionChains(self.driver).move_to_element(self.expect_visibility(lk_conf.fill_forms_xpath)).click().perform()
-    #         self.expect_visibility(lk_conf.verif_field_ln_ru_xpath).send_keys(lk_conf.verif_ln_ru)
-    #         i += 1
-    #         print(i)
-
-    # def test_upload(self):
-    #     # print(sys.platform)
-    #     # print(platform.system())
-    #     self.login_simple(lk_priv_data.login_for_verif, lk_priv_data.passw_for_verif, lk_priv_data.full_name_for_verif)
-    #     self.expect_visibility(lk_conf.settings_section_xpath).click()
-    #     self.expect_visibility(lk_conf.verification_section_xpath).click()
-    #     self.download = self.expect_visibility("//a[contains(text(), 'Загрузить документы')]")
-    #     # self.go_to_element(lk_conf.footer_xpath, elem_position=lk_conf.elem_position_bottom)
-    #     self.download.click()
-    #     for i in range(5):
-    #         self.download_image()
-    #         # self.save_src_png(self.get_funcname())
-    #         i += 1
-    #         print(i)
-
-
     def download_image(self):
-        self.expect_visibility(lk_conf.section_download_xpath)
         self.button_choose = self.expect_visibility_and_move(lk_conf.button_choose_xpath).click()
         sleep(1)
         autoit.win_wait(lk_conf.autoit_title, lk_conf.autoit_wait)
@@ -327,7 +315,7 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lk_conf.field_reg_confirmpassword).send_keys(lk_priv_data.reg_password)
         self.expect_visibility_and_move(lk_conf.button_reg_signup_xpath).click()
         self.expect_visibility(lk_conf.confirm_email_xpath)
-        sleep(10) #Ожидание поступления письма на почте
+        sleep(15) #Ожидание поступления письма на почту
         return self.email
 
     def checkout_gmail(self):
@@ -338,7 +326,7 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lk_conf.confirm_auth_button_xpath).click()
         self.expect_visibility(lk_conf.check_new_email_xpath).click()
         self.expect_visibility(lk_conf.reg_link_xpath).click()
-        sleep(10)
+        sleep(5)
 
     def choose_cityzenship_modal(self):
         self.waiting_required_link = WebDriverWait(self.driver, 40).until(
@@ -372,6 +360,7 @@ class LkswcTest(unittest.TestCase):
         self.top_and_off_set = self.element_top + self.page_off_set
         self.element_middle = self.top_and_off_set - (self.inner / 2)
         self.driver.execute_script("window.scrollTo(0, arguments[0])", self.element_middle)
+        sleep(0.2)
         self.found_element.is_displayed()
         return self.driver.find_element_by_xpath(path)
 
@@ -420,8 +409,8 @@ class LkswcTest(unittest.TestCase):
 
     def search_all_ps(self):
         #Получаем спикок всех включенных платежных систем в виде значений атрибута 'data-code'.
-        WebDriverWait(self.driver, lk_conf.delay).until(
-            EC.visibility_of_element_located((By.XPATH, lk_conf.last_ps_xpath)))
+        WebDriverWait(self.driver, lk_conf.delay).until(EC.visibility_of_element_located((By.XPATH, lk_conf.last_ps_xpath)))
+        self.expect_visibility(lk_conf.you_were_billed_xpath)
         self.last_elem = self.expect_visibility(lk_conf.last_ps_xpath)
         self.all_ps = self.driver.find_elements_by_xpath(lk_conf.all_ps_xpath)
         self.list_ps_attribute = []
@@ -442,8 +431,8 @@ class LkswcTest(unittest.TestCase):
     def checkout_impex_trading(self, instruction, popup_accept, success):
         self.expect_visibility(instruction)
         self.assertTrue(self.driver.page_source.__contains__(lk_conf.impex_modal_subtitle))
-        self.expect_visibility(popup_accept).click()
-        self.expect_visibility(success).click()
+        self.expect_visibility_and_move(popup_accept).click()
+        self.expect_visibility_and_move(success).click()
         self.expect_visibility(lk_conf.wait_checkout_trading_impex)
         self.assertEqual(lk_conf.site_trading_impex, self.driver.current_url)
 
@@ -487,9 +476,10 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lk_conf.progress_start_xpath).click()
         self.expect_visibility(count_shares)
         self.assertEqual(lk_conf.url_acceptance_page, self.driver.current_url)
-        ActionChains(self.driver).move_to_element(self.expect_visibility(lk_conf.checkbox_icon_xpath)).click().perform()
+        self.expect_visibility_and_move(lk_conf.checkbox_icon_xpath).click()
+        #ActionChains(self.driver).move_to_element(self.expect_visibility(lk_conf.checkbox_icon_xpath)).click().perform()
         # sleep(10)
-        self.expect_visibility(lk_conf.button_buy_xpath).click()
+        self.expect_visibility_and_move(lk_conf.button_buy_xpath).click()
 
     def packet_installment_payment(self, count_month):
         self.expect_visibility(lk_conf.main_balance_xpath)
@@ -501,14 +491,15 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(count_month).click()
         self.id_instalment = self.expect_visibility(lk_conf.last_instalment_xpath).get_attribute(
             lk_conf.name_attr_instalment_id)
-        self.expect_visibility("//button[@data-id='%s']" % self.id_instalment).click()
+        self.expect_visibility_and_move("//button[@data-id='%s']" % self.id_instalment).click()
 
     def packet_sign_a_claim(self, full_price_packet):
         try:
             self.expect_visibility(lk_conf.username_verif_data_xpath)
             self.expect_visibility(lk_conf.requirement_xpath)
-            self.sign = self.expect_visibility_and_move(lk_conf.sign_xpath)
+            self.expect_visibility(lk_conf.sign_xpath)
             sleep(3)  # временное решение
+            self.sign = self.expect_visibility_and_move(lk_conf.sign_xpath)
             self.sign.click()
         except TE:
             pass

@@ -213,6 +213,7 @@ deposit_button_xpath = "//button[@id='buttonPay']"
 last_ps_xpath = "//div[last()][@data-code]"
 all_ps_xpath = "//div[@data-code]"
 name_attribute = 'data-code'
+you_were_billed_xpath = "//span[contains(text(), 'Вам был выставлен счет №')]"
 #list of payment systems
 name_bitcoin = 'bitcoin'
 name_cryptonator = 'cryptonator'
