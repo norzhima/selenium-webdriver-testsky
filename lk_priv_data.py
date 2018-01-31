@@ -52,6 +52,8 @@ login_for_test = "n.chagdurova@skyway.capital"
 passw_for_test = "Xfulehjdf!1"
 full_name_for_test = "Norzhima Чагдурова"
 
+email_recipient = "chagdurova1992@mail.ru"
+full_recipient = "Norzhima Chagdurova (chagdurova1992@mail.ru)"
 
 
 

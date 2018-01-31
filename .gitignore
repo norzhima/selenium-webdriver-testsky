@@ -3,3 +3,4 @@ __pycache__
 lk_priv_data.py
 *.log
 *.png
+*.jpg

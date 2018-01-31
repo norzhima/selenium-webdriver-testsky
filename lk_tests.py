@@ -51,25 +51,42 @@ class LkswcTest(unittest.TestCase):
         self.autorization()
         self.deposit_account()
         if self.check_of_ps(lk_conf.ps_mera_xpath, lk_conf.name_mera) == True:
-            self.expect_visibility(lk_conf.popup_checkbox_accept_xpath).click()
-            self.expect_visibility(lk_conf.mera_success_xpath).click()
             self.expect_visibility(lk_conf.wait_checkout_mera)
             self.assertIn(lk_conf.site_mera, self.driver.current_url)
 
-    def test_cashin_exmo(self):
+    def test_cashin_advcash_exmo(self):
         self.autorization()
         self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_exmo_xpath, lk_conf.name_exmo) == True:
-            self.expect_visibility(lk_conf.wait_checkout_advcash)
-            self.assertEqual(lk_conf.site_advcash, self.driver.current_url)
+        if self.check_of_ps(lk_conf.ps_adv_exmo_xpath, lk_conf.name_advcash) == True:
+            self.checkout_advcash()
 
-    @unittest.skip("ecoin работает также как и exmo")
-    def test_cashin_ecoin(self):
+    @unittest.skip("Платежная система ecoin работает также как и exmo")
+    def test_cashin_advcash_ecoin(self):
         self.autorization()
         self.deposit_account()
-        if self.check_of_ps(lk_conf.ps_ecoin_xpath, lk_conf.name_ecoin) == True:
-            self.expect_visibility(lk_conf.wait_checkout_advcash)
-            self.assertEqual(lk_conf.site_advcash, self.driver.current_url)
+        if self.check_of_ps(lk_conf.ps_adv_ecoin_xpath, lk_conf.name_advcash) == True:
+            self.checkout_advcash()
+
+    @unittest.skip("Платежная система advcash работает также как и exmo")
+    def test_cashin_advcash(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.ps_advcash_xpath, lk_conf.name_advcash) == True:
+            self.checkout_advcash()
+
+    @unittest.skip("Платежная система payeer работает также как и exmo")
+    def test_cashin_payeer(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.ps_adv_payeer_xpath, lk_conf.name_advcash) == True:
+            self.checkout_advcash()
+
+    @unittest.skip("Платежная система advcash-swift работает также как и exmo")
+    def test_cashin_advcash_swift(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.ps_advcash_swift_xpath, lk_conf.name_advcash) == True:
+            self.checkout_advcash()
 
     def test_cashin_impex_mastercard(self):
         self.autorization()
@@ -141,8 +158,71 @@ class LkswcTest(unittest.TestCase):
         self.autorization()
         self.deposit_account()
         if self.check_of_ps(lk_conf.cryptonator_xpath, lk_conf.name_cryptonator) == True:
-            self.expect_visibility(lk_conf.wait_checkout_cryptonator)
-            self.assertIn(lk_conf.site_cryptonator, self.driver.current_url)
+            self.checkout_cripto()
+
+    @unittest.skip("Платежная система cryptonator_bitcoin работает также как и cryptonator")
+    def test_cashin_cryptonator_bitcoin(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.cryptonator_bitcoin_xpath, lk_conf.name_cryptonator) == True:
+            self.checkout_cripto()
+
+    @unittest.skip("Платежная система cryptonator_bitcoincash работает также как и cryptonator")
+    def test_cashin_cryptonator_bitcoincash(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.cryptonator_bitcoincash_xpath, lk_conf.name_cryptonator) == True:
+            self.checkout_cripto()
+
+    @unittest.skip("Платежная система cryptonator_dash работает также как и cryptonator")
+    def test_cashin_cryptonator_dash(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.cryptonator_dash_xpath, lk_conf.name_cryptonator) == True:
+            self.checkout_cripto()
+
+    @unittest.skip("Платежная система cryptonator_dogecoin работает также как и cryptonator")
+    def test_cashin_cryptonator_dogecoin(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.cryptonator_dogecoin_xpath, lk_conf.name_cryptonator) == True:
+            self.checkout_cripto()
+
+    @unittest.skip("Платежная система cryptonator_ethereum работает также как и cryptonator")
+    def test_cashin_cryptonator_etheteum(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.cryptonator_ethereum_xpath, lk_conf.name_cryptonator) == True:
+            self.checkout_cripto()
+
+    @unittest.skip("Платежная система cryptonator_litecoin работает также как и cryptonator")
+    def test_cashin_cryptonator_litecoin(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.cryptonator_litecoin_xpath, lk_conf.name_cryptonator) == True:
+            self.checkout_cripto()
+
+    @unittest.skip("Платежная система cryptonator_monero работает также как и cryptonator")
+    def test_cashin_cryptonator_monero(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.cryptonator_monero_xpath, lk_conf.name_cryptonator) == True:
+            self.checkout_cripto()
+
+
+    @unittest.skip("Платежная система cryptonator_ripple работает также как и cryptonator")
+    def test_cashin_cryptonator_ripple(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.cryptonator_ripple_xpath, lk_conf.name_cryptonator) == True:
+            self.checkout_cripto()
+
+    @unittest.skip("Платежная система cryptonator_zcash работает также как и cryptonator")
+    def test_cashin_cryptonator_zcash(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.cryptonator_zcash_xpath, lk_conf.name_cryptonator) == True:
+            self.checkout_cripto()
 
     @unittest.skip("Платежная система swift выключена.")
     def test_cashin_swift_large(self):
@@ -168,6 +248,19 @@ class LkswcTest(unittest.TestCase):
             try:
                 self.expect_visibility(lk_conf.popup_megapolis)
                 self.expect_visibility(lk_conf.button_megapolis).click()
+                self.expect_visibility(lk_conf.enter_to_megapolis)
+                self.assertEqual(lk_conf.site_megapolis, self.driver.current_url)
+            except TE:
+                self.popup_swift_alert()
+                self.payment_swift()
+
+    def test_cashin_tinkoff(self):
+        self.autorization()
+        self.deposit_account()
+        if self.check_of_ps(lk_conf.ps_tinkoff_xpath, lk_conf.name_megapolis) == True:
+            try:
+                self.expect_visibility(lk_conf.popup_tinkoff)
+                self.expect_visibility(lk_conf.button_tinkoff).click()
                 self.expect_visibility(lk_conf.enter_to_megapolis)
                 self.assertEqual(lk_conf.site_megapolis, self.driver.current_url)
             except TE:
@@ -206,26 +299,37 @@ class LkswcTest(unittest.TestCase):
         self.check_login(lk_priv_data.login_auth, "nnn", lk_conf.username_or_password_incorrect)
         self.check_login("nnn", "nnn", lk_conf.email_valid)
 
-    def test_registration(self):
-        self.registration()
-        sleep(5)
+    def test_transfer_of_money(self):
+        self.autorization()
+        self.funds_transfer()
         self.checkout_gmail()
-        #self.choose_cityzenship_modal()
+        self.insert_code()
 
-    def test_verification(self):
-        self.login_simple(lk_priv_data.login_for_verif, lk_priv_data.passw_for_verif, lk_priv_data.full_name_for_verif)
+    #@unittest.skip("тест registration_and_verification выключен.")
+    def test_registration_and_verification(self):
+        self.registration()
+        self.checkout_gmail()
+        self.expect_visibility(lk_conf.reg_link_xpath).click()
+        self.choose_cityzenship_modal()
+        self.verification()
+
+
+    def verification(self):
+        #self.login_simple(lk_priv_data.login_for_verif, lk_priv_data.passw_for_verif, lk_priv_data.full_name_for_verif)
         self.checkout_section_personal()
         self.verification_personal_data()
         self.verification_passport_data()
         self.verification_registration_address()
         self.verification_uploading_of_the_doc()
 
-
     def checkout_section_personal(self):
-        self.expect_visibility(lk_conf.settings_section_xpath).click()
+        sleep(2)
+        self.settings_section = self.expect_visibility(lk_conf.settings_section_xpath)
+        self.settings_section.is_displayed()
+        self.settings_section.click()
         self.expect_visibility(lk_conf.verification_section_xpath).click()
         self.fill = self.expect_visibility_and_move(lk_conf.fill_forms_xpath)
-        sleep(0.5)
+        sleep(1)
         self.fill.click()
 
     def verification_personal_data(self):
@@ -243,13 +347,13 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility_and_move(lk_conf.select_birthplace_xpath).click()
         self.expect_visibility(lk_conf.select_birthplace_country_xpath).click()
         self.expect_visibility_and_move(lk_conf.button_next_passport_xpath).click()
-        self.select_perondoc = self.expect_visibility(lk_conf.select_persondoc_xpath)
+        self.select_persondoc = self.expect_visibility_and_move(lk_conf.select_persondoc_xpath)
 
     def verification_passport_data(self):
-        self.select_perondoc.click()
+        self.select_persondoc.click()
         self.expect_visibility(lk_conf.select_persondoc_type_xpath).click()
         self.expect_visibility(lk_conf.field_persondoc_num_xpath).send_keys(lk_conf.persondoc_num)
-        self.expect_visibility(lk_conf.select_persondoc_day_xpath).click()
+        self.expect_visibility_and_move(lk_conf.select_persondoc_day_xpath).click()
         self.expect_visibility(lk_conf.select_persondoc_day_count_xpath).click()
         self.expect_visibility(lk_conf.select_persondoc_month_xpath).click()
         self.expect_visibility(lk_conf.select_persondoc_month_count_xpath).click()
@@ -257,7 +361,7 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lk_conf.select_persondoc_year_count_xpath).click()
         self.expect_visibility_and_move(lk_conf.field_persondoc_who_issue_xpath).send_keys(lk_conf.persondoc_who_issue)
         self.expect_visibility_and_move(lk_conf.button_next_address_xpath).click()
-        self.selectaddress_region = self.expect_visibility(lk_conf.select_address_region_xpath)
+        self.selectaddress_region = self.expect_visibility_and_move(lk_conf.select_address_region_xpath)
 
     def verification_registration_address(self):
         self.selectaddress_region.click()
@@ -265,9 +369,9 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lk_conf.select_address_citytype_xpath).click()
         self.expect_visibility(lk_conf.select_address_citytype_count_xpath).click()
         self.expect_visibility_and_move(lk_conf.field_city_name_xpath).send_keys(lk_conf.city_name)
-        self.expect_visibility(lk_conf.select_address_streettype_xpath).click()
+        self.expect_visibility_and_move(lk_conf.select_address_streettype_xpath).click()
         self.expect_visibility(lk_conf.select_address_streettype_count_xpath).click()
-        self.expect_visibility(lk_conf.field_address_street_xpath).send_keys(lk_conf.address_street_name)
+        self.expect_visibility_and_move(lk_conf.field_address_street_xpath).send_keys(lk_conf.address_street_name)
         self.expect_visibility_and_move(lk_conf.field_address_house_xpath).send_keys(lk_conf.house_number)
         self.expect_visibility_and_move(lk_conf.button_finish_xpath).click()
         self.expect_visibility(lk_conf.section_download_xpath)
@@ -315,7 +419,7 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lk_conf.field_reg_confirmpassword).send_keys(lk_priv_data.reg_password)
         self.expect_visibility_and_move(lk_conf.button_reg_signup_xpath).click()
         self.expect_visibility(lk_conf.confirm_email_xpath)
-        sleep(15) #Ожидание поступления письма на почту
+        sleep(25) #Ожидание поступления письма на почту
         return self.email
 
     def checkout_gmail(self):
@@ -325,23 +429,26 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility(lk_conf.password_for_gmail_xpath).send_keys(lk_priv_data.password_for_gmail)
         self.expect_visibility(lk_conf.confirm_auth_button_xpath).click()
         self.expect_visibility(lk_conf.check_new_email_xpath).click()
-        self.expect_visibility(lk_conf.reg_link_xpath).click()
-        sleep(5)
+        #window_before = self.driver.window_handles[0]
+        #sleep(15)
 
     def choose_cityzenship_modal(self):
-        self.waiting_required_link = WebDriverWait(self.driver, 40).until(
-            lambda s: s.current_url == lk_priv_data.mail_url)
-        self.expect_visibility(lk_conf.header_model_citizenshin_xpath)
-        self.save_src_png(self.get_funcname())
-        self.fieldcitizenship = self.expect_visibility(lk_conf.field_citizenship_country_xpath)
-        self.fieldcitizenship.click()
+        #window_after = self.driver.window_handles[1]
+        self.driver.switch_to.window(self.driver.window_handles[1])
+        #self.driver.switch_to.window(window_after)
+        self.driver.get(lk_priv_data.main_url)
+        self.expect_visibility(lk_conf.header_model_citizenship_xpath)
+        self.expect_visibility(lk_conf.field_citizenship_country_xpath).click()
         self.expect_visibility(lk_conf.ru_citizenship_country_xpath).click()
         self.expect_visibility(lk_conf.field_country_xpath).click()
         self.expect_visibility(lk_conf.ru_country_xpath).click()
         self.expect_visibility(lk_conf.field_city_xpath).send_keys(lk_conf.reg_city)
         self.expect_visibility(lk_conf.button_save_xpath).click()
-        self.full_regname = lk_conf.regname + self.email + ' ' + lk_conf.reglastname + self.email
+        self.full_regname = lk_conf.regname + '_' + self.email + ' ' + lk_conf.reglastname + '_' + self.email
+        #print(self.full_regname)
         self.expect_visibility("//h3[contains(text(), '%s')]" % self.full_regname)
+        #print(self.full_regname)
+        return True
 
     def expect_visibility(self, path):
         #print(path)
@@ -393,6 +500,14 @@ class LkswcTest(unittest.TestCase):
         self.expect_visibility("//h3[contains(text(), '%s')]" % name_sample)
         self.assertEqual(lk_conf.full_company_name, self.driver.title)
 
+    def checkout_cripto(self):
+        self.expect_visibility(lk_conf.wait_checkout_cryptonator)
+        self.assertIn(lk_conf.site_cryptonator, self.driver.current_url)
+
+    def checkout_advcash(self):
+        self.expect_visibility(lk_conf.wait_checkout_advcash)
+        self.assertEqual(lk_conf.site_advcash, self.driver.current_url)
+
     def autorization(self):
         self.user = lk_priv_data.get_user()
         self.login(self.user['login'], self.user['password'])
@@ -402,7 +517,7 @@ class LkswcTest(unittest.TestCase):
     def deposit_account(self, sum_cashin=lk_conf.sum_cashin_small):
         self.expect_visibility(lk_conf.banking_section_xpath).click()
         self.expect_visibility(lk_conf.deposit_account_section_xpath).click()
-        self.expect_visibility(lk_conf.dep_acc_title_xpath)
+        self.expect_visibility_and_move(lk_conf.dep_acc_title_xpath)
         self.assertEqual(lk_conf.check_url_cashin, self.driver.current_url)
         self.expect_visibility_and_move(lk_conf.field_cashin_xpath).send_keys(sum_cashin)
         self.expect_visibility(lk_conf.deposit_button_xpath).click()
@@ -461,9 +576,9 @@ class LkswcTest(unittest.TestCase):
         self.package_header = self.driver.find_elements_by_xpath(lk_conf.package_header_xpath)
         self.driver.execute_script("arguments[0].scrollIntoView(true)", self.package_header[count_pack])
         self.packet.click()
-        self.pay_account = self.expect_visibility(lk_conf.pay_account_xpath)
+        self.pay_account = self.expect_visibility_and_move(lk_conf.pay_account_xpath)
         self.assertEqual(url_checkout, self.driver.current_url)
-        self.expect_visibility_and_move(lk_conf.total_price_xpath)
+        self.expect_visibility(lk_conf.total_price_xpath)
         sleep(2)
         self.pay_account.click()
         self.expect_visibility(lk_conf.main_account_xpath)
@@ -554,6 +669,30 @@ class LkswcTest(unittest.TestCase):
         self.assertEqual(lk_conf.url_acceptance_page, self.driver.current_url)
         self.expect_visibility_and_move(lk_conf.checkbox_icon_xpath).click()
         self.expect_visibility(lk_conf.button_buy_xpath).click()
+
+    def funds_transfer(self):
+        self.expect_visibility(lk_conf.banking_section_xpath).click()
+        self.expect_visibility(lk_conf.funds_transfer_section_xpath).click()
+        self.expect_visibility_and_move(lk_conf.enter_the_sum_main_xpath).send_keys(lk_conf.sum_cashin_small)
+        self.expect_visibility_and_move(lk_conf.enter_the_sum_bonus_xpath).send_keys(lk_conf.sum_cashin_small)
+        self.expect_visibility_and_move(lk_conf.enter_email_recipient_xpath).send_keys(lk_priv_data.email_recipient)
+        self.expect_visibility(lk_conf.input_submit_xpath).click()
+        self.expect_visibility_and_move(lk_conf.recipient_fio_xpath)
+        self.assertTrue(self.driver.page_source.__contains__(lk_priv_data.full_recipient))
+        self.expect_visibility_and_move(lk_conf.pay1button_xpath).click()
+        sleep(25)        #Ожидание поступления письма на почту
+        self.driver.execute_script("window.open('','_blank');")
+        self.driver.switch_to.window(self.driver.window_handles[1])
+
+    def insert_code(self):
+        self.element_with_code = self.expect_visibility(lk_conf.funds_code_xpath)
+        self.code_for_transfer = self.element_with_code.text[-5:]
+        self.driver.switch_to.window(self.driver.window_handles[0])
+        self.expect_visibility(lk_conf.input_sms_code_xpath).send_keys(self.code_for_transfer)
+        self.expect_visibility(lk_conf.button_sms_code_xpath).click()
+        self.expect_visibility(lk_conf.transfer_success_xpath)
+
+
 
 if __name__ == "__main__":
     unittest.main()

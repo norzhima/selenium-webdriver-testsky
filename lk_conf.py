@@ -30,9 +30,13 @@ header_bitcoin = "//div[@id ='myModalLabel']"
 site_advcash = "https://wallet.advcash.com/sci/paymentRequest.jsf"
 wait_checkout_advcash = "//a[@href='https://advcash.com/']"
 #Пополнение через Exmo
-ps_exmo_xpath = "//div[@id='payment-adv-exmo']"
+ps_adv_exmo_xpath = "//div[@id='payment-adv-exmo']"
 #Пополнение через ECOIN
-ps_ecoin_xpath = "//div[@id='payment-adv-ecoin']/label/div[1]"
+ps_adv_ecoin_xpath = "//div[@id='payment-adv-ecoin']"
+ps_adv_payeer_xpath = "//div[@id='payment-adv-payeer']"
+ps_advcash_xpath = "//div[@id='payment-adv']"
+ps_advcash_swift_xpath = "//div[@id='payment-adv-swift']"
+
 
 #Пополнение через Fasapay
 ps_fasapay_xpath = "//div[@id='payment-fasa']"
@@ -84,12 +88,17 @@ megapolis_for_swift_xpath = "//div[@data-href~='Megapolis']"
 ps_megapolis_xpath = "//div[@data-payid='44']"
 choose_the_curr_for_payment = "//div[@id='content']/div[3]/div[2]/h4"
 
+#Пополнение через Тинькофф
+popup_tinkoff = "//div[@id='agreemodal-tinkoff']"
+button_tinkoff = "//div[@id='agreemodal-tinkoff']//a[contains(text(), 'Перейти на сайт для подтверждения')]"
+ps_tinkoff_xpath = "//div[@data-payid='57']"
+
 #Пополнение через MERA (Россия, СНГ, Прибалтика)
 ps_mera_xpath = "//div[@id='payment-mera']"
 popup_checkbox_accept_xpath = "//div[@class='swc-modal-content']/div[3]/label"
 mera_success_xpath = "//button[@id='mera-success']"
 #сайт cool-pay (mera)
-site_mera = "https://lk.cool-pay.com/"
+site_mera = "https://lk.cool-pay.com/"#https://lk.cool-pay.com/ru/api/payments/315604/methods
 wait_checkout_mera = "//img[@alt='CoolPay']"
 
 #Пополнение через PERFECT MONEY
@@ -122,7 +131,6 @@ choose_val_eur_xpath = "//div[@data-val='4']"
 
 #Пополнение через tt_swift
 ps_ameria_swift_xpath = "//div[@data-code='armenia-swift']"
-
 header_page = "//h3[contains(text(), 'Пополнить счет')]"
 
 #Пополнение через webmoney
@@ -133,6 +141,18 @@ popup_webmoney = "//div[@id='modal-web-money']"
 cryptonator_xpath = "//div[@id='payment-cryptonator-cryptonator']"
 wait_checkout_cryptonator = "//h1[contains(text(), 'First Skyway Invest Group Limited')]"
 site_cryptonator = "https://www.cryptonator.com/merchant/invoice"
+
+#Пополнение через cryptonator - все:
+cryptonator_bitcoin_xpath = "//div[@id='payment-cryptonator-bitcoin_crypto']"
+cryptonator_bitcoincash_xpath = "//div[@id='payment-cryptonator-bitcoincash']"
+cryptonator_dash_xpath = "//div[@id='payment-cryptonator-dash']"
+cryptonator_dogecoin_xpath = "//div[@id='payment-cryptonator-dogecoin']"
+cryptonator_ethereum_xpath = "//div[@id='payment-cryptonator-ethereum']"
+cryptonator_litecoin_xpath = "//div[@id='payment-cryptonator-litecoin_crypto']"
+cryptonator_monero_xpath = "//div[@id='payment-cryptonator-monero']"
+cryptonator_ripple_xpath = "//div[@id='payment-cryptonator-ripple']"
+cryptonator_zcash_xpath = "//div[@id='payment-cryptonator-zcash']"
+
 
 #Покупка пакета именное дерево
 packet_tree_xpath = "//div[@data-id='450']/div[3]/div/a"
@@ -168,19 +188,19 @@ field_reg_confirmpassword = "//input[@name='SignupForm[confirmpassword]']"
 button_reg_signup_xpath = "//input[@value='Зарегистрироваться']"
 auth_link_xpath = "//a[contains(text(), 'Авторизоваться')]"
 confirm_email_xpath = "//h3[contains(text(), 'Подтвердите свой email')]"
-
+#Почта
 login_for_gmail_xpath = "//input[@id='identifierId']"
-confirm_auth_button_xpath = "//span[contains(text(), 'Далее')]"
+confirm_auth_button_xpath = "//span[contains(text(), 'Далее')]"#"//span[contains(text(), 'Next')]"#
 password_for_gmail_xpath = "//input[@name='password']"
 check_new_email_xpath = "//tr[@class='zA zE']"
 link_reg = lk_priv_data.main_url + '/auth/verify-register?code='
 reg_link_xpath = "//a[contains(@href, '%s')]" % link_reg
 registration_completed_xpath = "//a[contains(text(), 'Регистрация завершена')]"
-
-
+#Модалка, где необходимо выбрать страну и указать город
+url_after_reg = lk_priv_data.main_url + "/site/index"
 choose_country_modal_xpath = "//select[@id='choose-citizenship-country']"
-header_model_citizenshin_xpath = "//div[contains(text(), 'Выберите страну и укажите город')]"
-field_citizenship_country_xpath = "//DIV[@id='choose-citizenship-country-modal']//SELECT[@id='choose-citizenship-country']"
+header_model_citizenship_xpath = "//div[contains(text(), 'Выберите страну и укажите город')]"
+field_citizenship_country_xpath = "//select[@id='choose-citizenship-country']"
 ru_citizenship_country_xpath = "//select[@id='choose-citizenship-country']/option[contains(text(), 'Россия')]"
 field_country_xpath = "//select[@id='choose-country']"
 ru_country_xpath = "//select[@id='choose-country']/option[contains(text(), 'Россия')]"
@@ -188,15 +208,14 @@ field_city_xpath = "//input[@id='choose-city']"
 reg_city = "Moscow"
 button_save_xpath = "//button[@id='save-citizenship']"
 
-
 #Авторизация в ЛК
 login_field_xpath = "//input[@name='LoginForm[email]']"
 passw_field_xpath = "//input[@name='LoginForm[password]']"
 login_button_xpath = "//input[@id='buttonLoginSubmit']"
-
 username_verif_data_xpath = "//h3[@class='personal-card__name js-tooltipster personal-card__name_verified tooltipstered']"
 username_non_verified_xpath = "//h3[@class='personal-card__name js-tooltipster personal-card__name_nonVerified tooltipstered']"
-#проверка авторизации
+
+#Проверка авторизации
 auth = lk_priv_data.main_url + "/auth/login"
 enter_email_address = "//span[contains(text(), 'Нужно ввести email')]"
 enter_password = "//span[contains(text(), 'Нужно ввести пароль')]"
@@ -219,18 +238,15 @@ name_bitcoin = 'bitcoin'
 name_cryptonator = 'cryptonator'
 name_pm = 'perfect-money'
 name_mera = 'mera'
-name_ecoin = 'adv-cash'
-name_exmo = 'adv-cash'
+name_advcash = 'adv-cash'
 name_mc = 'impex'
 name_fasa = 'fasa'
 name_impaya = 'impeximpaya'
 name_visa = 'impexvisa'
-name_payboutique = 'impexvisa'
+name_payboutique = 'impexpayboutique'
 name_orange = 'impexorange'
 name_webmoney = 'web-money'
 name_litecoin = 'litecoin'
-name_advcash = 'adv-cash'
-name_payeer = 'adv-cash'
 name_mega = 'impexmega'
 name_epay = 'impexepay'
 name_swift = 'swift'
@@ -296,6 +312,21 @@ url_my_certificates = lk_priv_data.main_url + "/investment/portfolio"
 #Переход к пополнению
 banking_section_xpath = "//span[contains(text(), 'Банкинг')]"
 deposit_account_section_xpath = "//a[@title='Пополнить счет']"
+
+#Переход к переводу средств
+funds_transfer_section_xpath = "//a[@title='Перевод средств']"
+#Перевод средств
+enter_the_sum_main_xpath = "//input[@id='sumA']"
+enter_the_sum_bonus_xpath = "//input[@id='sumB']"
+enter_email_recipient_xpath = "//input[@id='recipient']"
+input_submit_xpath = "//input[@id='findrec']"
+pay1button_xpath = "//button[@id='pay1button']"
+recipient_fio_xpath = "//div[@id='recipient_fio']"
+funds_transfer_modal_xpath = "//div[@id='myModal']"
+funds_code_xpath = "//a[contains(@href, 'mailto:chagdurova1992@mail.ru')]/parent::*"
+transfer_success_xpath = "//div[@id='myModal-success']"
+input_sms_code_xpath = "//input[@id='sms-code']"
+button_sms_code_xpath = "//button[@id='send-sms-code']"
 
 #Переход в раздел верификации
 settings_section_xpath = "//span[contains(text(), 'Настройки')]"
@@ -370,5 +401,6 @@ autoit_control_button = "Button1"
 finish_header_verif_xpath = "//h3[contains(text(), 'Ваши данные верификации')]"
 personal_list_link = lk_priv_data.main_url + "/personal/list"
 #link_download_docs_xpath = "//a[contains(text(), 'Загрузить документы')]"
+
 
 

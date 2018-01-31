@@ -1,0 +1,26 @@
+hub:
+ image: selenium/hub
+ restart: always
+ privileged: true
+ environment:
+   - GRID_TIMEOUT=30000
+   - GRID_BROWSER_TIMEOUT=30000
+   - GRID_CLEAN_UP_CYCLE=500
+   - GRID_NODE_POLLING=500
+   - GRID_MAX_SESSION=10
+ ports:
+   - "4444:4444"
+chrome:
+ image: selenium/node-chrome
+ restart: always
+ privileged: true
+ links:
+  - hub:hub
+ expose:
+  - "5555"
+ environment:
+  - HUB_PORT_4444_TCP_ADDR=hub
+  - HUB_PORT_4444_TCP_PORT=4444
+  - no_proxy=""
+  - NODE_MAX_INSTANCES=10
+  - NODE_MAX_SESSION=10
