@@ -1,16 +1,18 @@
 import lk_priv_data
 import random
 
-delay = 20
+delay = 40
 default_browser = 'Chrome'
 #default_browser = 'Firefox'
 
 short_company_name = "SkyWay"
 full_company_name = "SkyWay Capital"
 
+locator_id = "id"
+locator_xpath = "xpath"
 
-sum_cashin_small = 50
-sum_cashin_large = 2500
+sum_small = 50
+sum_large = 2500
 
 #Смена языка в ЛК
 language_search_xpath = "//DIV[@class='login__header-ul']//SPAN[@href='#']"
@@ -22,107 +24,114 @@ debug_toolbar_id = "yii-debug-toolbar"
 debug_minimize_xpath = "//span[@class='yii-debug-toolbar-toggler']"
 
 #Пополнение через биткоин
-bitcoin_xpath = "//div[@data-code='bitcoin']"
-popup_bitcoin = "//div[@id='modal-bitcoin']/div/div/div[2]/img"
+ps_bitcoin_id = "payment-bitcoin"
+popup_bitcoin_xpath = "//div[@id='modal-bitcoin']/div/div/div[2]/img"
 header_bitcoin = "//div[@id ='myModalLabel']"
 
 #сайт advcash (exmo, ecoin)
 site_advcash = "https://wallet.advcash.com/sci/paymentRequest.jsf"
 wait_checkout_advcash = "//a[@href='https://advcash.com/']"
-#Пополнение через Exmo
-ps_adv_exmo_xpath = "//div[@id='payment-adv-exmo']"
-#Пополнение через ECOIN
-ps_adv_ecoin_xpath = "//div[@id='payment-adv-ecoin']"
-ps_adv_payeer_xpath = "//div[@id='payment-adv-payeer']"
-ps_advcash_xpath = "//div[@id='payment-adv']"
-ps_advcash_swift_xpath = "//div[@id='payment-adv-swift']"
+#Пополнение через advcash
+ps_adv_id = "payment-adv"
+ps_adv_exmo_id = "payment-adv-exmo"
+ps_adv_ecoin_id = "payment-adv-ecoin"
+ps_adv_payeer_id = "payment-adv-payeer"
+ps_adv_swift_id = "payment-adv-swift"
 
 
 #Пополнение через Fasapay
-ps_fasapay_xpath = "//div[@id='payment-fasa']"
+ps_fasapay_id = "payment-fasa"
 site_fasapay = "https://sandbox.fasapay.com/sci/"
-wait_checkout_fasapay = "//div[@class='lbar1']"
+wait_checkout_fasapay_xpath = "//div[@class='lbar1']"
 
 #Пополнение через impexepay
-ps_impexepay_xpath = "//div[@data-code='impexepay']"
+ps_impex_epay_id = "payment-impex-epay"
 instruction_impexepay_xpath = "//div[@id='impex-tutor']/div/div/div[2]/div"
 popup_accept_impexepay_xpath = "//div[@id='impex-tutor']/div/div/div[3]/label"
-impexepay_success_xpath = "//button[@id='impex-tutor-success']"
+impexepay_success_id = "impex-tutor-success"
 
 #Пополнение через Impaya_world (Все страны)
-ps_impaya_world_xpath = "//div[@data-code='impeximpaya']"
+ps_impex_impaya_world_id = "payment-impex-impaya"
 instruction_impaya_world_xpath = "//div[@id='impex-tutor']/div/div/div[2]/div"
 popup_accept_impaya_world_xpath = "//div[@id='impex-tutor']/div/div/div[3]/label"
-impaya_world_success_xpath = "//button[@id='impex-tutor-success']"
+impaya_world_success_id = "impex-tutor-success"
 
 #Пополнение через MasterCard (impex)
-ps_mc_impex_xpath = "//div[@data-code='impex']"
+ps_impex_mc_id = "payment-impex-mastercard"
 instruction_mc_impex_xpath = "//div[@id='impex-alert']/div/div/div[2]/div"
 popup_accept_mc_impex_xpath = "//div[@id='impex-alert']/div/div/div[3]/label"
-mc_impex_success_xpath = "//button[@id='impex-success']"
+mc_impex_success_id = "impex-success"
 
 #Пополнение через impex_orange
-ps_impexorange_xpath = "//div[@data-code='impexorange']"
+ps_impex_orange_id = "payment-impex-orange"
 instruction_impexorange_xpath = "//div[@id='impex-tutor']/div/div/div[2]/div"
 popup_accept_impexorange_xpath = "//div[@id='impex-tutor']/div/div/div[3]/label"
-impexorange_success_xpath = "//button[@id='impex-tutor-success']"
+impexorange_success_id = "impex-tutor-success"
 
 #Пополнение через impex_visa
-ps_impexvisa_xpath = "//div[@data-code='impexvisa']"
+ps_impex_visa_id = "payment-impex-visa"
 instruction_impexvisa_xpath = "//div[@id='impexvisa-alert']//div[contains(text(), 'Инструкция по оплате')]"#"//div[@id='impexvisa-alert']/div/div/div[2]/div"
 popup_accept_impexvisa_xpath = "//div[@id='impexvisa-alert']/div/div/div[3]/label"
-impexvisa_success_xpath = "//button[@id='impexvisa-success']"
+impexvisa_success_id = "impexvisa-success"
 
 #Пополнение через payboutique
-ps_impexpayboutique_xpath = "//div[@data-code='impexpayboutique']"
-instruction_impexpayboutique_xpath = "//div[@id='impexvisa-alert']//div[contains(text(), 'Инструкция по оплате')]"#"//div[@id='impexvisa-alert']/div/div/div[2]/div"
-popup_accept_impexpayboutique_xpath = "//div[@id='impexvisa-alert']/div/div/div[3]/label"
-impexpayboutique_success_xpath = "//button[@id='impexvisa-success']"
+ps_impex_payboutique_id = "payment-impex-payboutique"
+instruction_impexpayboutique_xpath = "//div[@id='impexpayboutique-alert']//div[contains(text(), 'Инструкция по оплате')]"#"//div[@id='impexvisa-alert']/div/div/div[2]/div"
+popup_accept_impexpayboutique_xpath = "//div[@id='impexpayboutique-alert']/div/div/div[3]/label"
+impexpayboutique_success_id = "impexpayboutique-success"
 
 #Пополнение через Мегаполис
-popup_megapolis = "//div[@id='agreemodal']"
-button_megapolis = "//a[contains(text(), 'Перейти на сайт для подтверждения')]"
-enter_to_megapolis = "//h1[contains(text(), 'Вход на сайт')]"
+popup_megapolis_xpath = "//div[@id='agreemodal']"
+button_megapolis_xpath = "//a[contains(text(), 'Перейти на сайт для подтверждения')]"
+enter_to_megapolis_xpath = "//h1[contains(text(), 'Вход на сайт')]"
 site_megapolis = "http://xn----7sbbjhcxbcqidfvkebk5be4i5i.xn--p1ai/login"
 megapolis_for_swift_xpath = "//div[@data-href~='Megapolis']"
-ps_megapolis_xpath = "//div[@data-payid='44']"
-choose_the_curr_for_payment = "//div[@id='content']/div[3]/div[2]/h4"
+ps_megapolis_agree_id = "payment-megapolis_agree"
+ps_megapolis_id = "payment-megapolis"
+#ps_megapolis_agree_xpath = "//div[@id='payment-megapolis_agree']"
+id_attr_megapolis = "id"
+choose_the_curr_for_payment_xpath = "//div[@id='content']/div[3]/div[2]/h4"
 
 #Пополнение через Тинькофф
-popup_tinkoff = "//div[@id='agreemodal-tinkoff']"
-button_tinkoff = "//div[@id='agreemodal-tinkoff']//a[contains(text(), 'Перейти на сайт для подтверждения')]"
-ps_tinkoff_xpath = "//div[@data-payid='57']"
+popup_tinkoff_id = "agreemodal-tinkoff"
+#popup_tinkoff = "//div[@id='agreemodal-tinkoff']"
+button_tinkoff_xpath = "//div[@id='agreemodal-tinkoff']//a[contains(text(), 'Перейти на сайт для подтверждения')]"
+ps_tinkoff_id = "payment-megapolis_tinkoff"
+ps_tinkoff_agree_id = "payment-megapolis_tinkoff_agree"
 
-#Пополнение через MERA (Россия, СНГ, Прибалтика)
-ps_mera_xpath = "//div[@id='payment-mera']"
+#Пополнение через MERA(Россия, СНГ, Прибалтика)
+ps_mera_id = "payment-mera"
 popup_checkbox_accept_xpath = "//div[@class='swc-modal-content']/div[3]/label"
 mera_success_xpath = "//button[@id='mera-success']"
 #сайт cool-pay (mera)
-site_mera = "https://lk.cool-pay.com/"#https://lk.cool-pay.com/ru/api/payments/315604/methods
-wait_checkout_mera = "//img[@alt='CoolPay']"
+site_mera = "https://lk.cool-pay.com/"
+wait_checkout_mera_xpath = "//img[@alt='CoolPay']"
+#Пополнение через Qiwi(Россия, СНГ, Прибалтика)
+ps_mera_qiwi_id = "payment-mera-kiwiqiwi"
+#Пополнение через Euroset(Россия, СНГ, Прибалтика)
+ps_mera_euroset_id = "payment-mera-euroset"
 
 #Пополнение через PERFECT MONEY
-ps_perfect_money_xpath = "//div[@id='payment-perfect']"
+ps_perfect_money_id = "payment-perfect"
 site_perfect_money = "https://perfectmoney.is/api/step1.asp"
-wait_checkout_pm = "//a[@href='https://perfectmoney.is']"
+wait_checkout_pm_xpath = "//a[@href='https://perfectmoney.is']"
 
 #Пополнение через swift
-ps_web_swift_xpath = "//div[@data-payid='4']"
-#"//div[@data-code='web-swift']"
+ps_swift_id = "payment-swift"
 #<2500
 popup_web_swift_small_xpath = "//div[@id='modalSwiftStep1']/div/div/div/div[2]"
 swift_modal_title = "Банковский перевод"
 link_in_modal_body = "www.advcash.com"
 #Страница заполнения инфойса (swift >=2500, megapolis, ttswift)
 transition_to_payment_swift_xpath = "//h4[@id='currency-choice']"
-download_from_verification_swift_xpath = "//a[@id='fill-from-vd']"
+download_from_verification_swift_id = "fill-from-vd"
 accept_swift_xpath = "//input[@id='agree']/.."
 submit_swift_xpath = "//button[@type='submit']"
-wait_checkout_swift_page = "//span[@class='label label-danger']"
+wait_checkout_swift_page_xapth = "//span[@class='label label-danger']"
 url_swift_invoices =  lk_priv_data.main_url + "/swift/"
 
 #Пополнение через tt_swift
-ps_tt_swift_xpath = "//div[@id='payment-tt']"
+ps_tt_swift_id = "payment-tt"
 
 #Выбор валюты для формы свифта
 choose_val_gbp_xpath = "//div[@data-val='1']"
@@ -130,43 +139,72 @@ choose_val_ru_xpath = "//div[@data-val='2']"
 choose_val_eur_xpath = "//div[@data-val='4']"
 
 #Пополнение через tt_swift
-ps_ameria_swift_xpath = "//div[@data-code='armenia-swift']"
+ps_ameria_swift_id = "payment-armenia"
 header_page = "//h3[contains(text(), 'Пополнить счет')]"
 
 #Пополнение через webmoney
-webmoney_xpath = "//div[@id='payment-webmoney']"
-popup_webmoney = "//div[@id='modal-web-money']"
+ps_webmoney_id = "payment-webmoney"
+popup_webmoney_xpath = "//div[@id='modal-web-money']"
 
 #Пополнение через cryptonator
-cryptonator_xpath = "//div[@id='payment-cryptonator-cryptonator']"
+ps_cryptonator_id = "payment-cryptonator-cryptonator"
 wait_checkout_cryptonator = "//h1[contains(text(), 'First Skyway Invest Group Limited')]"
 site_cryptonator = "https://www.cryptonator.com/merchant/invoice"
 
 #Пополнение через cryptonator - все:
-cryptonator_bitcoin_xpath = "//div[@id='payment-cryptonator-bitcoin_crypto']"
-cryptonator_bitcoincash_xpath = "//div[@id='payment-cryptonator-bitcoincash']"
-cryptonator_dash_xpath = "//div[@id='payment-cryptonator-dash']"
-cryptonator_dogecoin_xpath = "//div[@id='payment-cryptonator-dogecoin']"
-cryptonator_ethereum_xpath = "//div[@id='payment-cryptonator-ethereum']"
-cryptonator_litecoin_xpath = "//div[@id='payment-cryptonator-litecoin_crypto']"
-cryptonator_monero_xpath = "//div[@id='payment-cryptonator-monero']"
-cryptonator_ripple_xpath = "//div[@id='payment-cryptonator-ripple']"
-cryptonator_zcash_xpath = "//div[@id='payment-cryptonator-zcash']"
+ps_cryptonator_bitcoin_id = "payment-cryptonator-bitcoin_crypto"
+ps_cryptonator_bitcoincash_id = "payment-cryptonator-bitcoincash"
+ps_cryptonator_dash_id = "payment-cryptonator-dash"
+ps_cryptonator_dogecoin_id = "payment-cryptonator-dogecoin"
+ps_cryptonator_ethereum_id = "payment-cryptonator-ethereum"
+ps_cryptonator_litecoin_crypto_id = "payment-cryptonator-litecoin_crypto"
+ps_cryptonator_monero_id = "payment-cryptonator-monero"
+ps_cryptonator_ripple_id = "payment-cryptonator-ripple"
+ps_cryptonator_zcash_id = "payment-cryptonator-zcash"
 
+url_checkout_inst = lk_priv_data.main_url + "/investment/instalment?packet=%s"
+url_checkout_simple = lk_priv_data.main_url + "/investment/programs?packet=%s"
+#packages_without_plus = [exp_start, ]
+#packages_with_plus = []
 
-#Покупка пакета именное дерево
-packet_tree_xpath = "//div[@data-id='450']/div[3]/div/a"
-url_checkout_tree = lk_priv_data.main_url + "/investment/programs?packet=450"
-price_tree = 5000
-count_shares_tree_xpath = "//strong[contains(text(), '600 000')]"
+#Покупка пакета premium_5000
+premium_5000 = 456
+exp_premium_5000 = 456
+choose_packet_premium_5000_xpath = "//div[@data-name='Premium 5 000']//a"
+price_premium_5000 = 5000
+count_shares_premium_5000_xpath = "//strong[contains(text(), '600 000')]"
+inst_premium_5000 = False
 
 #Покупка пакета рассрочка 500
-packet_instalment_500_xpath = "//div[@data-id='435']/div[3]/div/a"
-url_checkout_instalment_500 = lk_priv_data.main_url + "/investment/instalment?packet=435"
+instalment_500 = 435
+exp_instalment_500 = 435
+choose_packet_instalment_500_xpath = "//div[@data-id='435']/div[3]/div/a"
 price_instalment_500 = 500
 count_shares_instalment_500_xpath = "//strong[contains(text(), '575 000')]"
-count_month = 9
+count_month_500 = 9
 price_instalment_500_all = 5000
+inst_instalment_500 = True
+
+#Покупка пакета рассрочка старт
+count_shares_starts_xpath = "//strong[contains(text(), '16 250')]"
+start = 439
+exp_start = 439
+first_payment_25_xpath = "//input[@name='package_439'][@data-first_payment='25']/.."
+choose_packet_start_xpath = "//a[@href='/investment/instalment?packet=439']"
+price_start = 25
+count_month_start = 9
+price_start_all = 250
+inst_start = True
+
+#Покупка пакета рассрочка старт +
+start_plus = 443
+exp_start_plus = 443
+first_payment_50_xpath = "//input[@name='package_439'][@data-first_payment='50']/.."
+choose_packet_start_plus_xpath = "//a[@href='/investment/instalment?packet=443']"
+price_start_plus = 50
+count_month_start_plus = 8
+price_start_plus_all = 250
+inst_start_plus = True
 
 #Регистрация
 sign_up_xpath = "//a[contains(text(), 'Зарегистрироваться')]"
@@ -176,7 +214,7 @@ field_email_xpath = "//input[@name='email']"
 for_phisical_xpath = "//label[@for='register-physical']"
 button_sign_up_xpath = "//input[@value='Зарегистрироваться']"
 partner_sky_xpath = "//input[@value='SkyWay Capital']"
-field_phone_xpath = "//input[@id='signupform-phone']"
+field_phone_id = "signupform-phone"
 phone_code = 7
 region_code = 977
 field_regname_xpath = "//input[@name='SignupForm[firstname]']"
@@ -189,24 +227,24 @@ button_reg_signup_xpath = "//input[@value='Зарегистрироваться'
 auth_link_xpath = "//a[contains(text(), 'Авторизоваться')]"
 confirm_email_xpath = "//h3[contains(text(), 'Подтвердите свой email')]"
 #Почта
-login_for_gmail_xpath = "//input[@id='identifierId']"
+login_for_gmail_id = "identifierId"
 confirm_auth_button_xpath = "//span[contains(text(), 'Далее')]"#"//span[contains(text(), 'Next')]"#
 password_for_gmail_xpath = "//input[@name='password']"
 check_new_email_xpath = "//tr[@class='zA zE']"
 link_reg = lk_priv_data.main_url + '/auth/verify-register?code='
-reg_link_xpath = "//a[contains(@href, '%s')]" % link_reg
+reg_link_xpath = "//div[@role='listitem'][last()]//a[contains(@href, '%s')]" % link_reg
 registration_completed_xpath = "//a[contains(text(), 'Регистрация завершена')]"
 #Модалка, где необходимо выбрать страну и указать город
 url_after_reg = lk_priv_data.main_url + "/site/index"
 choose_country_modal_xpath = "//select[@id='choose-citizenship-country']"
 header_model_citizenship_xpath = "//div[contains(text(), 'Выберите страну и укажите город')]"
-field_citizenship_country_xpath = "//select[@id='choose-citizenship-country']"
+field_citizenship_country_id = "choose-citizenship-country"
 ru_citizenship_country_xpath = "//select[@id='choose-citizenship-country']/option[contains(text(), 'Россия')]"
-field_country_xpath = "//select[@id='choose-country']"
+field_country_id = "choose-country"
 ru_country_xpath = "//select[@id='choose-country']/option[contains(text(), 'Россия')]"
-field_city_xpath = "//input[@id='choose-city']"
+field_city_id = "choose-city"
 reg_city = "Moscow"
-button_save_xpath = "//button[@id='save-citizenship']"
+button_save_id = "save-citizenship"
 
 #Авторизация в ЛК
 login_field_xpath = "//input[@name='LoginForm[email]']"
@@ -225,43 +263,24 @@ email_valid = "//span[contains(text(), 'Значение «Email» не явля
 #Пополнение счета
 dep_acc_title_xpath = "//h3[contains(text(), 'Пополнить счет')]"
 check_url_cashin = lk_priv_data.main_url + "/account/cashin"
-field_cashin_xpath = "//input[@id='req1']"
-deposit_button_xpath = "//button[@id='buttonPay']"
+field_cashin_id = "req1"
+deposit_button_id = "buttonPay"
 
 #Получение списка всех включенных ПС
 last_ps_xpath = "//div[last()][@data-code]"
 all_ps_xpath = "//div[@data-code]"
-name_attribute = 'data-code'
+name_attribute = 'id'
+#name_attribute = 'data-code'
 you_were_billed_xpath = "//span[contains(text(), 'Вам был выставлен счет №')]"
-#list of payment systems
-name_bitcoin = 'bitcoin'
-name_cryptonator = 'cryptonator'
-name_pm = 'perfect-money'
-name_mera = 'mera'
-name_advcash = 'adv-cash'
-name_mc = 'impex'
-name_fasa = 'fasa'
-name_impaya = 'impeximpaya'
-name_visa = 'impexvisa'
-name_payboutique = 'impexpayboutique'
-name_orange = 'impexorange'
-name_webmoney = 'web-money'
-name_litecoin = 'litecoin'
-name_mega = 'impexmega'
-name_epay = 'impexepay'
-name_swift = 'swift'
-name_megapolis = 'web-swift'
-name_ttswift = 'tt-swift'
-name_ameria = 'armenia-swift'
 
 #сайт devcab.trading-impex.com/
-wait_checkout_trading_impex = "//button[@id='dropdownMenu1']"
+wait_checkout_trading_impex_id = "dropdownMenu1"
 site_trading_impex = "https://devcab.trading-impex.com/auth/login"
 
 #Всплывающее окно свифт
 popup_swift_alert_xpath = "//div[@id='swift-alert']/div/div/div[1]"
 popup_accept_swift_alert_xpath = "//div[@id='swift-alert']/div/div/div[3]/label"
-swift_alert_success_xpath = "//button[@id='swift-success']"
+swift_alert_success_id = "swift-success"
 
 #Модальное окно по переходу в impex trading
 impex_modal_subtitle = "Инструкция по оплате"
@@ -274,29 +293,31 @@ elem_position_top = "top"
 elem_position_bottom = "bottom"
 
 #Выбор пакета и подписание договора конвертируемого займа
-main_balance_xpath = "//span[@class='personal-card__table-value-text']"
+a_balance_xpath = "//span[@class='personal-card__table-value-text'][1]"
+b_balance_xpath = "//span[@class='personal-card__table-value-text'][1]"
 package_header_xpath = "//div[@class='package__item-header']"
 pay_account_xpath = "//label[@for='pay-w-acc']"
 main_account_xpath = "//span[@class='paying__control-label-text']"
 total = "Итого"
-total_price_xpath = "//span[@id='total_price']"
-input_one_xpath = "//input[@id='input1']"
-checkout_tree_xpath = "//div[@class='paying__panel-acc-btn']/input"
-progress_start_xpath = "//button[@id='progressStart']"
+total_price_id = "total_price"
+input_one_id = "input1"
+checkout_button_xpath = "//div[@class='paying__panel-acc-btn']/input"
+progress_start_id = "progressStart"
 you_select_shares_xpath = "//div[contains(text(), 'Вы собираетесь приобрести следующее количество акций')]"
-checkbox_icon_xpath = "//label[@for='agree']"#"//span[@class='swc-elements_checkbox-icon']"
+checkbox_icon_xpath = "//label[@for='agree']"
 button_buy_xpath = "//button[@id='buy-btn'][not(@disabled)]"
 sign_xpath = "//button[@name='sign']"
 
 #Рассрочка
 url_pay_instalment = lk_priv_data.main_url + "/investment/pay-instalment"
-href_my_installment_xpath = "//div[@id='content']/a"
+href_my_instalment_xpath = "//div[@id='content']/a"
 checkout_myinstalment_xpath = "//h2[contains(text(), 'Мои рассрочки')]"
 section_myinstalment = lk_priv_data.main_url + "/investment/myinstalment"
 select_pay_instalment_xpath = "//select[@class='swc-elements_pay-select swc-elements_pay-select_low instalment-payment-qty']"
 schedule_payment_xpath = "//span[@class='myinstalment_description-title']"
-month_pay_instalment_xpath = "//select[@class='swc-elements_pay-select swc-elements_pay-select_low instalment-payment-qty']/option[@value='%s']" % count_month
+month_pay_instalment_xpath = "//select[@class='swc-elements_pay-select swc-elements_pay-select_low instalment-payment-qty']/option[@value='%s']"
 last_instalment_xpath = "//div[@class='myinstalment_item ']"
+button_for_pay_instalment_xpath = "//button[@data-id='%s']"
 name_attr_instalment_id = "data-id"
 
 #Подписание требования к сертификату
@@ -316,81 +337,82 @@ deposit_account_section_xpath = "//a[@title='Пополнить счет']"
 #Переход к переводу средств
 funds_transfer_section_xpath = "//a[@title='Перевод средств']"
 #Перевод средств
-enter_the_sum_main_xpath = "//input[@id='sumA']"
-enter_the_sum_bonus_xpath = "//input[@id='sumB']"
-enter_email_recipient_xpath = "//input[@id='recipient']"
-input_submit_xpath = "//input[@id='findrec']"
-pay1button_xpath = "//button[@id='pay1button']"
-recipient_fio_xpath = "//div[@id='recipient_fio']"
+enter_the_sum_main_id = "sumA"
+enter_the_sum_bonus_id = "sumB"
+enter_email_recipient_id = "recipient"
+input_submit_id = "findrec"
+pay1button_id = "pay1button"
+recipient_fio_id = "recipient_fio"
+confirmation_email_xpath = "//input[@value='email']/.."
 funds_transfer_modal_xpath = "//div[@id='myModal']"
 funds_code_xpath = "//a[contains(@href, 'mailto:chagdurova1992@mail.ru')]/parent::*"
-transfer_success_xpath = "//div[@id='myModal-success']"
-input_sms_code_xpath = "//input[@id='sms-code']"
-button_sms_code_xpath = "//button[@id='send-sms-code']"
+transfer_success_id = "myModal-success"
+input_sms_code_id = "sms-code"
+button_sms_code_id = "send-sms-code"
 
 #Переход в раздел верификации
 settings_section_xpath = "//span[contains(text(), 'Настройки')]"
 verification_section_xpath = "//a[@title='Верификация']"
 
 #Верификация
-fill_forms_xpath = "//a[contains(text(), 'Заполнить')]"#"//a[@href='/personal']"#
+fill_forms_xpath = "//a[contains(text(), 'Заполнить')]"
 #Заполнение формы "Персональные данные"
 header_verif_xpath = "//div[@id='verification-steps']"
-verif_field_ln_ru_xpath = "//input[@id='userpersonaldata-last_name']"
+verif_field_ln_ru_id = "userpersonaldata-last_name"
 verif_ln_ru = "ФамилияВ"
-verif_field_ln_en_xpath = "//input[@id='userpersonaldata-last_name_en']"
+verif_field_ln_en_id = "userpersonaldata-last_name_en"
 verif_ln_en = "LastnameV"
-verif_field_n_ru_xpath = "//input[@id='userpersonaldata-first_name']"
+verif_field_n_ru_id = "userpersonaldata-first_name"
 verif_n_ru = "ИмяВ"
-verif_field_n_en_xpath = "//input[@id='userpersonaldata-first_name_en']"
+verif_field_n_en_id = "userpersonaldata-first_name_en"
 verif_n_en = "NameV"
 checkbox_female_xpath = "//input[@id='userpersonaldata-gender-female']/.."
-select_birthday_xpath = "//select[@id='userpersonaldata-birthday']"
+select_birthday_id = "userpersonaldata-birthday"
 select_birthday_count_xpath = "//select[@id='userpersonaldata-birthday']/option[@value='10']"
-select_birthmonth_xpath = "//select[@id='userpersonaldata-birthmonth']"
+select_birthmonth_id = "userpersonaldata-birthmonth"
 select_birthmonth_count_xpath = "//select[@id='userpersonaldata-birthmonth']/option[@value='6']"
-select_birthyear_xpath = "//select[@id='userpersonaldata-birthyear']"
+select_birthyear_id = "userpersonaldata-birthyear"
 select_birthyear_count_xpath = "//select[@id='userpersonaldata-birthyear']/option[@value='1990']"
-select_birthplace_xpath = "//select[@id='userpersonaldata-birthplace_country_id']"
+select_birthplace_id = "userpersonaldata-birthplace_country_id"
 select_birthplace_country_xpath = "//select[@id='userpersonaldata-birthplace_country_id']/option[@value='4']"
 button_next_passport_xpath = "//a[@data-next='passport-data']"
 #Заполнение формы "Паспортные данные"
-select_persondoc_xpath = "//select[@id='userpersonaldata-id_type_id']"
+select_persondoc_id = "userpersonaldata-id_type_id"
 select_persondoc_type_xpath = "//select[@id='userpersonaldata-id_type_id']/option[@value='1']"
-field_persondoc_num_xpath = "//input[@id='userpersonaldata-id_serial_number']"
+field_persondoc_num_id = "userpersonaldata-id_serial_number"
 persondoc_num = "12459565"
-select_persondoc_day_xpath = "//select[@id='userpersonaldata-user_document_day']"
+select_persondoc_day_id = "userpersonaldata-user_document_day"
 select_persondoc_day_count_xpath = "//select[@id='userpersonaldata-user_document_day']/option[@value='10']"
-select_persondoc_month_xpath = "//select[@id='userpersonaldata-user_document_month']"
+select_persondoc_month_id = "userpersonaldata-user_document_month"
 select_persondoc_month_count_xpath = "//select[@id='userpersonaldata-user_document_month']/option[@value='6']"
-select_persondoc_year_xpath = "//select[@id='userpersonaldata-user_document_year']"
+select_persondoc_year_id = "userpersonaldata-user_document_year"
 select_persondoc_year_count_xpath = "//select[@id='userpersonaldata-user_document_year']/option[@value='2013']"
-field_persondoc_who_issue_xpath = "//input[@id='userpersonaldata-id_who_issue']"
+field_persondoc_who_issue_id = "userpersonaldata-id_who_issue"
 persondoc_who_issue = "ОУФМС по стране"
 button_next_address_xpath = "//a[@data-next='address-data']"
 #Заполнение формы "Адрес регистрации"
 field_reg_address_xpath = "//input[@id='userpersonaldata-reg_address_en']"
 reg_address = "Адрес текущий"
 button_finish_xpath = "//a[@data-next='finish']"
-select_address_region_xpath = "//select[@id='userpersonaldata-reg_address_region_id']"
+select_address_region_id = "userpersonaldata-reg_address_region_id"
 select_address_region_count_xpath = "//select[@id='userpersonaldata-reg_address_region_id']/option[@value='5468686']"
-select_address_citytype_xpath = "//select[@id='userpersonaldata-reg_address_city_type_id']"
+select_address_citytype_id = "userpersonaldata-reg_address_city_type_id"
 select_address_citytype_count_xpath = "//select[@id='userpersonaldata-reg_address_city_type_id']/option[@value='1']"
 select_address_country_xpath = "//select[@id='userpersonaldata-reg_address_country_id']"
-field_city_name_xpath = "//input[@id='userpersonaldata-reg_address_city_name']"
+field_city_name_id = "userpersonaldata-reg_address_city_name"
 city_name = "Название города"
-select_address_streettype_xpath = "//select[@id='userpersonaldata-reg_address_street_type_id']"
+select_address_streettype_id = "userpersonaldata-reg_address_street_type_id"
 select_address_streettype_count_xpath = "//select[@id='userpersonaldata-reg_address_street_type_id']/option[@value='3']"
-field_address_street_xpath = "//input[@id='userpersonaldata-reg_address_street_name']"
+field_address_street_id = "userpersonaldata-reg_address_street_name"
 address_street_name = "Молодежная"
-field_address_house_xpath = "//input[@id='userpersonaldata-reg_address_house']"
+field_address_house_id = "userpersonaldata-reg_address_house"
 house_number = 20
 #Заполнение формы "Загрузка документов"
 section_download_xpath = "//h3[contains(text(), 'Загрузка документов')]"
 button_choose_xpath = "//span[contains(text(), 'Выбрать')]"
 button_download_xpath = "//button[contains(text(), 'Загрузить')]"
 upload_confirm_xpath = "//label[@for='upload_confirm_file']"
-button_confirm_xpath = "//button[@id='upload_confirm_file_save']"
+button_confirm_id = "upload_confirm_file_save"
 #status_ver_after_fill = "На проверке"
 #autoit
 autoit_title = "Открытие"#"Open"#
@@ -402,5 +424,33 @@ finish_header_verif_xpath = "//h3[contains(text(), 'Ваши данные вер
 personal_list_link = lk_priv_data.main_url + "/personal/list"
 #link_download_docs_xpath = "//a[contains(text(), 'Загрузить документы')]"
 
-
-
+#Запрос на вывод:
+#1) добавление реквизитов
+req_section_xpath = "//a[@href='/account/settings']"
+req_title_section_xpath = "//h2[contains(text(), 'Платежные реквизиты')]"
+req_button_add = "opener"
+open_mymodal_id = "myModal"
+select_req_type_id = "account-type"
+select_req_visa_xpath = "//option[@data-code='VISA']"
+input_req_number_visa_id = "number"
+input_req_name_owner_id = "name"
+req_name_owner = "test user"
+input_req_expiry_id = "expiry"
+req_expiry = 1220
+button_add_requisites_id = "sendaccountdata"
+added_rows = "(//DIV[@id='wrap']//TABLE)[3]/tbody/tr[%s]"
+title_requisites_xpath = "//h2[@class='cabinet__title']"
+all_rows_table_requisites_xpath = "(//DIV[@id='wrap']//TABLE)[3]/tbody/tr"
+len_td_table_xpath = "(//DIV[@id='wrap']//TABLE)[3]/tbody/tr[1]/td"
+#2) переход к заросу на вывод
+withdrawal_request_xpath = "//a[@href='/account/cashout']"
+count_request_xpath = "//div[@id='w1']//td"
+text_del_xpath = "//div[@id='w1']//td[7]"
+link_for_delete = "//div[@id='w1']//tr[1]/td[7]"
+exp_text_for_del = "Отменить"
+data_type_visamaster_xpath = "//input[@data-type-id='4']/parent::*"
+input_sum_request_id = "summ"
+button_request_id = "pay1button"
+last_message_xpath = "//div[@role='listitem'][last()]"
+last_rows_table_requisites_xpath = "(//DIV[@id='wrap']//TABLE)[3]/tbody/tr[last()]"
+element_with_code_xpath = "//div[@role='listitem'][last()]//div[contains(text(), 'Ваш проверочный код')]"

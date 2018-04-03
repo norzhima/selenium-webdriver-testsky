@@ -1,4 +1,5 @@
 .idea/
+.tmp.drivedownload/
 __pycache__
 lk_priv_data.py
 *.log

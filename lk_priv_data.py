@@ -1,6 +1,9 @@
-main_url = 'https://cab-test7.skyway.capital'
-#main_url = 'https://nnew.skyway.capital'
+main_url = 'https://app02-newlk02.skyway.capital'#'https://cab-test7.skyway.capital'
+
 '''
+main_url = 'https://app02-newlk01.skyway.capital'
+
+
 list_username = [
                  ['nikimik741@gmail.com', 'aa1bb2cc', 'Анна Арапова'],
                  ['philipp.d.1988@gmail.com', 'aa1bb2cc', 'Филипп Данкерт'],
@@ -15,13 +18,15 @@ list_username = [
                  ['89178645359@mail.ru', 'aa1bb2cc', 'Альбина Ахмадиева'],
                  ['lukoyanov13@mail.ru', 'aa1bb2cc', 'Виктор Лукоянов']
                  ]
+                 {'login': 'globalmoney777@gmail.com','password':'aa1bb2cc', 'full_name': 'Алексей Суходоев'},
+
 '''
 login_auth = "n.chagdurova@skyway.capital"
 
 list_ver_user = [
     {'login': 'sanyabc@mail.ru', 'password': 'aa1bb2cc', 'full_name': 'Александр Хухрянский'},
-    {'login': 'globalmoney777@gmail.com','password':'aa1bb2cc', 'full_name': 'Алексей Суходоев'},
-    {'login': 'n.chagdurova@skyway.capital', 'password': "Xfulehjdf!1", 'full_name': 'Norzhima Чагдурова'},
+    {'login': 'nikimik741@gmail.com','password':'aa1bb2cc', 'full_name': 'Анна Арапова'},
+    {'login': 'lukoyanov13@mail.ru', 'password':'aa1bb2cc', 'full_name': 'Виктор Лукоянов'},
     {'login': 'ruketkhashieva@gmail.com', 'password': 'aa1bb2cc', 'full_name': 'Рукет Хашиева'},
     {'login': '47maksimova@gmail.com', 'password': 'aa1bb2cc', 'full_name': 'Галина Максимова'},
 ]
@@ -38,7 +43,7 @@ def get_user():
 reg_password = 'aa1bb2cc'
 mail_url = 'https://mail.google.com/mail/u/1/#inbox'
 login_for_gmail = "skywaytest2@gmail.com"
-password_for_gmail = "testuser2"
+password_for_gmail = "bgtyhnmju5678tyughj"
 
 #list_for_bd
 all_user_id = [207302, 91, 163672, 258454, 258414, 111757, 208320, 243133, 258027, 220610, 257498, 256034, 242815, 257553, 157325, 257394, 257323]
@@ -48,12 +53,15 @@ login_for_verif = "chagdurova1992@mail.ru"
 passw_for_verif = "aa1bb2cc"
 full_name_for_verif = "Norzhima Chagdurova"
 
-login_for_test = "n.chagdurova@skyway.capital"
-passw_for_test = "Xfulehjdf!1"
-full_name_for_test = "Norzhima Чагдурова"
+login_for_test = "chagdurova1992@mail.ru"
+passw_for_test = "y/xfulehjdf903skyway"
+full_name_for_test = "Norzhima Chagdurova"
 
-email_recipient = "chagdurova1992@mail.ru"
-full_recipient = "Norzhima Chagdurova (chagdurova1992@mail.ru)"
+email_recipient = "n.chagdurova@skyway.capital"
+full_recipient = "Norzhima Чагдурова (n.chagdurova@skyway.capital)"
+
+#запрос на вывод. Добавлние реквизитов
+req_number_visa = "4572857489562584"
 
 
 
