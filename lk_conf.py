@@ -8,8 +8,9 @@ default_browser = 'Chrome'
 short_company_name = "SkyWay"
 full_company_name = "SkyWay Capital"
 
-locator_id = "id"
-locator_xpath = "xpath"
+# locator_id = "id"
+# locator_xpath = "xpath"
+logout = "//a[@href='/auth/logout']"
 
 sum_small = 50
 sum_large = 2500
@@ -162,49 +163,154 @@ ps_cryptonator_monero_id = "payment-cryptonator-monero"
 ps_cryptonator_ripple_id = "payment-cryptonator-ripple"
 ps_cryptonator_zcash_id = "payment-cryptonator-zcash"
 
+#ПОКУПКА ПАКЕТОВ
 url_checkout_inst = lk_priv_data.main_url + "/investment/instalment?packet=%s"
 url_checkout_simple = lk_priv_data.main_url + "/investment/programs?packet=%s"
-#packages_without_plus = [exp_start, ]
-#packages_with_plus = []
-
-#Покупка пакета premium_5000
-premium_5000 = 456
-exp_premium_5000 = 456
-choose_packet_premium_5000_xpath = "//div[@data-name='Premium 5 000']//a"
-price_premium_5000 = 5000
-count_shares_premium_5000_xpath = "//strong[contains(text(), '600 000')]"
-inst_premium_5000 = False
 
 #Покупка пакета рассрочка 500
-instalment_500 = 435
-exp_instalment_500 = 435
-choose_packet_instalment_500_xpath = "//div[@data-id='435']/div[3]/div/a"
-price_instalment_500 = 500
-count_shares_instalment_500_xpath = "//strong[contains(text(), '575 000')]"
-count_month_500 = 9
-price_instalment_500_all = 5000
-inst_instalment_500 = True
+#Здесь необходимо заполнить все свойства пакетов, которые собираемся тестировать
+packet_instalment_500 = {
+ 'packet_id':435,
+ 'choose_packet_xpath':"//div[@data-id='435']/div[3]/div/a",
+ 'price': 500,
+ 'count_shares':"//strong[contains(text(), '575 000')]",
+ 'count_month':9,
+ 'price_all':5000,
+ 'instalment':True,
+ 'pay':'a'
+}
 
+#Покупка пакета premium_5000
+packet_premium_5000 = {
+ 'packet_id': 456,
+ 'choose_packet_xpath':"//div[@data-name='Premium 5 000']//a",
+ 'count_shares':"//strong[contains(text(), '600 000')]",
+ 'price_all':5000,
+ 'instalment':False
+}
+
+
+exp_without_plus = [439, 440, 441, 442]
 #Покупка пакета рассрочка старт
-count_shares_starts_xpath = "//strong[contains(text(), '16 250')]"
-start = 439
-exp_start = 439
 first_payment_25_xpath = "//input[@name='package_439'][@data-first_payment='25']/.."
-choose_packet_start_xpath = "//a[@href='/investment/instalment?packet=439']"
-price_start = 25
-count_month_start = 9
-price_start_all = 250
-inst_start = True
+packet_start = {
+ 'packet_id':439,
+ 'choose_packet_xpath':"//a[@href='/investment/instalment?packet=439']",
+ 'price': 25,
+ 'count_shares':"//strong[contains(text(), '16 250')]",
+ 'count_month':9,
+ 'price_all':250,
+ 'instalment':True
+}
 
+exp_with_plus = [443, 444, 445, 446]
 #Покупка пакета рассрочка старт +
-start_plus = 443
-exp_start_plus = 443
 first_payment_50_xpath = "//input[@name='package_439'][@data-first_payment='50']/.."
-choose_packet_start_plus_xpath = "//a[@href='/investment/instalment?packet=443']"
-price_start_plus = 50
-count_month_start_plus = 8
-price_start_plus_all = 250
-inst_start_plus = True
+packet_start_plus = {
+ 'packet_id': 443,
+ 'choose_packet_xpath':"//a[@href='/investment/instalment?packet=443']",
+ 'price': 50,
+ 'count_shares':"//strong[contains(text(), '16 250')]",
+ 'count_month':8,
+ 'instalment':True,
+ 'price_all': 250,
+}
+innotrans_one = {
+ 'packet_id': 428,
+ 'choose_packet_xpath': "//a[@href='/investment/programs?packet=428']",
+ 'count_shares': "//strong[contains(text(), '90 000')]",
+ 'price_all': 1000,
+ 'instalment': False,
+ 'innotrans':True
+}
+
+#Выбор метода оплаты:
+pay_account_a = {
+ 'type': "a",
+ 'pay_from_b':0,
+ 'pay_from_c':0,
+}
+pay_account_b = {
+ 'type':"b",
+ 'pay_from_a':0,
+ 'pay_from_c':0,
+}
+pay_account_c = {
+ 'type':"c",
+ 'pay_from_a':0,
+ 'pay_from_b':0,
+}
+pay_account_ab = {
+ 'type':"ab",
+ 'pay_from_c':0,
+ 'pay_from_b':5,
+}
+pay_account_ac = {
+ 'type': "ac",
+ 'pay_from_c': 5,
+ 'pay_from_b': 0,
+}
+pay_account_bc = {
+ 'type': "bc",
+ 'pay_from_a': 0,
+ 'pay_from_c': 5,
+}
+pay_account_abc = {
+ 'type': "abc",
+ 'pay_from_b': 5,
+ 'pay_from_c': 5,
+}
+pay_ameria = {
+ 'type': "ameria",
+}
+pay_ameria_xpath = "//div[@data-ps-id='56']"
+
+#Выбор пакета и подписание договора конвертируемого займа
+balance_a_xpath = "//div[@data-slider='swcSliceCalculation']//tr[1]//span"
+balance_b_xpath = "//div[@data-slider='swcSliceCalculation']//tr[2]//span"
+balance_c_xpath = "//div[@data-slider='swcSliceCalculation']//tr[3]//strong"
+balance_d_xpath = "//div[@data-slider='swcSliceCalculation']//tr[4]//strong"
+pay_w_acc = "//label[@for='pay-w-acc']"
+pay_w_ps = "//label[@for='pay-w-ps']"
+input_a_id = "input1"
+input_b_id = "input2"
+input_c_id = "input7"
+package_header_xpath = "//div[@class='package__item-header']"
+pay_accounts_xpath = "//label[@for='pay-w-acc']"
+main_account_xpath = "//span[@class='paying__control-label-text']"
+total = "Итого"
+total_price_id = "total_price"
+checkout_button_xpath = "//div[@class='paying__panel-acc-btn']/input"
+progress_start_id = "progressStart"
+you_select_shares_xpath = "//div[contains(text(), 'Вы собираетесь приобрести следующее количество акций')]"
+checkbox_icon_xpath = "//label[@for='agree']"
+button_buy_xpath = "//button[@id='buy-btn'][not(@disabled)]"
+sign_xpath = "//button[@name='sign']"
+
+#Рассрочка
+url_pay_instalment = lk_priv_data.main_url + "/investment/pay-instalment"
+href_my_instalment_xpath = "//div[@id='content']/a"
+checkout_myinstalment_xpath = "//h2[contains(text(), 'Мои рассрочки')]"
+pay_instalment_xpath = "//h2[contains(text(), 'Мои рассрочки')]"
+section_myinstalment = lk_priv_data.main_url + "/investment/myinstalment"
+select_pay_instalment_xpath = "//select[@class='swc-elements_pay-select swc-elements_pay-select_low instalment-payment-qty']"
+schedule_payment_xpath = "//span[@class='myinstalment_description-title']"
+month_pay_instalment_xpath = "//select[@class='swc-elements_pay-select swc-elements_pay-select_low instalment-payment-qty']/option[@value='%s']"
+last_instalment_xpath = "//div[@class='myinstalment_item ']"
+button_for_pay_instalment_xpath = "//button[@data-id='%s']"
+name_attr_instalment_id = "data-id"
+select_a_or_b = "//select[@id='pay-select%s']"
+select_b = "//select[@id='pay-select%s']/option[@value='B']"
+
+#Подписание требования к сертификату
+requirement_xpath = "//canvas[@id='swc-canvas']"
+section_my_certificates_xpath = "//h2[contains(text(), 'Мои сертификаты')]"
+section_my_certificates = "Мои сертификаты"
+checkout_main_section_xpath = "//a[@class='heading-logo-link']"
+all_news_xpath = "//a[@class='news__title-link']"
+url_acceptance_page = lk_priv_data.main_url+"/investment/pay-check"
+url_my_certificates = lk_priv_data.main_url + "/investment/portfolio"
+
 
 #Регистрация
 sign_up_xpath = "//a[contains(text(), 'Зарегистрироваться')]"
@@ -219,6 +325,7 @@ phone_code = 7
 region_code = 977
 field_regname_xpath = "//input[@name='SignupForm[firstname]']"
 regname = "name"
+username_in_lk = "//h3[contains(text(), '%s')]"
 field_reglastname_xpath = "//input[@name='SignupForm[lastname]']"
 reglastname = "lastname"
 field_reg_password = "//input[@name='SignupForm[password]']"
@@ -230,8 +337,10 @@ confirm_email_xpath = "//h3[contains(text(), 'Подтвердите свой em
 login_for_gmail_id = "identifierId"
 confirm_auth_button_xpath = "//span[contains(text(), 'Далее')]"#"//span[contains(text(), 'Next')]"#
 password_for_gmail_xpath = "//input[@name='password']"
-check_new_email_xpath = "//tr[@class='zA zE']"
+check_new_email_xpath = "//tr[@class='zA zE']"#"Верификация email на SkyWay Capital" //tr[@class='zA zE']//b[contains(text(), 'Верификация email на SkyWay Capital')]Новый вход в личный кабинет new.skyway.capital
+
 link_reg = lk_priv_data.main_url + '/auth/verify-register?code='
+new_reg_link_xpath = "//a[@href='mailto:%s']/../a[4]"
 reg_link_xpath = "//div[@role='listitem'][last()]//a[contains(@href, '%s')]" % link_reg
 registration_completed_xpath = "//a[contains(text(), 'Регистрация завершена')]"
 #Модалка, где необходимо выбрать страну и указать город
@@ -291,43 +400,6 @@ footer_xpath = "//div[@id='footer']//div[@class='footer__top']"
 select_payment_system = "//div[contains(text(), 'Выберите платежную систему')]"
 elem_position_top = "top"
 elem_position_bottom = "bottom"
-
-#Выбор пакета и подписание договора конвертируемого займа
-a_balance_xpath = "//span[@class='personal-card__table-value-text'][1]"
-b_balance_xpath = "//span[@class='personal-card__table-value-text'][1]"
-package_header_xpath = "//div[@class='package__item-header']"
-pay_account_xpath = "//label[@for='pay-w-acc']"
-main_account_xpath = "//span[@class='paying__control-label-text']"
-total = "Итого"
-total_price_id = "total_price"
-input_one_id = "input1"
-checkout_button_xpath = "//div[@class='paying__panel-acc-btn']/input"
-progress_start_id = "progressStart"
-you_select_shares_xpath = "//div[contains(text(), 'Вы собираетесь приобрести следующее количество акций')]"
-checkbox_icon_xpath = "//label[@for='agree']"
-button_buy_xpath = "//button[@id='buy-btn'][not(@disabled)]"
-sign_xpath = "//button[@name='sign']"
-
-#Рассрочка
-url_pay_instalment = lk_priv_data.main_url + "/investment/pay-instalment"
-href_my_instalment_xpath = "//div[@id='content']/a"
-checkout_myinstalment_xpath = "//h2[contains(text(), 'Мои рассрочки')]"
-section_myinstalment = lk_priv_data.main_url + "/investment/myinstalment"
-select_pay_instalment_xpath = "//select[@class='swc-elements_pay-select swc-elements_pay-select_low instalment-payment-qty']"
-schedule_payment_xpath = "//span[@class='myinstalment_description-title']"
-month_pay_instalment_xpath = "//select[@class='swc-elements_pay-select swc-elements_pay-select_low instalment-payment-qty']/option[@value='%s']"
-last_instalment_xpath = "//div[@class='myinstalment_item ']"
-button_for_pay_instalment_xpath = "//button[@data-id='%s']"
-name_attr_instalment_id = "data-id"
-
-#Подписание требования к сертификату
-requirement_xpath = "//canvas[@id='swc-canvas']"
-section_my_certificates_xpath = "//h2[contains(text(), 'Мои сертификаты')]"
-section_my_certificates = "Мои сертификаты"
-checkout_main_section_xpath = "//a[@class='heading-logo-link']"
-all_news_xpath = "//a[@class='news__title-link']"
-url_acceptance_page = lk_priv_data.main_url+"/investment/pay-check"
-url_my_certificates = lk_priv_data.main_url + "/investment/portfolio"
 
 #Разделы ЛК
 #Переход к пополнению

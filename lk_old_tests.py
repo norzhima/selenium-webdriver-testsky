@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException as TE
 import lk_conf
 import lk_priv_data
-import lk_methods
+import lk_method
 import random
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
@@ -24,17 +24,16 @@ import platform
 class LkswcTest(unittest.TestCase):
     def setUp(self):
         if lk_conf.default_browser is "Chrome":
-            self.options = webdriver.ChromeOptions()
-            self.options.add_argument("--start-maximized")
-            #self.options.arguments
-            self.driver = webdriver.Chrome(chrome_options=self.options)
+            options = webdriver.ChromeOptions()
+            options.add_argument("--start-maximized")
+            self.driver = webdriver.Chrome(chrome_options=options)
         else:
-            self.profile = webdriver.FirefoxProfile()
-            self.profile.native_events_enabled = False
+            profile = webdriver.FirefoxProfile()
+            profile.native_events_enabled = False
             self.driver = webdriver.Firefox()
-            #profile.setEnableNativeEvents(false)
             self.driver.maximize_window()
-        self.find = lk_methods.Find(self.driver)
+        self.find = lk_method.Find(self.driver)
+        self.pay = lk_method.Pay(self.driver)
         self.driver.get(lk_priv_data.main_url)
         self.assertEqual(lk_conf.short_company_name, self.driver.title)
         self.change_language()
@@ -298,7 +297,7 @@ class LkswcTest(unittest.TestCase):
         self.autorization()
         self.deposit_account()
         if self.check_of_ps(lk_conf.ps_ameria_swift_id) == True:
-            #self.popup_swift_alert()
+            self.popup_swift_alert()
             self.payment_swift()
 
     @unittest.skip("Платежная система tt_swift выключена.")
@@ -308,17 +307,17 @@ class LkswcTest(unittest.TestCase):
         if self.check_of_ps(lk_conf.ps_tt_swift_id) == True:
             self.payment_swift(select_currency="yes")
 
-    def test_check_packet_simple_premium_5000(self):
-        self.check_packets(lk_conf.premium_5000)
+    def test_packet_simple_premium_5000_through_account_c(self):
+        self.check_packet(lk_conf.packet_premium_5000, lk_conf.pay_account_c)
 
-    def test_check_packet_instalment_500(self):
-        self.check_packets(lk_conf.instalment_500)
+    def test_packet_instalment_500_through_account_a(self):
+        self.check_packet(lk_conf.packet_instalment_500, lk_conf.pay_account_a)
 
-    def test_check_packet_instalment_start(self):
-        self.check_packets(lk_conf.start)
+    def test_packet_instalment_start_through_account_ab(self):
+        self.check_packet(lk_conf.packet_start, lk_conf.pay_account_ab)
 
-    def test_check_packet_instalment_start_plus(self):
-        self.check_packets(lk_conf.start_plus)
+    def test_packet_instalment_start_plus_through_account_b(self):
+        self.check_packet(lk_conf.packet_start_plus, lk_conf.pay_account_b)
 
     def test_auth_login(self):
         self.check_login("", "", lk_conf.enter_password, enter_email='yes',)
@@ -335,7 +334,7 @@ class LkswcTest(unittest.TestCase):
         self.choose_cityzenship_modal()
         self.verification()
 
-    #@unittest.skip("тест test_transfer_of_money выключен.")
+    #@unittest.skip("тест test_transfer_of_money выключен, так как включены в ЛК доп. проверки на наличие гугл аутентификатора и получение кодов через смс")
     def test_transfer_of_money(self):
         self.login_simple()
         self.funds_transfer()
@@ -344,68 +343,96 @@ class LkswcTest(unittest.TestCase):
         except TE:
             print("Сообщение на почту не пришло за указанное время")
 
-    #@unittest.skip("тест test_withdrawal_request выключен.")
+    @unittest.skip("тест test_withdrawal_request выключен, так как включены в ЛК доп. проверки на наличие гугл аутентификатора и получение кодов через смс")
     def test_withdrawal_request(self):
         self.login_simple()
         self.add_requisites()
         self.withdrawal_request()
         self.get_and_insert_code()
 
-    def check_packets(self, packet_id):
+
+    def check_packet(self, packet, payment_method):
         self.autorization()
-        self.get_param_packet(packet_id)
-        self.check_packet()
-
-
-    def get_param_packet(self, packet_id):
-        self.packet_id = packet_id
-        if self.packet_id == lk_conf.exp_instalment_500:
-            self.url_checkout = lk_conf.url_checkout_inst % self.packet_id
-            self.choose_packet_xpath = lk_conf.choose_packet_instalment_500_xpath
-            self.price = lk_conf.price_instalment_500
-            self.count_shares = lk_conf.count_shares_instalment_500_xpath
-            self.count_month = lk_conf.count_month_500
-            self.price_all = lk_conf.price_instalment_500_all
-            self.instalment = lk_conf.inst_instalment_500
-        elif self.packet_id == lk_conf.exp_premium_5000:
-            self.choose_packet_xpath = lk_conf.choose_packet_premium_5000_xpath
-            self.count_shares = lk_conf.count_shares_premium_5000_xpath
-            self.price_all = lk_conf.price_premium_5000
-            self.instalment = lk_conf.inst_premium_5000
-            self.url_checkout = lk_conf.url_checkout_simple % self.packet_id
-        elif self.packet_id == lk_conf.exp_start:
-            self.url_checkout = lk_conf.url_checkout_inst % self.packet_id
-            self.choose_packet_xpath = lk_conf.choose_packet_start_xpath
-            self.price = lk_conf.price_start
-            self.count_shares = lk_conf.count_shares_starts_xpath
-            self.count_month = lk_conf.count_month_start
-            self.price_all = lk_conf.price_start_all
-            self.instalment = lk_conf.inst_start
-        elif self.packet_id == lk_conf.exp_start_plus:
-            self.url_checkout = lk_conf.url_checkout_inst % self.packet_id
-            self.choose_packet_xpath = lk_conf.choose_packet_start_plus_xpath
-            self.price = lk_conf.price_start_plus
-            self.count_shares = lk_conf.count_shares_starts_xpath
-            self.count_month = lk_conf.count_month_start_plus
-            self.price_all = lk_conf.price_start_plus_all
-            self.instalment = lk_conf.inst_start_plus
-        else:
-            print("Указанный пакет не найден")
-
-
-    def check_packet(self):
-        if self.instalment == True:
-            if self.packet_id in [lk_conf.exp_start]:
+        if packet['instalment'] == True:
+            if packet['packet_id'] in lk_conf.exp_without_plus:
                 self.find.element_by_xpath_and_move(lk_conf.first_payment_25_xpath).click()
-            if self.packet_id in [lk_conf.exp_start_plus]:
+            if packet['packet_id'] in lk_conf.exp_with_plus:
                 self.find.element_by_xpath_and_move(lk_conf.first_payment_50_xpath).click()
-            self.packet_choose(self.choose_packet_xpath, self.url_checkout,
-                               self.price, self.count_shares)
-            self.packet_instalment_payment(lk_conf.month_pay_instalment_xpath % self.count_month)
+            self.sum_list = self.packet_choose(packet['choose_packet_xpath'], lk_conf.url_checkout_inst % packet['packet_id'],
+                               packet['price'], packet['count_shares'], payment_method, packet['instalment'])
+            self.packet_instalment_payment(lk_conf.month_pay_instalment_xpath % packet['count_month'], payment_method)
+            self.packet_sign_a_claim(self.sum_list, packet['price_all'], packet['instalment'], payment_method['type'], packet['price'])
         else:
-            self.packet_choose(self.choose_packet_xpath, self.url_checkout,
-                               self.price_all, self.count_shares)
-        self.packet_sign_a_claim(self.price_all)
+            self.sum_list = self.packet_choose(packet['choose_packet_xpath'], lk_conf.url_checkout_simple % packet['packet_id'],
+                               packet['price_all'], packet['count_shares'], payment_method, packet['instalment'])
+            self.packet_sign_a_claim(self.sum_list, packet['price_all'], packet['instalment'], payment_method['type'])
+
+    def packet_choose(self, packet_name, url_checkout, price_packet, count_shares, payment_method, packet_inst):
+        self.main_balance_before_int = self.get_all_balance()
+        self.find.element_by_xpath_and_move(packet_name).click()
+        self.total_price = int(self.find.element_by_id(lk_conf.total_price_id).text.replace(' ', ''))
+        self.assertEqual(url_checkout, self.driver.current_url)
+        self.assertEqual(self.total_price, price_packet)
+        self.sum_internal = self.pay.pay(packet_inst, payment_method, price_packet)
+        self.find.element_by_id(lk_conf.progress_start_id).click()
+        self.find.element_by_xpath(count_shares)
+        self.assertEqual(lk_conf.url_acceptance_page, self.driver.current_url)
+        self.find.element_by_xpath_and_move(lk_conf.checkbox_icon_xpath).click()
+        self.find.element_by_xpath_and_move(lk_conf.button_buy_xpath).click()
+        return self.sum_internal
+
+    def packet_instalment_payment(self, count_month, payment_method):
+        href_my_instalment = self.find.element_by_xpath_and_move(lk_conf.href_my_instalment_xpath)
+        self.assertEqual(lk_conf.url_pay_instalment, self.driver.current_url)
+        href_my_instalment.click()
+        self.find.element_by_xpath(lk_conf.checkout_myinstalment_xpath)
+        self.assertEqual(lk_conf.section_myinstalment, self.driver.current_url)
+        self.find.element_by_xpath_and_move(lk_conf.select_pay_instalment_xpath).click()
+        self.find.element_by_xpath(count_month).click()
+        self.id_instalment = self.find.element_by_xpath(lk_conf.last_instalment_xpath).get_attribute(
+            lk_conf.name_attr_instalment_id)
+        if payment_method['type'] == "b":
+            self.find.element_by_xpath(lk_conf.select_a_or_b % self.id_instalment).click()
+            self.find.element_by_xpath(lk_conf.select_b % self.id_instalment).click()
+        self.find.element_by_xpath_and_move(lk_conf.button_for_pay_instalment_xpath % self.id_instalment).click()
+
+    def packet_sign_a_claim(self, sum, full_price_packet, packet_inst, payment_method, first_pay_price = 0):
+        try:
+            self.find.element_by_xpath(lk_conf.username_verif_data_xpath)
+            self.find.element_by_xpath(lk_conf.requirement_xpath)
+            sleep(3)  # временное решение
+            self.sign = self.find.element_by_xpath_and_move(lk_conf.sign_xpath)
+            self.sign.click()
+        except TE:
+            pass
+        self.find.element_by_xpath(lk_conf.section_my_certificates_xpath)
+        self.assertTrue(self.driver.page_source.__contains__(lk_conf.section_my_certificates))
+        self.assertEqual(lk_conf.url_my_certificates, self.driver.current_url)
+        self.actual_result = self.get_all_balance()
+        self.exp_result = self.expected_result(sum, full_price_packet, packet_inst, payment_method, first_pay_price)
+        self.assertEqual(self.exp_result, self.actual_result)
+
+    def get_all_balance(self):
+        self.balance_a_int = self.get_balance(lk_conf.balance_a_xpath)
+        self.balance_b_int = self.get_balance(lk_conf.balance_b_xpath)
+        self.balance_c_int = self.get_balance(lk_conf.balance_c_xpath)
+        return [self.balance_a_int, self.balance_b_int, self.balance_c_int]
+
+    def get_balance(self, name_account):
+        self.account =  self.find.element_by_xpath(name_account).text.replace(' ', '')
+        self.account_balance = int(self.account[:-4])
+        return self.account_balance
+
+    def expected_result(self, sum, full_price_packet, packet_inst, payment_method, first_pay_price):
+        if packet_inst == True:
+            if payment_method == "b":
+                sum[1] = sum[1] + (full_price_packet - first_pay_price)
+            else:
+                sum[0] = sum[0] + (full_price_packet - first_pay_price)
+        self.result_a = self.main_balance_before_int[0] - sum[0]
+        self.result_b = self.main_balance_before_int[1] - sum[1]
+        self.result_c = self.main_balance_before_int[2] - sum[2]
+        return [self.result_a, self.result_b, self.result_c]
 
     def get_and_insert_code(self):
         self.open_in_new_window_mail()
@@ -457,7 +484,7 @@ class LkswcTest(unittest.TestCase):
         self.verification_personal_data()
         self.verification_passport_data()
         self.verification_registration_address()
-        self.verification_uploading_of_the_doc()
+        #self.verification_uploading_of_the_doc()
 
     def checkout_section_personal(self):
         sleep(2)
@@ -580,7 +607,7 @@ class LkswcTest(unittest.TestCase):
         self.find.element_by_id(lk_conf.field_city_id).send_keys(lk_conf.reg_city)
         self.find.element_by_id(lk_conf.button_save_id).click()
         self.full_regname = lk_conf.regname + '_' + self.email + ' ' + lk_conf.reglastname + '_' + self.email
-        self.find.element_by_xpath("//h3[contains(text(), '%s')]" % self.full_regname)
+        self.find.element_by_xpath(lk_conf.username_in_lk % self.full_regname)
         return True
 
     def login(self, log_in, passw):
@@ -602,7 +629,7 @@ class LkswcTest(unittest.TestCase):
 
     def login_simple(self, login_simple=lk_priv_data.login_for_test, pasw_simple=lk_priv_data.passw_for_test, name_sample=lk_priv_data.full_name_for_test):
         self.login(login_simple, pasw_simple)
-        self.find.element_by_xpath("//h3[contains(text(), '%s')]" % name_sample)
+        self.find.element_by_xpath(lk_conf.username_in_lk % name_sample)
         self.assertEqual(lk_conf.full_company_name, self.driver.title)
 
     def checkout_cripto(self):
@@ -614,9 +641,9 @@ class LkswcTest(unittest.TestCase):
         self.assertEqual(lk_conf.site_advcash, self.driver.current_url)
 
     def autorization(self):
-        self.user = lk_priv_data.get_user()
-        self.login(self.user['login'], self.user['password'])
-        self.find.element_by_xpath("//h3[contains(text(), '%s')]" % self.user['full_name'])
+        user = lk_priv_data.get_user()
+        self.login(user['login'], user['password'])
+        self.find.element_by_xpath(lk_conf.username_in_lk % user['full_name'])
         #print(self.user['login'])
         self.assertEqual(lk_conf.full_company_name, self.driver.title)
 
@@ -633,16 +660,16 @@ class LkswcTest(unittest.TestCase):
 
     def search_all_ps(self):
         #Получаем спикок всех включенных платежных систем в виде значений атрибута 'id'.
-        self.all_ps = self.find.elements_by_xpath(lk_conf.all_ps_xpath)
-        self.list_ps_attribute = []
-        for i in self.all_ps:
-            self.list_ps_attribute.append(str(i.get_attribute(lk_conf.name_attribute)))
-        return self.list_ps_attribute
+        all_ps = self.find.elements_by_xpath(lk_conf.all_ps_xpath)
+        list_ps_attribute = []
+        for i in all_ps:
+            list_ps_attribute.append(str(i.get_attribute(lk_conf.name_attribute)))
+        return list_ps_attribute
 
     def check_of_ps(self, ps_id):
-        self.list_ps = self.search_all_ps()
+        list_ps = self.search_all_ps()
         # print(self.list_ps)
-        if ps_id in self.list_ps:
+        if ps_id in list_ps:
             self.find.element_by_id_and_move(ps_id).click()
             return True
         else:
@@ -673,69 +700,16 @@ class LkswcTest(unittest.TestCase):
         self.find.element_by_xpath(lk_conf.wait_checkout_swift_page_xapth)
         self.assertEqual(lk_conf.url_swift_invoices, self.driver.current_url)
 
-    def packet_choose(self, packet_name, url_checkout, price_packet, count_shares):
-        self.main_balance_before = self.find.element_by_xpath(lk_conf.a_balance_xpath).text.replace(' ', '')
-        self.main_balance_before_int = int(self.main_balance_before[:-4])
-        self.find.element_by_xpath_and_move(packet_name).click()
-        self.pay_account = self.find.element_by_xpath_and_move(lk_conf.pay_account_xpath)
-        self.assertEqual(url_checkout, self.driver.current_url)
-        # sleep(2)
-        self.pay_account.click()
-        self.total_price = int(self.find.element_by_id(lk_conf.total_price_id).text.replace(' ', ''))
-        self.assertEqual(self.total_price, price_packet)
-        self.input_one = self.find.element_by_id(lk_conf.input_one_id).send_keys(price_packet)
-        self.find.element_by_xpath(lk_conf.checkout_button_xpath).click()
-        self.find.element_by_id(lk_conf.progress_start_id).click()
-        self.find.element_by_xpath(count_shares)
-        self.assertEqual(lk_conf.url_acceptance_page, self.driver.current_url)
-        self.find.element_by_xpath_and_move(lk_conf.checkbox_icon_xpath).click()
-        self.find.element_by_xpath_and_move(lk_conf.button_buy_xpath).click()
-
-    def get_balance_on_account(self, account=lk_conf.a_balance_xpath):
-        pass
-
-
-    def packet_instalment_payment(self, count_month):
-        self.find.element_by_xpath(lk_conf.a_balance_xpath)
-        self.assertEqual(lk_conf.url_pay_instalment, self.driver.current_url)
-        self.find.element_by_xpath_and_move(lk_conf.href_my_instalment_xpath).click()
-        self.find.element_by_xpath(lk_conf.checkout_myinstalment_xpath)
-        self.assertEqual(lk_conf.section_myinstalment, self.driver.current_url)
-        self.find.element_by_xpath_and_move(lk_conf.select_pay_instalment_xpath).click()
-        self.find.element_by_xpath(count_month).click()
-        self.id_instalment = self.find.element_by_xpath(lk_conf.last_instalment_xpath).get_attribute(
-            lk_conf.name_attr_instalment_id)
-        self.find.element_by_xpath_and_move(lk_conf.button_for_pay_instalment_xpath % self.id_instalment).click()
-
-    def packet_sign_a_claim(self, full_price_packet):
-        try:
-            self.find.element_by_xpath(lk_conf.username_verif_data_xpath)
-            self.find.element_by_xpath(lk_conf.requirement_xpath)
-            sleep(3)  # временное решение
-            self.sign = self.find.element_by_xpath_and_move(lk_conf.sign_xpath)
-            self.sign.click()
-        except TE:
-            pass
-        self.find.element_by_xpath(lk_conf.section_my_certificates_xpath)
-        self.assertTrue(self.driver.page_source.__contains__(lk_conf.section_my_certificates))
-        self.assertEqual(lk_conf.url_my_certificates, self.driver.current_url)
-        self.main_balance_after = self.find.element_by_xpath(lk_conf.a_balance_xpath).text.replace(' ', '')
-        self.main_balance_after_int = int(self.main_balance_after[:-4])
-        # self.main_balance_after_replace = self.main_balance_after.text.replace(' ', '')
-        # self.main_balance_after_replace_int = int(self.main_balance_after_replace[:-4])
-        self.assertEqual(self.main_balance_before_int - full_price_packet, self.main_balance_after_int)
-
     def change_language(self):
-        self.language_search = self.find.element_by_xpath(lk_conf.language_search_xpath)
-        if self.language_search.text == "EN":
-            self.language_search.click()
-            self.switching_to_ru = self.find.element_by_xpath(lk_conf.switching_to_ru_xpath).click()
+        language_search = self.find.element_by_xpath(lk_conf.language_search_xpath)
+        if language_search.text == "EN":
+            language_search.click()
+            self.find.element_by_xpath(lk_conf.switching_to_ru_xpath).click()
         self.find.element_by_xpath(lk_conf.enter_the_systeme_xpath)
 
     def debug(self):
         try:
-            WebDriverWait(self.driver, lk_conf.delay).until(
-                EC.visibility_of_element_located((By.ID, lk_conf.debug_toolbar_id)))
+            self.find.element_by_id(lk_conf.debug_toolbar_id)
             self.find.element_by_xpath(lk_conf.debug_minimize_xpath).click()
         except TE:
             pass
