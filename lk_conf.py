@@ -170,10 +170,10 @@ url_checkout_simple = lk_priv_data.main_url + "/investment/programs?packet=%s"
 #Покупка пакета рассрочка 500
 #Здесь необходимо заполнить все свойства пакетов, которые собираемся тестировать
 packet_instalment_500 = {
- 'packet_id':435,
- 'choose_packet_xpath':"//div[@data-id='435']/div[3]/div/a",
+ 'packet_id':491,
+ 'choose_packet_xpath':"//div[@data-id='491']/div[3]/div/a",
  'price': 500,
- 'count_shares':"//strong[contains(text(), '575 000')]",
+ 'count_shares':"//strong[contains(text(), '275 000')]",
  'count_month':9,
  'price_all':5000,
  'instalment':True,
@@ -182,35 +182,35 @@ packet_instalment_500 = {
 
 #Покупка пакета premium_5000
 packet_premium_5000 = {
- 'packet_id': 456,
+ 'packet_id': 487,
  'choose_packet_xpath':"//div[@data-name='Premium 5 000']//a",
- 'count_shares':"//strong[contains(text(), '600 000')]",
+ 'count_shares':"//strong[contains(text(), '300 000')]",
  'price_all':5000,
  'instalment':False
 }
 
 
-exp_without_plus = [439, 440, 441, 442]
+exp_without_plus = [498, 499, 500, 501]
 #Покупка пакета рассрочка старт
-first_payment_25_xpath = "//input[@name='package_439'][@data-first_payment='25']/.."
+first_payment_25_xpath = "//input[@name='package_498'][@data-first_payment='25']/.."
 packet_start = {
- 'packet_id':439,
- 'choose_packet_xpath':"//a[@href='/investment/instalment?packet=439']",
+ 'packet_id':498,
+ 'choose_packet_xpath':"//a[@href='/investment/instalment?packet=498']",
  'price': 25,
- 'count_shares':"//strong[contains(text(), '16 250')]",
+ 'count_shares':"//strong[contains(text(), '7 750')]",
  'count_month':9,
  'price_all':250,
  'instalment':True
 }
 
-exp_with_plus = [443, 444, 445, 446]
+exp_with_plus = [502, 503, 504, 505]
 #Покупка пакета рассрочка старт +
-first_payment_50_xpath = "//input[@name='package_439'][@data-first_payment='50']/.."
+first_payment_50_xpath = "//input[@name='package_498'][@data-first_payment='50']/.."
 packet_start_plus = {
- 'packet_id': 443,
- 'choose_packet_xpath':"//a[@href='/investment/instalment?packet=443']",
+ 'packet_id': 502,
+ 'choose_packet_xpath':"//a[@href='/investment/instalment?packet=502']",
  'price': 50,
- 'count_shares':"//strong[contains(text(), '16 250')]",
+ 'count_shares':"//strong[contains(text(), '7 750')]",
  'count_month':8,
  'instalment':True,
  'price_all': 250,

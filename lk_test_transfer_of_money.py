@@ -15,7 +15,7 @@ class TestTransferOfMoney(LkLogInSimple):
         try:
             self.methods.get_and_insert_code()
         except TE:
-            print("Message to the mail did not come for Wednesday time")
+            print("The message did not arrive within the specified time interval")
 
 
     def funds_transfer(self):

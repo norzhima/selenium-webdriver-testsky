@@ -54,7 +54,7 @@ test_withdrawal_request = unittest.TestLoader().loadTestsFromTestCase(TestWithdr
 test_cashin_ttswift = unittest.TestLoader().loadTestsFromTestCase(TestCashInTtswift) #давно выключено на бою
 
 
-extended_testing = unittest.TestSuite([test_auth,
+extended_tests = unittest.TestSuite([test_auth,
                                        tests_cashin_advcash,
                                        test_cashin_ameria,
                                        test_cashin_bitcoin,
@@ -75,6 +75,11 @@ extended_testing = unittest.TestSuite([test_auth,
                                        test_registration,
                                        test_transfer_of_money,
                                        test_verification])
+
+check_packets = unittest.TestSuite([test_packet_instalment_500,
+                                    test_packet_instalment_start,
+                                    test_packet_instalment_start_plus,
+                                    test_packet_simple_premium_500])
 
 #basic_tests = unittest.TestSuite([tests_cashin_advcash])
 
@@ -116,7 +121,7 @@ test_tests.addTest(TestVerification('test_verification'))
 
 dir = os.getcwd()
 # open the report file
-branch = "LK-1388"
+branch = "LK-1297"
 report_title = "Results of a personal cabinet test."
 if len(branch) > 2:
     report_title += " Branch: " + branch
