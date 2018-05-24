@@ -46,20 +46,6 @@ class PayPackets(LogInRundom):
             return [self.a, self.b, self.c]
 
 
-
-
-    def w_ps_megapolis(self):
-        pass
-
-    def w_ps_megapolis_apree(self):
-        pass
-
-    def w_ps_tinkoff(self):
-        pass
-
-    def w_ps_tinkoff_agree(self):
-        pass
-
     def w_ps_ameria(self):
         pass
 
@@ -98,6 +84,7 @@ class PayPackets(LogInRundom):
         href_my_instalment = self.methods.wait_and_find_element_by_xpath_and_move(lk_conf.href_my_instalment_xpath)
         self.assertEqual(lk_conf.url_pay_instalment, self.driver.current_url)
         href_my_instalment.click()
+        self.methods.wait_and_find_element_by_xpath_and_move(lk_conf.tab_myinstalment).click()
         self.methods.wait_and_find_element_by_xpath(lk_conf.checkout_myinstalment_xpath)
         self.assertEqual(lk_conf.section_myinstalment, self.driver.current_url)
         self.methods.wait_and_find_element_by_xpath_and_move(lk_conf.select_pay_instalment_xpath).click()

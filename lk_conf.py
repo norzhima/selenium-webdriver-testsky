@@ -39,6 +39,13 @@ ps_adv_ecoin_id = "payment-adv-ecoin"
 ps_adv_payeer_id = "payment-adv-payeer"
 ps_adv_swift_id = "payment-adv-swift"
 
+tab_visa_mastercard = "//a[@href='#psCategory2']"
+tab_cryptonator = "//a[@href='#psCategory1']"
+tab_swift = "//a[@href='#psCategory3']"
+tab_aggregators = "//a[@href='#psCategory4']"
+tab_systems = "//a[@href='#psCategory5']"
+tab_cash = "//a[@href='#psCategory6']"
+
 
 #Пополнение через Fasapay
 ps_fasapay_id = "payment-fasa"
@@ -108,7 +115,7 @@ mera_success_xpath = "//button[@id='mera-success']"
 site_mera = "https://lk.cool-pay.com/"
 wait_checkout_mera_xpath = "//img[@alt='CoolPay']"
 #Пополнение через Qiwi(Россия, СНГ, Прибалтика)
-ps_mera_qiwi_id = "payment-mera-kiwiqiwi"
+ps_mera_qiwi_id = "payment-mera-qiwi"
 #Пополнение через Euroset(Россия, СНГ, Прибалтика)
 ps_mera_euroset_id = "payment-mera-euroset"
 
@@ -290,9 +297,10 @@ sign_xpath = "//button[@name='sign']"
 #Рассрочка
 url_pay_instalment = lk_priv_data.main_url + "/investment/pay-instalment"
 href_my_instalment_xpath = "//div[@id='content']/a"
+tab_myinstalment = "//*[@id='divStep1']/div[1]/h2/a"
 checkout_myinstalment_xpath = "//h2[contains(text(), 'Мои рассрочки')]"
 pay_instalment_xpath = "//h2[contains(text(), 'Мои рассрочки')]"
-section_myinstalment = lk_priv_data.main_url + "/investment/myinstalment"
+section_myinstalment = lk_priv_data.main_url + "/investment/myinstalment-not-paid"
 select_pay_instalment_xpath = "//select[@class='swc-elements_pay-select swc-elements_pay-select_low instalment-payment-qty']"
 schedule_payment_xpath = "//span[@class='myinstalment_description-title']"
 month_pay_instalment_xpath = "//select[@class='swc-elements_pay-select swc-elements_pay-select_low instalment-payment-qty']/option[@value='%s']"
@@ -373,7 +381,8 @@ email_valid = "//span[contains(text(), 'Значение «Email» не явля
 dep_acc_title_xpath = "//h3[contains(text(), 'Пополнить счет')]"
 check_url_cashin = lk_priv_data.main_url + "/account/cashin"
 field_cashin_id = "req1"
-deposit_button_id = "buttonPay"
+deposit_button_id = "createInvoice"
+pay_invoice_id = "payInvoice"
 
 #Получение списка всех включенных ПС
 last_ps_xpath = "//div[last()][@data-code]"

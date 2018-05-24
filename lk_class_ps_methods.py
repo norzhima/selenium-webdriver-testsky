@@ -22,14 +22,14 @@ class LkPsMethods(LkBase):
         self.methods.wait_and_find_element_by_xpath(lk_conf.deposit_account_section_xpath).click()
         self.methods.wait_and_find_element_by_xpath(lk_conf.dep_acc_title_xpath)
 
-    def check_of_ps(self,  ps_id, sum_cashin=lk_conf.sum_small):
+    def check_of_ps(self,  ps_id, tab, sum_cashin=lk_conf.sum_small):
         self.methods.wait_and_find_element_by_id_and_move(lk_conf.field_cashin_id).send_keys(sum_cashin)
         self.methods.wait_and_find_element_by_id(lk_conf.deposit_button_id).click()
+        self.methods.wait_and_find_element_by_xpath_and_move(tab).click()
         list_ps = self.search_all_ps()
-        # print(list_ps)
-        # print(ps_id)
         if ps_id in list_ps:
             self.methods.wait_and_find_element_by_id_and_move(ps_id).click()
+            self.methods.wait_and_find_element_by_id_and_move(lk_conf.pay_invoice_id).click()
             return True
         else:
             print("PS", ps_id, "disabled")
